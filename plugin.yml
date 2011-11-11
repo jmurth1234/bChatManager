@@ -1,7 +1,7 @@
 name: ChatManager
-main: ru.tehkode.chatmanager.bukkit.ChatManager
+main: net.rymate.ChatManager.ChatManager
 depend: [ PermissionsEx ]
-version: 1.15
-author: t3hk0d3
+version: 1
+author: rymate1234
 website: www.bukkit.org
 description: Chat management plugin from PermissionsEx
