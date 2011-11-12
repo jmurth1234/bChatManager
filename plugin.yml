@@ -1,6 +1,6 @@
 name: ChatManager
 main: net.rymate.ChatManager.ChatManager
-depend: [ PermissionsEx ]
+depend: [ bPermissions ]
 version: 1
 author: rymate1234
 website: www.bukkit.org

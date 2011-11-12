@@ -45,6 +45,7 @@ public class ChatManager extends JavaPlugin {
     public void onEnable() {
         setupPrefixes();
         this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
         this.listener = new ChatListener((YamlConfiguration) this.getConfig(), this);
         this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
         Ping.init(this);
