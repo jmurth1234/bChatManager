@@ -1,7 +1,7 @@
-name: ChatManager
-main: net.rymate.ChatManager.ChatManager
+name: bChatManager
+main: net.rymate.bChatManager.bChatManager
 depend: [ bPermissions ]
 version: 1
 author: rymate1234
 website: www.bukkit.org
-description: Chat management plugin from PermissionsEx
+description: Chat management plugin for bPermissions based of PEX ChatManager
