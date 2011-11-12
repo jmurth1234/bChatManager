@@ -1,5 +1,5 @@
 chat-range: 100.0
 display-name-format: '%prefix%player%suffix'
-global-message-format: '%prefix <%player> : &e%message'
+global-message-format: '%prefix <%player>: %message'
 message-format: '%prefix %player: &f%message'
 ranged-mode: false

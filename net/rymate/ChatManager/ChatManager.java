@@ -41,6 +41,22 @@ public class ChatManager extends JavaPlugin {
     public ChatManager() {
     }
 
+    @Override
+    public void onEnable() {
+        setupPrefixes();
+        this.getConfig().options().copyDefaults(true);
+        this.listener = new ChatListener((YamlConfiguration) this.getConfig(), this);
+        this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
+        Ping.init(this);
+        logger.info("[ChatManager] ChatManager enabled.");
+    }
+
+    @Override
+    public void onDisable() {
+        this.listener = null;
+        logger.info("[ChatManager] ChatManager disabled!");
+    }
+
     public void setupPrefixes() {
         try {
             ir = Permissions.getInfoReader();
@@ -49,20 +65,4 @@ public class ChatManager extends JavaPlugin {
             this.getPluginLoader().disablePlugin(this);
         }
     }
-
-    @Override
-    public void onEnable() {
-        setupPrefixes();
-        this.listener = new ChatListener((YamlConfiguration) this.getConfig());
-        Ping.init(this);
-        logger.info("[ChatManager] ChatManager enabled.");
-    }
-
-    @Override
-    public void onDisable() {
-        this.listener = null;
-
-        logger.info("[ChatManager] ChatManager disabled!");
-    }
-
 }

@@ -50,13 +50,15 @@ public class ChatListener extends PlayerListener {
     protected String optionGlobalMessageFormat = "global-message-format";
     protected String optionRangedMode = "force-ranged-mode";
     protected String optionDisplayname = "display-name-format";
+    private final ChatManager plugin;
 
-    public ChatListener(YamlConfiguration config) {
+    public ChatListener(YamlConfiguration config, ChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
         this.globalMessageFormat = config.getString("global-message-format", this.globalMessageFormat);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
         this.chatRange = config.getDouble("chat-range", this.chatRange);
         this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
+        this.plugin = aThis;
     }
 
     @Override
@@ -69,25 +71,20 @@ public class ChatListener extends PlayerListener {
         
         String worldName = player.getWorld().getName();
 
-        PermissionUser user = PermissionsEx.getPermissionManager().getUser(player);
-        if (user == null) {
-            return;
-        }
-
-        String message = user.getOption(this.optionMessageFormat, player.getWorld().getName(), messageFormat);
-        boolean localChat = user.getOptionBoolean(this.optionRangedMode, player.getWorld().getName(), rangedMode);
+        String message = messageFormat;
+        boolean localChat = rangedMode;
 
         String chatMessage = event.getMessage();
-        if (chatMessage.startsWith("!") && user.has("chatmanager.chat.global", player.getWorld().getName())) {
+        if (chatMessage.startsWith("!") && player.hasPermission("chatmanager.chat.global")) {
             localChat = false;
             chatMessage = chatMessage.substring(1);
 
-            message = user.getOption(this.optionGlobalMessageFormat, player.getWorld().getName(), globalMessageFormat);
+            message = globalMessageFormat;
         }
 
         message = this.colorize(message);
 
-        if (user.has("chatmanager.chat.color", player.getWorld().getName())) {
+        if (player.hasPermission("chatmanager.chat.color")) {
             chatMessage = this.colorize(chatMessage);
         }
 
@@ -99,7 +96,7 @@ public class ChatListener extends PlayerListener {
         event.setMessage(chatMessage);
 
         if (localChat) {
-            double range = user.getOptionDouble(this.optionChatRange, player.getWorld().getName(), chatRange);
+            double range = chatRange;
             
             event.getRecipients().clear();
             event.getRecipients().addAll(this.getLocalRecipients(player, message, range));
@@ -113,20 +110,15 @@ public class ChatListener extends PlayerListener {
     }
     
     protected void updateDisplayName(Player player){
-        PermissionUser user = PermissionsEx.getPermissionManager().getUser(player);
-        if (user == null) {
-            return;
-        }
         
         String worldName = player.getWorld().getName();
-        player.setDisplayName(this.colorize(this.replacePlayerPlaceholders(player, user.getOption(this.optionDisplayname, worldName, this.displayNameFormat))));
+        player.setDisplayName(this.colorize(this.replacePlayerPlaceholders(player, this.displayNameFormat)));
     }
     
     protected String replacePlayerPlaceholders(Player player, String format){
-        PermissionUser user = PermissionsEx.getPermissionManager().getUser(player);
         String worldName = player.getWorld().getName();  
-        return format.replace("%prefix", this.colorize(user.getPrefix(worldName)))
-                     .replace("%suffix", this.colorize(user.getSuffix(worldName)))
+        return format.replace("%prefix", this.colorize(plugin.ir.getPrefix(player)))
+                     .replace("%suffix", this.colorize(plugin.ir.getSuffix(player)))
                      .replace("%world", worldName)                     
                      .replace("%player", player.getName());
     }
@@ -135,14 +127,13 @@ public class ChatListener extends PlayerListener {
         Location playerLocation = sender.getLocation();
         List<Player> recipients = new LinkedList<Player>();
         double squaredDistance = Math.pow(range, 2);
-        PermissionManager manager = PermissionsEx.getPermissionManager();
         for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
             // Recipient are not from same world
             if (!recipient.getWorld().equals(sender.getWorld())) {
                 continue;
             }
 
-            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !manager.has(sender, "chatmanager.override.ranged")) {
+            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !sender.hasPermission("chatmanager.override.ranged")) {
                 continue;
             }
 
@@ -193,7 +184,6 @@ public class ChatListener extends PlayerListener {
         if(string == null){
             return "";
         }
-        
         return string.replaceAll("&([a-z0-9])", "\u00A7$1");
     }
 }
