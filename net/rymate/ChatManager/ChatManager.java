@@ -19,12 +19,14 @@
 package net.rymate.ChatManager;
 
 import java.util.logging.Logger;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
-import de.bananaco.permissions.info.InfoReader;
 import com.randomappdev.pluginstats.Ping;
+import de.bananaco.permissions.Permissions;
+import de.bananaco.permissions.info.InfoReader;
+import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
 /**
  *
@@ -33,55 +35,42 @@ import com.randomappdev.pluginstats.Ping;
 public class ChatManager extends JavaPlugin {
 
     protected final static Logger logger = Logger.getLogger("Minecraft");
-    
     protected ChatListener listener;
+    public InfoReader ir = null;
 
     public ChatManager() {
     }
 
+    public void setupPrefixes() {
+        try {
+            ir = Permissions.getInfoReader();
+        } catch (Exception e) {
+            System.err.println("bPermissions not detected! Disabling plugin.");
+            this.getPluginLoader().disablePlugin(this);
+        }
+    }
+
     @Override
     public void onEnable() {
-        // At first check PEX existance
-        try {
-            PermissionsEx.getPermissionManager();
-        } catch (Throwable e) {
-            logger.severe("[ChatManager] PermissionsEx not found, disabling");
-            this.getPluginLoader().disablePlugin(this);
-            return;
-        }
 
-        Configuration config = this.getConfiguration();
-
-        if (config.getProperty("enable") == null) { // Migrate
-            this.initializeConfiguration(config);
-        }
-
-        this.listener = new ChatListener(config);
-
-        if (config.getBoolean("enable", false)) {
-            this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
-            logger.info("[ChatManager] ChatManager enabled!");
-        } else {
-            logger.info("[ChatManager] ChatManager disabled. Check config.yml!");
-            this.getPluginLoader().disablePlugin(this);
-        }
-
+        setupPrefixes();
+        this.listener = new ChatListener((YamlConfiguration) this.getConfig());
+        config = this.getConfig();
         config.save();
+
         Ping.init(this);
     }
 
     @Override
     public void onDisable() {
         this.listener = null;
-        
+
         logger.info("[ChatManager] ChatManager disabled!");
     }
 
-    protected void initializeConfiguration(Configuration config) {
+    protected void initializeConfiguration(YamlConfiguration config) {
         // At migrate and setup defaults
         PermissionsEx pex = (PermissionsEx) this.getServer().getPluginManager().getPlugin("PermissionsEx");
-
-        Configuration pexConfig = pex.getConfiguration();
 
         // Flags
         config.setProperty("enable", pexConfig.getBoolean("permissions.chat.enable", false));
@@ -91,6 +80,7 @@ public class ChatManager extends JavaPlugin {
         config.setProperty("chat-range", pexConfig.getDouble("permissions.chat.chat-range", ChatListener.CHAT_RANGE));
 
         config.save();
-    }
 
+
+    }
 }

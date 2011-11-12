@@ -23,13 +23,10 @@ import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.util.config.Configuration;
-import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 /**
  *
@@ -54,7 +51,7 @@ public class ChatListener extends PlayerListener {
     protected String optionRangedMode = "force-ranged-mode";
     protected String optionDisplayname = "display-name-format";
 
-    public ChatListener(Configuration config) {
+    public ChatListener(YamlConfiguration config) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
         this.globalMessageFormat = config.getString("global-message-format", this.globalMessageFormat);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
