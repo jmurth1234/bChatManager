@@ -24,6 +24,7 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
+import com.randomappdev.pluginstats.Ping;
 
 /**
  *
@@ -66,6 +67,7 @@ public class ChatManager extends JavaPlugin {
         }
 
         config.save();
+        Ping.init(this);
     }
 
     @Override
