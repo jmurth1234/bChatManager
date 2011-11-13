@@ -28,8 +28,10 @@ import de.bananaco.permissions.Permissions;
 import de.bananaco.permissions.info.InfoReader;
 
 /**
- *
- * @author t3hk0d3
+ * Main class for bChatManager
+ * 
+ * @oldauthor t3hk0d3
+ * @author rymate1234
  */
 public class bChatManager extends JavaPlugin {
 
