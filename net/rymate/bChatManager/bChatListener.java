@@ -86,7 +86,7 @@ public class bChatListener extends PlayerListener {
 
         message = this.colorize(message);
 
-        if (player.hasPermission("chatmanager.chat.color")) {
+        if (player.hasPermission("bchatmanager.chat.color")) {
             chatMessage = this.colorize(chatMessage);
         }
 
