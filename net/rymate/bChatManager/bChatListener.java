@@ -128,7 +128,8 @@ public class bChatListener extends PlayerListener {
                      .replace("%world", worldName)                     
                      .replace("%player", player.getName());
     }
-    
+
+
     protected List<Player> getLocalRecipients(Player sender, String message, double range) {
         Location playerLocation = sender.getLocation();
         List<Player> recipients = new LinkedList<Player>();
