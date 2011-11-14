@@ -18,6 +18,7 @@
  */
 package net.rymate.bChatManager;
 
+import de.bananaco.permissions.interfaces.PermissionSet;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -122,7 +123,8 @@ public class bChatListener extends PlayerListener {
         return format.replace("%prefix", this.colorize(plugin.ir.getPrefix(player)))
                      .replace("%suffix", this.colorize(plugin.ir.getSuffix(player)))
                      .replace("%world", worldName)                     
-                     .replace("%player", player.getName());
+                     .replace("%player", player.getName())
+                     .replace("%group", getGroup(player));
     }
 
 
@@ -189,4 +191,12 @@ public class bChatListener extends PlayerListener {
         }
         return string.replaceAll("&([a-z0-9])", "\u00A7$1");
     }
+
+    private CharSequence getGroup(Player player) {
+        PermissionSet world = plugin.wpm.getPermissionSet(player.getWorld());
+        List<String> grouplist = world.getGroups(player);
+        String group = grouplist.get(0);
+        return group;
+    }
+
 }

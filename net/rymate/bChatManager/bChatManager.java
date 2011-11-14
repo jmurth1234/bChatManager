@@ -19,6 +19,7 @@
  */
 package net.rymate.bChatManager;
 
+import de.bananaco.permissions.worlds.WorldPermissionsManager;
 import java.util.logging.Logger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event.Priority;
@@ -39,6 +40,7 @@ public class bChatManager extends JavaPlugin {
     protected final static Logger logger = Logger.getLogger("Minecraft");
     protected bChatListener listener;
     public InfoReader ir = null;
+    public WorldPermissionsManager wpm;
 
     public bChatManager() {
     }
@@ -63,6 +65,7 @@ public class bChatManager extends JavaPlugin {
     public void setupPrefixes() {
         try {
             ir = Permissions.getInfoReader();
+            wpm = Permissions.getWorldPermissionsManager();
         } catch (Exception e) {
             System.err.println("bPermissions not detected! Disabling plugin.");
             this.getPluginLoader().disablePlugin(this);
