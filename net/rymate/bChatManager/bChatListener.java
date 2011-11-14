@@ -124,7 +124,7 @@ public class bChatListener extends PlayerListener {
                      .replace("%suffix", this.colorize(plugin.ir.getSuffix(player)))
                      .replace("%world", worldName)                     
                      .replace("%player", player.getName())
-                     .replace("%group", getGroup(player));
+                     .replace("%group", getGroup(player)); //getting group doesn't work \o/
     }
 
 

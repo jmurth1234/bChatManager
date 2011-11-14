@@ -15,8 +15,12 @@ import org.bukkit.configuration.file.FileConfiguration;
  * @author Ryan
  */
 class MeCommand implements CommandExecutor {
+    private final FileConfiguration config;
+    private final bChatManager plugin;
 
     public MeCommand(FileConfiguration config, bChatManager aThis) {
+        this.config = config;
+        this.plugin = aThis;
     }
 
     @Override
