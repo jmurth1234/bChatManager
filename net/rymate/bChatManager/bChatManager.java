@@ -53,6 +53,7 @@ public class bChatManager extends JavaPlugin {
         this.listener = new bChatListener((YamlConfiguration) this.getConfig(), this);
         this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
         Ping.init(this);
+        getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
         logger.info("[ChatManager] ChatManager enabled.");
     }
 
