@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -27,6 +28,11 @@ class MeCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "Ya need to type something after it :P");
             return false;
         }
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
+            return true;
+        }
+        Player player = (Player) sender;
         int i;
         StringBuilder me = new StringBuilder();
         for (i = 0; i < args.length; i++) {
@@ -41,13 +47,11 @@ class MeCommand implements CommandExecutor {
             meMessage = f.colorize(meMessage);
         }
 
-        message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
-        message = f.replacePlayerPlaceholders(sender, message);
+        message = message.replace("%message", meMessage).replace("%displayname", "%1$s");
+        message = f.replacePlayerPlaceholders(player, message);
         message = f.replaceTime(message);
-        
-        event.setFormat(message);
-        event.setMessage(chatMessage);
-        plugin.getServer().broadcastMessage(me.toString());
+
+        plugin.getServer().broadcastMessage(message);
         return true;
     }
 }
