@@ -15,11 +15,11 @@ import org.bukkit.configuration.file.FileConfiguration;
  * @author Ryan
  */
 class MeCommand implements CommandExecutor {
-    private final FileConfiguration config;
     private final bChatManager plugin;
+    private final String meFormat;
 
     public MeCommand(FileConfiguration config, bChatManager aThis) {
-        this.config = config;
+        this.meFormat = config.getString("me-format", this.meFormat);
         this.plugin = aThis;
     }
 
@@ -35,7 +35,8 @@ class MeCommand implements CommandExecutor {
             me.append(" ");
             me.append(args[i]);
         }
-        sender.sendMessage(me.toString());
+        String message = meFormat;
+        plugin.getServer().broadcastMessage(me.toString());
         return true;
     }
 }

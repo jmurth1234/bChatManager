@@ -50,6 +50,7 @@ public class bChatListener extends PlayerListener {
     protected String optionDisplayname = "display-name-format";
     private final bChatManager plugin;
     private final String alertFormat;
+    bChatFormatter f;
 
     public bChatListener(YamlConfiguration config, bChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
@@ -58,6 +59,7 @@ public class bChatListener extends PlayerListener {
         this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
         this.alertFormat = config.getString("alert-format", this.alertFormat);
         this.plugin = aThis;
+        this.f = new bChatFormatter(plugin);
     }
 
     @Override
@@ -85,15 +87,15 @@ public class bChatListener extends PlayerListener {
             message = alertFormat;
         }
 
-        message = this.colorize(message);
+        message = f.colorize(message);
 
         if (player.hasPermission("bchatmanager.chat.color")) {
-            chatMessage = this.colorize(chatMessage);
+            chatMessage = f.colorize(chatMessage);
         }
 
         message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
-        message = this.replacePlayerPlaceholders(player, message);
-        message = this.replaceTime(message);
+        message = f.replacePlayerPlaceholders(player, message);
+        message = f.replaceTime(message);
         
         event.setFormat(message);
         event.setMessage(chatMessage);
@@ -115,18 +117,8 @@ public class bChatListener extends PlayerListener {
     protected void updateDisplayName(Player player){
         
         String worldName = player.getWorld().getName();
-        player.setDisplayName(this.colorize(this.replacePlayerPlaceholders(player, this.displayNameFormat)));
+        player.setDisplayName(f.colorize(f.replacePlayerPlaceholders(player, this.displayNameFormat)));
     }
-    
-    protected String replacePlayerPlaceholders(Player player, String format){
-        String worldName = player.getWorld().getName();  
-        return format.replace("%prefix", this.colorize(plugin.ir.getPrefix(player)))
-                     .replace("%suffix", this.colorize(plugin.ir.getSuffix(player)))
-                     .replace("%world", worldName)                     
-                     .replace("%player", player.getName())
-                     .replace("%group", getGroup(player)); //getting group doesn't work \o/
-    }
-
 
     protected List<Player> getLocalRecipients(Player sender, String message, double range) {
         Location playerLocation = sender.getLocation();
@@ -146,57 +138,4 @@ public class bChatListener extends PlayerListener {
         }
         return recipients;
     }
-
-    protected String replaceTime(String message) {
-        Calendar calendar = Calendar.getInstance();
-
-        if (message.contains("%h")) {
-            message = message.replace("%h", String.format("%02d", calendar.get(Calendar.HOUR)));
-        }
-
-        if (message.contains("%H")) {
-            message = message.replace("%H", String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)));
-        }
-
-        if (message.contains("%g")) {
-            message = message.replace("%g", Integer.toString(calendar.get(Calendar.HOUR)));
-        }
-
-        if (message.contains("%G")) {
-            message = message.replace("%G", Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)));
-        }
-
-        if (message.contains("%i")) {
-            message = message.replace("%i", String.format("%02d", calendar.get(Calendar.MINUTE)));
-        }
-
-        if (message.contains("%s")) {
-            message = message.replace("%s", String.format("%02d", calendar.get(Calendar.SECOND)));
-        }
-
-        if (message.contains("%a")) {
-            message = message.replace("%a", (calendar.get(Calendar.AM_PM) == 0) ? "am" : "pm");
-        }
-
-        if (message.contains("%A")) {
-            message = message.replace("%A", (calendar.get(Calendar.AM_PM) == 0) ? "AM" : "PM");
-        }
-
-        return message;
-    }
-
-    protected String colorize(String string) {
-        if(string == null){
-            return "";
-        }
-        return string.replaceAll("&([a-z0-9])", "\u00A7$1");
-    }
-
-    private CharSequence getGroup(Player player) {
-        PermissionSet world = plugin.wpm.getPermissionSet(player.getWorld());
-        List<String> grouplist = world.getGroups(player);
-        String group = grouplist.get(0);
-        return group;
-    }
-
 }
