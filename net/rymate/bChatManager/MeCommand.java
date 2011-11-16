@@ -17,10 +17,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 class MeCommand implements CommandExecutor {
     private final bChatManager plugin;
     private final String meFormat;
+    private final bChatFormatter f;
 
     public MeCommand(FileConfiguration config, bChatManager aThis) {
         this.meFormat = config.getString("me-format", this.meFormat);
         this.plugin = aThis;
+        this.f = new bChatFormatter(plugin);
     }
 
     @Override
@@ -35,7 +37,20 @@ class MeCommand implements CommandExecutor {
             me.append(" ");
             me.append(args[i]);
         }
+        String meMessage = me.toString();
         String message = meFormat;
+        message = f.colorize(message);
+
+        if (sender.hasPermission("bchatmanager.chat.color")) {
+            meMessage = f.colorize(meMessage);
+        }
+
+        message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
+        message = f.replacePlayerPlaceholders(sender, message);
+        message = f.replaceTime(message);
+        
+        event.setFormat(message);
+        event.setMessage(chatMessage);
         plugin.getServer().broadcastMessage(me.toString());
         return true;
     }
