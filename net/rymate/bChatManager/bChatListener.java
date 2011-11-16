@@ -101,8 +101,7 @@ public class bChatListener extends PlayerListener {
         event.setMessage(chatMessage);
 
         if (localChat) {
-            double range = chatRange;
-            
+            double range = chatRange;            
             event.getRecipients().clear();
             event.getRecipients().addAll(this.getLocalRecipients(player, message, range));
         }
