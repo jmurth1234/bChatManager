@@ -62,9 +62,10 @@ class MeCommand implements CommandExecutor {
 
         if (rangedMode) {
             List<Player> pl = getLocalRecipients(player, message, chatRange);
-            for (int j = 0; i < pl.size(); j++) {
+            for (int j = 0; j < pl.size(); j++) {
                 pl.get(j).sendMessage(message);
             }
+            sender.sendMessage(message);
             System.out.println(message);
         } else {
             plugin.getServer().broadcastMessage(message);
