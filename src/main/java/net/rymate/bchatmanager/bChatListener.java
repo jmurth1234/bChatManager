@@ -18,8 +18,6 @@
  */
 package net.rymate.bchatmanager;
 
-import de.bananaco.permissions.interfaces.PermissionSet;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.Bukkit;
