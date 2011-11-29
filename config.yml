@@ -1,6 +1,0 @@
-chat-range: 100.0
-display-name-format: '%prefix%player%suffix'
-message-format: '%prefix %player: &f%message'
-ranged-mode: false
-alert-format: '&c[ALERT] &f%message'
-me-format: '* %player %message'
