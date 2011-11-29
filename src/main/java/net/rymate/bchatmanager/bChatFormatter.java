@@ -21,11 +21,10 @@ package net.rymate.bchatmanager;
 
 import java.util.Calendar;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
  *
- * @author Ryan
+ * @author rymate1234
  */
 public class bChatFormatter {
 
