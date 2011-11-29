@@ -42,9 +42,6 @@ public class bChatManager extends JavaPlugin {
     public InfoReader ir = null;
     public WorldPermissionsManager wpm;
 
-    public bChatManager() {
-    }
-
     @Override
     public void onEnable() {
         setupPrefixes();
