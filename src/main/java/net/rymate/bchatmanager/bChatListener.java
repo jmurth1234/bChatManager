@@ -127,11 +127,9 @@ public class bChatListener extends PlayerListener {
             if (!recipient.getWorld().equals(sender.getWorld())) {
                 continue;
             }
-
             if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !sender.hasPermission("chatmanager.override.ranged")) {
                 continue;
             }
-
             recipients.add(recipient);
         }
         return recipients;
