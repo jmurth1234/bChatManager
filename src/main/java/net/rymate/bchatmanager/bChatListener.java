@@ -1,6 +1,7 @@
 /*
- * bChatManager - PermissionsEx Chat management plugin for Bukkit
- * Copyright (C) 2011 t3hk0d3 http://www.tehkode.ru
+ * bChatManager - Chat management plugin for Bukkit
+ * Originally - PermissionsEx chat management plugin for Bukkit
+ * Copyright (C) 2011 rymate1234
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
