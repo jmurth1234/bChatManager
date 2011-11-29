@@ -45,8 +45,8 @@ class MeCommand implements CommandExecutor {
         int i;
         StringBuilder me = new StringBuilder();
         for (i = 0; i < args.length; i++) {
-            me.append(" ");
             me.append(args[i]);
+            me.append(" ");
         }
         String meMessage = me.toString();
         String message = meFormat;
