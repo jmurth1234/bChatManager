@@ -1,0 +1,9 @@
+TODO LIST - FOR MY USE ONLY TBH, BUT YOU CAN SPY
+
+Stuff to ADD:
+ - Pex support (maybe other plugins)
+ - ability to hear everyone in ranged mode
+ - ability to disable /me (not sure how to do this)
+
+Stuff to FIX;
+ - I have lazy users, so i don't know <_<
