@@ -1,6 +1,6 @@
 name: bChatManager
 main: net.rymate.bchatmanager.bChatManager
-depend: [ bPermissions ]
+softdepend: [ bPermissions. PermissionsEX ]
 version: 1.1
 author: rymate1234
 website: www.bukkit.org
