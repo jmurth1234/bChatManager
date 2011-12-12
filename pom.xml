@@ -22,6 +22,16 @@
             </snapshots>
         </repository>
         <repository>
+            <id>pex-repo</id>
+            <url>http://repo.tehkode.ru/browse/ru.tehkode</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
             <id>cward-repo</id>
             <url>http://repo.chrisgward.com/repository</url>
             <releases>
