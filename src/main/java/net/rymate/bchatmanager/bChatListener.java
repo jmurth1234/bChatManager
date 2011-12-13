@@ -113,7 +113,6 @@ public class bChatListener extends PlayerListener {
     }
     
     protected void updateDisplayName(Player player){
-        
         String worldName = player.getWorld().getName();
         player.setDisplayName(f.colorize(f.replacePlayerPlaceholders(player, this.displayNameFormat)));
     }

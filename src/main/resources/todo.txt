@@ -7,3 +7,6 @@ Stuff to ADD:
 
 Stuff to FIX;
  - I have lazy users, so i don't know <_<
+
+ Stuff DONE:
+  - NOT adding pex support after all
