@@ -83,7 +83,7 @@ class MeCommand implements CommandExecutor {
                 continue;
             }
 
-            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !sender.hasPermission("chatmanager.override.ranged")) {
+            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !sender.hasPermission("bchatmanager.heareverything")) {
                 continue;
             }
 
