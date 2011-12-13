@@ -28,6 +28,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.randomappdev.pluginstats.Ping;
 import de.bananaco.permissions.Permissions;
 import de.bananaco.permissions.info.InfoReader;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginLoader;
+import org.bukkit.plugin.PluginManager;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 /**
  * Main class for bChatManager
@@ -41,6 +45,8 @@ public class bChatManager extends JavaPlugin {
     protected bChatListener listener;
     public InfoReader ir = null;
     public WorldPermissionsManager wpm;
+    public boolean usebanana;
+    public boolean usepex;
 
     @Override
     public void onEnable() {
@@ -50,6 +56,7 @@ public class bChatManager extends JavaPlugin {
         this.listener = new bChatListener((YamlConfiguration) this.getConfig(), this);
         this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
         Ping.init(this);
+        checkPerms(this.getServer().getPluginManager());
         getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
         logger.info("[ChatManager] ChatManager enabled.");
     }
@@ -67,6 +74,19 @@ public class bChatManager extends JavaPlugin {
         } catch (Exception e) {
             System.err.println("bPermissions not detected! Disabling plugin.");
             this.getPluginLoader().disablePlugin(this);
+        }
+    }
+
+    private void checkPerms(PluginManager pm) {
+        Permissions bp = (Permissions) pm.getPlugin("bPermissions");
+        PermissionsEx pex = (PermissionsEx) pm.getPlugin("PermissionsEx");
+        if (bp != null) {
+            this.usebanana = true;
+        } else if (pex != null) {
+            this.usepex = true;
+        } else {
+            logger.warning("Well, looks like you're not using a supported permissions plugin. Disabling...d");
+            pm.disablePlugin(this);
         }
     }
 }
