@@ -50,13 +50,13 @@ public class bChatManager extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        checkPerms(this.getServer().getPluginManager());
         setupPrefixes();
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
         this.listener = new bChatListener((YamlConfiguration) this.getConfig(), this);
         this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
         Ping.init(this);
-        checkPerms(this.getServer().getPluginManager());
         getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
         logger.info("[ChatManager] ChatManager enabled.");
     }
