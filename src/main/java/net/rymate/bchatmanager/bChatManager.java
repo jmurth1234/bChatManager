@@ -41,14 +41,23 @@ public class bChatManager extends JavaPlugin {
     protected bChatListener listener;
     public InfoReader ir = null;
     public WorldPermissionsManager wpm;
-    
+
     @Override
     public void onEnable() {
         setupPrefixes();
         setupConfig();
         setupCommands();
         this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
-        Ping.init(this);
+        try {
+            // create a new metrics object
+            Metrics metrics = new Metrics();
+
+            // 'this' in this context is the Plugin object
+            metrics.beginMeasuringPlugin(this);
+        } catch (Exception e) {
+            System.out.println(e);
+            // Failed to submit the stats :-(
+        }
         logger.info("[ChatManager] ChatManager enabled.");
     }
 
@@ -67,16 +76,17 @@ public class bChatManager extends JavaPlugin {
             this.getPluginLoader().disablePlugin(this);
         }
     }
+
     public void setupConfig() {
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
         this.listener = new bChatListener((YamlConfiguration) this.getConfig(), this);
     }
-    
+
     public void setupCommands() {
         boolean use = this.getConfig().getBoolean("me-format", true);
         if (use == true) {
-         getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
+            getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
         }
     }
 }
