@@ -25,7 +25,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.randomappdev.pluginstats.Ping;
 import de.bananaco.permissions.Permissions;
 import de.bananaco.permissions.info.InfoReader;
 
