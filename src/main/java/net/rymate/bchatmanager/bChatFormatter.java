@@ -39,7 +39,8 @@ public class bChatFormatter {
         return format.replace("%prefix", this.colorize(plugin.ir.getPrefix(player)))
                      .replace("%suffix", this.colorize(plugin.ir.getSuffix(player)))
                      .replace("%world", worldName)
-                     .replace("%player", player.getName());
+                     .replace("%player", player.getName())
+                     .replace("%displayname", player.getDisplayName());
     }
 
     protected String replaceTime(String message) {
