@@ -19,7 +19,7 @@ class MeCommand implements CommandExecutor {
 
     private final bChatManager plugin;
     private final String meFormat;
-    private final bChatFormatter f;
+    private final Functions f;
     private final boolean rangedMode;
     private final double chatRange;
 
@@ -28,7 +28,7 @@ class MeCommand implements CommandExecutor {
         this.chatRange = config.getDouble("chat-range", this.chatRange);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
         this.plugin = aThis;
-        this.f = new bChatFormatter(plugin);
+        this.f = new Functions(plugin);
     }
 
     @Override

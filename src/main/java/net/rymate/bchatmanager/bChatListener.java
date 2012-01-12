@@ -49,7 +49,7 @@ public class bChatListener extends PlayerListener {
     protected String optionDisplayname = "display-name-format";
     private final bChatManager plugin;
     private final String alertFormat;
-    bChatFormatter f;
+    Functions f;
 
     public bChatListener(YamlConfiguration config, bChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
@@ -58,7 +58,7 @@ public class bChatListener extends PlayerListener {
         this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
         this.alertFormat = config.getString("alert-format", this.alertFormat);
         this.plugin = aThis;
-        this.f = new bChatFormatter(plugin);
+        this.f = new Functions(plugin);
     }
 
     @Override
@@ -102,35 +102,8 @@ public class bChatListener extends PlayerListener {
         if (localChat) {
             double range = chatRange;            
             event.getRecipients().clear();
-            event.getRecipients().addAll(this.getLocalRecipients(player, message, range));
+            event.getRecipients().addAll(f.getLocalRecipients(player, message, range));
         }
     }
-    
-    protected void updateDisplayNames(){
-        for(Player player : Bukkit.getServer().getOnlinePlayers()){
-            updateDisplayName(player);
-        }
-    }
-    
-    protected void updateDisplayName(Player player){
-        String worldName = player.getWorld().getName();
-        player.setDisplayName(f.colorize(f.replacePlayerPlaceholders(player, this.displayNameFormat)));
-    }
-
-    protected List<Player> getLocalRecipients(Player sender, String message, double range) {
-        Location playerLocation = sender.getLocation();
-        List<Player> recipients = new LinkedList<Player>();
-        double squaredDistance = Math.pow(range, 2);
-        for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
-            // Recipient are not from same world
-            if (!recipient.getWorld().equals(sender.getWorld())) {
-                continue;
-            }
-            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !sender.hasPermission("bchatmanager.heareverything")) {
-                continue;
-            }
-            recipients.add(recipient);
-        }
-        return recipients;
-    }
+   
 }
