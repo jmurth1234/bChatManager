@@ -34,7 +34,7 @@ import org.bukkit.event.player.PlayerListener;
  */
 public class bChatListener extends PlayerListener {
     
-    public final static String MESSAGE_FORMAT = "<%prefix%player%suffix> %message";
+    public final static String MESSAGE_FORMAT = "%prefix %player: &f%message";
     public final static Boolean RANGED_MODE = false;
     public final static double CHAT_RANGE = 100d;
 
