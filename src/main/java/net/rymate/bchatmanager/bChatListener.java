@@ -51,7 +51,7 @@ public class bChatListener extends PlayerListener {
 
     public bChatListener(YamlConfiguration config, bChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
-        this.messageFormat = config.getString("local-message-format", this.localMessageFormat);
+        this.localMessageFormat = config.getString("local-message-format", this.localMessageFormat);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
         this.chatRange = config.getDouble("chat-range", this.chatRange);
         this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
