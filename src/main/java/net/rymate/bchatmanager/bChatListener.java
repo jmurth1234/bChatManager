@@ -107,5 +107,4 @@ public class bChatListener extends PlayerListener {
             event.getRecipients().addAll(f.getLocalRecipients(player, message, range));
         }
     }
-   
 }
