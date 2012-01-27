@@ -77,7 +77,7 @@ public class bChatListener extends PlayerListener {
             chatMessage = chatMessage.substring(1);
         }
 
-        if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.alert")) {
+        if (chatMessage.startsWith("#") && player.hasPermission("bchatmanager.chat.alert")) {
             localChat = false;
             chatMessage = chatMessage.substring(1);
             message = alertFormat;
