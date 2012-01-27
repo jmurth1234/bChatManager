@@ -67,7 +67,6 @@ public class bChatListener extends PlayerListener {
         }
 
         Player player = event.getPlayer();
-        String worldName = player.getWorld().getName();
 
         String message = messageFormat;
         boolean localChat = rangedMode;

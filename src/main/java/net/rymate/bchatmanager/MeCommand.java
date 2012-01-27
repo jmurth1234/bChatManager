@@ -61,7 +61,7 @@ class MeCommand implements CommandExecutor {
         message = f.replaceTime(message);
 
         if (rangedMode) {
-            List<Player> pl = getLocalRecipients(player, message, chatRange);
+            List<Player> pl = f.getLocalRecipients(player, message, chatRange);
             for (int j = 0; j < pl.size(); j++) {
                 pl.get(j).sendMessage(message);
             }
@@ -71,24 +71,5 @@ class MeCommand implements CommandExecutor {
             plugin.getServer().broadcastMessage(message);
         }
         return true;
-    }
-
-    protected List<Player> getLocalRecipients(Player sender, String message, double range) {
-        Location playerLocation = sender.getLocation();
-        List<Player> recipients = new LinkedList<Player>();
-        double squaredDistance = Math.pow(range, 2);
-        for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
-            // Recipient are not from same world
-            if (!recipient.getWorld().equals(sender.getWorld())) {
-                continue;
-            }
-
-            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !sender.hasPermission("bchatmanager.heareverything")) {
-                continue;
-            }
-
-            recipients.add(recipient);
-        }
-        return recipients;
     }
 }
