@@ -19,10 +19,6 @@
  */
 package net.rymate.bchatmanager;
 
-import java.util.LinkedList;
-import java.util.List;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
