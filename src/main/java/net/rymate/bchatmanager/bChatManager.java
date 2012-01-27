@@ -24,7 +24,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
-import de.bananaco.bpermissions.api.ApiLayer;
 
 /**
  * Main class for bChatManager
@@ -36,11 +35,9 @@ public class bChatManager extends JavaPlugin {
 
     protected final static Logger logger = Logger.getLogger("Minecraft");
     protected bChatListener listener;
-    public ApiLayer api = null;
 
     @Override
     public void onEnable() {
-        setupPrefixes();
         setupConfig();
         setupCommands();
         this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
@@ -61,15 +58,6 @@ public class bChatManager extends JavaPlugin {
     public void onDisable() {
         this.listener = null;
         logger.info("[ChatManager] ChatManager disabled!");
-    }
-
-    public void setupPrefixes() {
-        try {
-            api = new ApiLayer();
-        } catch (Exception e) {
-            System.err.println("bPermissions not detected! Disabling plugin.");
-            this.getPluginLoader().disablePlugin(this);
-        }
     }
 
     public void setupConfig() {

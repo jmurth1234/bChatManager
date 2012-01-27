@@ -35,10 +35,12 @@ import org.bukkit.event.player.PlayerListener;
 public class bChatListener extends PlayerListener {
     
     public final static String MESSAGE_FORMAT = "%prefix %player: &f%message";
+    public final static String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
     public final static Boolean RANGED_MODE = false;
     public final static double CHAT_RANGE = 100d;
 
     protected String messageFormat = MESSAGE_FORMAT;
+    protected String localMessageFormat = LOCAL_MESSAGE_FORMAT;
     protected boolean rangedMode = RANGED_MODE;
     protected double chatRange = CHAT_RANGE;
     protected String displayNameFormat = "%prefix%player%suffix";
@@ -53,6 +55,7 @@ public class bChatListener extends PlayerListener {
 
     public bChatListener(YamlConfiguration config, bChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
+        this.messageFormat = config.getString("local-message-format", this.localMessageFormat);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
         this.chatRange = config.getDouble("chat-range", this.chatRange);
         this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
@@ -77,13 +80,16 @@ public class bChatListener extends PlayerListener {
         if (chatMessage.startsWith("!") && player.hasPermission("bchatmanager.chat.global")) {
             localChat = false;
             chatMessage = chatMessage.substring(1);
-            //message = globalMessageFormat;
         }
 
         if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.alert")) {
             localChat = false;
             chatMessage = chatMessage.substring(1);
             message = alertFormat;
+        }
+        
+        if (localChat == true) {
+            message = localMessageFormat;
         }
 
         message = f.colorize(message);
