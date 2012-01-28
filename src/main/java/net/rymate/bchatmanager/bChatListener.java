@@ -32,6 +32,7 @@ public class bChatListener extends PlayerListener {
     
     public final static String MESSAGE_FORMAT = "%prefix %player: &f%message";
     public final static String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
+    public final static String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
     public final static Boolean RANGED_MODE = false;
     public final static double CHAT_RANGE = 100d;
 
@@ -40,6 +41,7 @@ public class bChatListener extends PlayerListener {
     protected boolean rangedMode = RANGED_MODE;
     protected double chatRange = CHAT_RANGE;
     protected String displayNameFormat = "%prefix%player%suffix";
+    protected String personalMessageFormat = PERSONAL_MESSAGE_FORMAT;
     
     protected String optionChatRange = "chat-range";
     protected String optionMessageFormat = "message-format";
@@ -48,10 +50,12 @@ public class bChatListener extends PlayerListener {
     private final bChatManager plugin;
     private final String alertFormat;
     Functions f;
+    
 
     public bChatListener(YamlConfiguration config, bChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
         this.localMessageFormat = config.getString("local-message-format", this.localMessageFormat);
+        this.personalMessageFormat = config.getString("local-message-format", this.personalMessageFormat);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
         this.chatRange = config.getDouble("chat-range", this.chatRange);
         this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
@@ -81,6 +85,17 @@ public class bChatListener extends PlayerListener {
             localChat = false;
             chatMessage = chatMessage.substring(1);
             message = alertFormat;
+        }
+        
+        if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.message")) {
+            chatMessage = chatMessage.substring(1);
+            String[] messageSplit = chatMessage.split(" ");
+            Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
+            localChat = false;
+            event.getRecipients().clear();
+            event.getRecipients().add(player);
+            event.getRecipients().add(reciever);
+            message = personalMessageFormat;
         }
         
         if (localChat == true) {
