@@ -55,7 +55,7 @@ public class bChatListener extends PlayerListener {
     public bChatListener(YamlConfiguration config, bChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
         this.localMessageFormat = config.getString("local-message-format", this.localMessageFormat);
-        this.personalMessageFormat = config.getString("local-message-format", this.personalMessageFormat);
+        this.personalMessageFormat = config.getString("personal-message-format", this.personalMessageFormat);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
         this.chatRange = config.getDouble("chat-range", this.chatRange);
         this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
@@ -91,6 +91,7 @@ public class bChatListener extends PlayerListener {
             chatMessage = chatMessage.substring(1);
             String[] messageSplit = chatMessage.split(" ");
             Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
+            chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
             localChat = false;
             event.getRecipients().clear();
             event.getRecipients().add(player);

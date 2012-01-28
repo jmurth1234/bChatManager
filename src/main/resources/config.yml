@@ -1,6 +1,8 @@
 chat-range: 100.0
 display-name-format: '%player'
 message-format: '%prefix %player: &f%message'
+local-message-format: '[LOCAL] %prefix %player: &f%message'
+personal-message-format: '[FROM] %prefix %player ---> &f%message'
 control-me: true
 ranged-mode: false
 alert-format: '&c[ALERT] &f%message'
