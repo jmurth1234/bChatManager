@@ -41,6 +41,10 @@ public class Channel {
     public List<Player> getPlayersInChannel() {
         return usersInChannel;
     }
+    
+    public String getName() {
+        return name;
+    }
 
     public boolean checkPassword(String s) {
         if (isPassworded) {
