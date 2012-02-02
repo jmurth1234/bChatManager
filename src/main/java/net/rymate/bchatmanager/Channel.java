@@ -16,4 +16,13 @@ public class Channel {
     List<Player> usersInChannel; //duh
     public boolean isPassworded;
     public String password;
+    
+    /**
+     * Creates a new channel with the specified name
+     * 
+     * @param s the name of the channel
+     */
+    public Channel(String s) {
+        this.name = s;
+    }
 }
