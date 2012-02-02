@@ -42,7 +42,6 @@ public class Channel {
     }
 
     public boolean checkPassword(String s) {
-        Boolean b;
         if (isPassworded) {
             if (s == password) {
                 return true;
