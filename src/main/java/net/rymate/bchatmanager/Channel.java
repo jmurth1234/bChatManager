@@ -11,34 +11,46 @@ import org.bukkit.entity.Player;
  * @author rymate
  */
 public class Channel {
+
     public String name; //kinda obvious
     public boolean isPublic; //in case I implement a list of channels (might make a spout one eventually)
     List<Player> usersInChannel; //duh
     public boolean isPassworded;
     public String password;
-    
+
     /**
      * Creates a new channel with the specified name
      * 
      * @param s the name of the channel
      */
-    
     public Channel(String s) {
         this.name = s;
     }
-    
+
     public void addPlayer(Player p) {
         usersInChannel.add(p);
     }
-    
+
     public void rmPlayer(Player p) {
         if (usersInChannel.contains(p)) {
             usersInChannel.remove(p);
         }
     }
-    
+
     public List<Player> getPlayersInChannel() {
         return usersInChannel;
     }
-    
+
+    public boolean checkPassword(String s) {
+        Boolean b;
+        if (isPassworded) {
+            if (s == password) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
