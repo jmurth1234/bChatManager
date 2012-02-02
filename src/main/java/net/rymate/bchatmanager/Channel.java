@@ -25,4 +25,15 @@ public class Channel {
     public Channel(String s) {
         this.name = s;
     }
+    
+    public void addPlayer(Player p) {
+        usersInChannel.add(p);
+    }
+    
+    public void rmPlayer(Player p) {
+        if (usersInChannel.contains(p)) {
+            usersInChannel.remove(p);
+        }
+    }
+    
 }
