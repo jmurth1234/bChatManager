@@ -36,4 +36,8 @@ public class Channel {
         }
     }
     
+    public List<Player> getPlayersInChannel() {
+        return usersInChannel;
+    }
+    
 }
