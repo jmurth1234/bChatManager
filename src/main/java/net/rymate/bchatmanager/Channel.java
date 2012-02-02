@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
  * You'll also be able to hook one directly by getting them through the ChannelManager
  * That's if I ever get round to doing an API ;)
  * It'll definitely be used internally :D
+ * 
  * @author rymate
  */
 public class Channel {
