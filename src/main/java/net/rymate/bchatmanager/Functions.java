@@ -49,11 +49,7 @@ public class Functions {
 
     protected String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
-        return format
-                .replace("%prefix", this.colorize(ir.getPrefix(player)))
-                .replace("%suffix", this.colorize(ir.getSuffix(player)))
-                .replace("%world", worldName).replace("%player", player.getName())
-                .replace("%displayname", player.getDisplayName());
+        return format.replace("%prefix", this.colorize(ir.getPrefix(player))).replace("%suffix", this.colorize(ir.getSuffix(player))).replace("%world", worldName).replace("%player", player.getName()).replace("%displayname", player.getDisplayName());
     }
 
     protected String replaceTime(String message) {
@@ -121,10 +117,20 @@ public class Functions {
             if (!recipient.getWorld().equals(sender.getWorld())) {
                 continue;
             }
-            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance && !sender.hasPermission("bchatmanager.heareverything")) {
+            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance) {
                 continue;
             }
             recipients.add(recipient);
+        }
+        return recipients;
+    }
+
+    protected List<Player> getSpies() {
+        List<Player> recipients = new LinkedList<Player>();
+        for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
+            if (recipient.hasPermission("bchatmanager.spy")) {
+                recipients.add(recipient);
+            }
         }
         return recipients;
     }

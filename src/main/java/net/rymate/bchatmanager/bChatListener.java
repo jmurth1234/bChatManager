@@ -29,20 +29,18 @@ import org.bukkit.event.player.PlayerListener;
  * @author t3hk0d3
  */
 public class bChatListener extends PlayerListener {
-    
+
     public final static String MESSAGE_FORMAT = "%prefix %player: &f%message";
     public final static String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
     public final static String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
     public final static Boolean RANGED_MODE = false;
     public final static double CHAT_RANGE = 100d;
-
     protected String messageFormat = MESSAGE_FORMAT;
     protected String localMessageFormat = LOCAL_MESSAGE_FORMAT;
     protected boolean rangedMode = RANGED_MODE;
     protected double chatRange = CHAT_RANGE;
     protected String displayNameFormat = "%prefix%player%suffix";
     protected String personalMessageFormat = PERSONAL_MESSAGE_FORMAT;
-    
     protected String optionChatRange = "chat-range";
     protected String optionMessageFormat = "message-format";
     protected String optionRangedMode = "force-ranged-mode";
@@ -50,7 +48,6 @@ public class bChatListener extends PlayerListener {
     private final bChatManager plugin;
     private final String alertFormat;
     Functions f;
-    
 
     public bChatListener(YamlConfiguration config, bChatManager aThis) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
@@ -86,7 +83,7 @@ public class bChatListener extends PlayerListener {
             chatMessage = chatMessage.substring(1);
             message = alertFormat;
         }
-        
+
         if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.message")) {
             chatMessage = chatMessage.substring(1);
             String[] messageSplit = chatMessage.split(" ");
@@ -96,9 +93,10 @@ public class bChatListener extends PlayerListener {
             event.getRecipients().clear();
             event.getRecipients().add(player);
             event.getRecipients().add(reciever);
+            event.getRecipients().addAll(f.getSpies());
             message = personalMessageFormat;
         }
-        
+
         if (localChat == true) {
             message = localMessageFormat;
         }
@@ -112,14 +110,15 @@ public class bChatListener extends PlayerListener {
         message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
         message = f.replacePlayerPlaceholders(player, message);
         message = f.replaceTime(message);
-        
+
         event.setFormat(message);
         event.setMessage(chatMessage);
 
         if (localChat) {
-            double range = chatRange;            
+            double range = chatRange;
             event.getRecipients().clear();
             event.getRecipients().addAll(f.getLocalRecipients(player, message, range));
+            event.getRecipients().addAll(f.getSpies());
         }
     }
 }

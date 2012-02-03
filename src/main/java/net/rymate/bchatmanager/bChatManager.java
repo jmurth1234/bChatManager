@@ -44,7 +44,6 @@ public class bChatManager extends JavaPlugin {
         try {
             // create a new metrics object
             Metrics metrics = new Metrics();
-
             // 'this' in this context is the Plugin object
             metrics.beginMeasuringPlugin(this);
         } catch (Exception e) {
