@@ -21,14 +21,16 @@ package net.rymate.bchatmanager;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerListener;
 
 /**
  *
  * @author t3hk0d3
  */
-public class bChatListener extends PlayerListener {
+public class bChatListener implements Listener {
 
     public final static String MESSAGE_FORMAT = "%prefix %player: &f%message";
     public final static String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
@@ -61,7 +63,7 @@ public class bChatListener extends PlayerListener {
         this.f = new Functions(plugin);
     }
 
-    @Override
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChat(PlayerChatEvent event) {
         if (event.isCancelled()) {
             return;

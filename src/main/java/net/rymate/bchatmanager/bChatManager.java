@@ -40,7 +40,7 @@ public class bChatManager extends JavaPlugin {
     public void onEnable() {
         setupConfig();
         setupCommands();
-        this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
+        this.getServer().getPluginManager().registerEvents(this.listener, this);
         try {
             // create a new metrics object
             Metrics metrics = new Metrics();
