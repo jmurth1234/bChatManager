@@ -71,4 +71,6 @@ public class bChatManager extends JavaPlugin {
             getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
         }
     }
+    
+    
 }
