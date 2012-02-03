@@ -1,3 +1,5 @@
+package net.rymate.bchatmanager;
+
 /*
  * Copyright 2011 Tyler Blair. All rights reserved.
  *
@@ -25,8 +27,7 @@
  * authors and contributors and should not be interpreted as representing official policies,
  * either expressed or implied, of anybody else.
  */
-package net.rymate.bchatmanager;
-
+ 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -40,8 +41,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -50,9 +54,45 @@ import java.util.UUID;
 public class Metrics {
 
     /**
+     * Interface used to collect custom data for a plugin
+     */
+    public static abstract class Plotter {
+
+        /**
+         * Get the column name for the plotted point
+         *
+         * @return the plotted point's column name
+         */
+        public abstract String getColumnName();
+
+        /**
+         * Get the current value for the plotted point
+         *
+         * @return
+         */
+        public abstract int getValue();
+
+        @Override
+        public int hashCode() {
+            return getColumnName().hashCode() + getValue();
+        }
+
+        @Override
+        public boolean equals(Object object) {
+            if (!(object instanceof Plotter)) {
+                return false;
+            }
+
+            Plotter plotter = (Plotter) object;
+            return plotter.getColumnName().equals(getColumnName()) && plotter.getValue() == getValue();
+        }
+
+    }
+
+    /**
      * The metrics revision number
      */
-    private final static int REVISION = 1;
+    private final static int REVISION = 3;
 
     /**
      * The base url of the metrics domain
@@ -70,9 +110,14 @@ public class Metrics {
     private static final String CONFIG_FILE = "plugins/PluginMetrics/config.yml";
 
     /**
-     * Object that pings the server every so often
+     * Interval of time to ping in minutes
      */
-    private final MetricsPing ping = new MetricsPing();
+    private final static int PING_INTERVAL = 10;
+
+    /**
+     * A map of the custom data plotters for plugins
+     */
+    private Map<Plugin, Set<Plotter>> customData = Collections.synchronizedMap(new HashMap<Plugin, Set<Plotter>>());
 
     /**
      * The plugin configuration file
@@ -104,18 +149,46 @@ public class Metrics {
     }
 
     /**
+     * Adds a custom data plotter for a given plugin
+     *
+     * @param plugin
+     * @param plotter
+     */
+    public void addCustomData(Plugin plugin, Plotter plotter) {
+        Set<Plotter> plotters = customData.get(plugin);
+
+        if (plotters == null) {
+            plotters = Collections.synchronizedSet(new LinkedHashSet<Plotter>());
+            customData.put(plugin, plotters);
+        }
+
+        plotters.add(plotter);
+    }
+
+    /**
      * Begin measuring a plugin
      *
      * @param plugin
      */
-    public void beginMeasuringPlugin(Plugin plugin) throws IOException {
+    public void beginMeasuringPlugin(final Plugin plugin) throws IOException {
         // Did we opt out?
         if (configuration.getBoolean("opt-out", false)) {
             return;
         }
 
-        ping.addPlugin(plugin);
+        // First tell the server about us
         postPlugin(plugin, false);
+
+        // Ping the server in intervals
+        plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
+            public void run() {
+                try {
+                    postPlugin(plugin, true);
+                } catch (IOException e) {
+                    System.out.println("[Metrics] " + e.getMessage());
+                }
+            }
+        }, PING_INTERVAL * 1200, PING_INTERVAL * 1200);
     }
 
     /**
@@ -126,15 +199,25 @@ public class Metrics {
     private void postPlugin(Plugin plugin, boolean isPing) throws IOException {
         // Construct the post data
         String response = "ERR No response";
-        String data = encode("guid") + "=" + encode(guid)
-                + "&" + encode("version") + "=" + encode(plugin.getDescription().getVersion())
-                + "&" + encode("server") + "=" + encode(Bukkit.getVersion())
-                + "&" + encode("players") + "=" + encode(Bukkit.getServer().getOnlinePlayers().length + "")
-                + "&" + encode("revision") + "=" + encode(REVISION + "");
+        String data = encode("guid") + '=' + encode(guid)
+                + '&' + encode("version") + '=' + encode(plugin.getDescription().getVersion())
+                + '&' + encode("server") + '=' + encode(Bukkit.getVersion())
+                + '&' + encode("players") + '=' + encode(String.valueOf(Bukkit.getServer().getOnlinePlayers().length))
+                + '&' + encode("revision") + '=' + encode(REVISION + "");
 
         // If we're pinging, append it
         if (isPing) {
-            data += "&" + encode("ping") + "=" + encode("true");
+            data += '&' + encode("ping") + '=' + encode("true");
+        }
+
+        // Add any custom data (if applicable)
+        Set<Plotter> plotters = customData.get(plugin);
+
+        if (plotters != null) {
+            for (Plotter plotter : plotters) {
+                data += "&" + encode ("Custom" + plotter.getColumnName())
+                        + "=" + encode(Integer.toString(plotter.getValue()));
+            }
         }
 
         // Create the url
@@ -157,13 +240,10 @@ public class Metrics {
         writer.close();
         reader.close();
 
-        if (response.startsWith("OK")) {
-            // Useless return, but it documents that we should be receiving OK followed by an optional description
-            return;
-        } else if (response.startsWith("ERR")) {
-            // Throw it to whoever is catching us
-            throw new IOException(response);
+        if (response.startsWith("ERR")){
+            throw new IOException(response); //Throw the exception
         }
+        //if (response.startsWith("OK")) - We should get "OK" followed by an optional description if everything goes right
     }
 
     /**
@@ -172,78 +252,8 @@ public class Metrics {
      * @param text
      * @return
      */
-    private String encode(String text) throws UnsupportedEncodingException {
+    private static String encode(String text) throws UnsupportedEncodingException {
         return URLEncoder.encode(text, "UTF-8");
-    }
-
-    /**
-     * Periodically runs the metrics tool
-     */
-    private final class MetricsPing implements Runnable {
-
-        /**
-         * Interval of time to ping in minutes
-         */
-        private final static int PING_INTERVAL = 20;
-
-        /**
-         * List of plugins to send stats for.
-         * Must be manually synchronized.
-         */
-        private final List<Plugin> plugins = new LinkedList<Plugin>();
-
-        /**
-         * The last time the server was pinged.
-         * We don't want to immediately ping
-         */
-        private long lastPing = System.currentTimeMillis();
-
-        public MetricsPing() {
-            new Thread(this).start();
-        }
-
-        public void run() {
-            // convert the interval in milliseconds
-            final long intervalMillis = PING_INTERVAL * 60 * 1000L;
-
-            while (true) {
-
-                // Have we reached the interval?
-                if (System.currentTimeMillis() - lastPing > intervalMillis) {
-                    lastPing = System.currentTimeMillis();
-
-                    // Post each plugin
-                    synchronized (plugins) {
-                        for (Plugin plugin : plugins) {
-                            try {
-                                postPlugin(plugin, true);
-                            } catch (IOException e) {
-                                System.out.println("[Metrics] " + e);
-                            }
-                        }
-                    }
-                }
-
-                try {
-                    Thread.sleep(2500L);
-                } catch (InterruptedException e) {
-                }
-            }
-        }
-
-        /**
-         * Add a plugin to be updated every so often
-         *
-         * @param plugin
-         */
-        public void addPlugin(Plugin plugin) {
-            synchronized (plugins) {
-                if (!plugins.contains(plugin)) {
-                    plugins.add(plugin);
-                }
-            }
-        }
-
     }
 
 }
