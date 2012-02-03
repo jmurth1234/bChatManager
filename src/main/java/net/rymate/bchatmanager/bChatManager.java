@@ -20,7 +20,6 @@
 package net.rymate.bchatmanager;
 
 import java.util.logging.Logger;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -41,24 +40,23 @@ public class bChatManager extends JavaPlugin {
     public void onEnable() {
         setupConfig();
         setupCommands();
-        this.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this.listener, Priority.Normal, this);
+        this.getServer().getPluginManager().registerEvents(this.listener, this);
         try {
             // create a new metrics object
             Metrics metrics = new Metrics();
-
             // 'this' in this context is the Plugin object
             metrics.beginMeasuringPlugin(this);
         } catch (Exception e) {
             System.out.println(e);
             // Failed to submit the stats :-(
         }
-        logger.info("[ChatManager] ChatManager enabled.");
+        logger.info("[bChatManager] bChatManager enabled.");
     }
 
     @Override
     public void onDisable() {
         this.listener = null;
-        logger.info("[ChatManager] ChatManager disabled!");
+        logger.info("[bChatManager] bChatManager disabled!");
     }
 
     public void setupConfig() {
@@ -71,32 +69,6 @@ public class bChatManager extends JavaPlugin {
         boolean use = this.getConfig().getBoolean("me-format", true);
         if (use == true) {
             getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
-        }
-    }
-
-    public enum Messages {
-
-        PASSWORD_WRONG("Password incorrect.");
-        private String format;
-
-        Messages(String format) {
-            this.format = format;
-        }
-
-        /**
-         * Sends a message.
-         *
-         * @param sender reciever
-         */
-        void send(CommandSender sender) {
-            sender.sendMessage(format);
-        }
-
-        /**
-         * Prints a message prefixed with [bChatManager] to the console.
-         */
-        void print() {
-            logger.info("[bChatManager] " + format);
         }
     }
 }
