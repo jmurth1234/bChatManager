@@ -50,13 +50,13 @@ public class bChatManager extends JavaPlugin {
             System.out.println(e);
             // Failed to submit the stats :-(
         }
-        logger.info("[ChatManager] ChatManager enabled.");
+        logger.info("[bChatManager] bChatManager enabled.");
     }
 
     @Override
     public void onDisable() {
         this.listener = null;
-        logger.info("[ChatManager] ChatManager disabled!");
+        logger.info("[bChatManager] bChatManager disabled!");
     }
 
     public void setupConfig() {

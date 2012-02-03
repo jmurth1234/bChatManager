@@ -1,7 +1,7 @@
 name: bChatManager
 main: net.rymate.bchatmanager.bChatManager
 depend: [ bPermissions ]
-version: 1.3
+version: 1.3.1
 author: rymate1234
 website: www.bukkit.org
 description: Chat management plugin for bPermissions based of PEX ChatManager
