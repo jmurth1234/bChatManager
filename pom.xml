@@ -7,7 +7,7 @@
     <version>2.0</version>
     <packaging>jar</packaging>
 
-    <name>bChatManager-core</name>
+    <name>bChatManager</name>
     <url>http://maven.apache.org</url>
     <repositories>
         <repository>
@@ -42,6 +42,7 @@
             <version>1337-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    
     <build>
         <resources>
             <resource>
