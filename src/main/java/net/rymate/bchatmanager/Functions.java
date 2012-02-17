@@ -131,7 +131,8 @@ public class Functions {
         return recipients;
     }
 
-    private String getInfo(Player player, String info) {
+    //IT WORKS!
+    private String getInfo(Player player, String info) { 
         String output;
         output = ApiLayer.getValue(player.getWorld().getName(), CalculableType.USER, player.getName(), info);
         String colored = colorize(output);
