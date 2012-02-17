@@ -19,6 +19,8 @@
  */
 package net.rymate.bchatmanager;
 
+import de.bananaco.bpermissions.api.ApiLayer;
+import de.bananaco.bpermissions.api.util.CalculableType;
 import de.bananaco.permissions.Permissions;
 import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
@@ -49,7 +51,7 @@ public class Functions {
 
     protected String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
-        return format.replace("%prefix", this.colorize(ir.getPrefix(player))).replace("%suffix", this.colorize(ir.getSuffix(player))).replace("%world", worldName).replace("%player", player.getName()).replace("%displayname", player.getDisplayName());
+        return format.replace("%prefix", getInfo(player, "prefix")).replace("%suffix", getInfo(player, "suffix")).replace("%world", worldName).replace("%player", player.getName()).replace("%displayname", player.getDisplayName());
     }
 
     protected String replaceTime(String message) {
@@ -133,5 +135,12 @@ public class Functions {
             }
         }
         return recipients;
+    }
+
+    private String getInfo(Player player, String info) {
+        String output = "";
+        output = ApiLayer.getValue(player.getWorld().getName(), CalculableType.USER, player.getName(), info);
+        String colored = colorize(output);
+        return colored;
     }
 }
