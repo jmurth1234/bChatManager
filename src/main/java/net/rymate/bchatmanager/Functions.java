@@ -21,9 +21,6 @@ package net.rymate.bchatmanager;
 
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
-import de.bananaco.permissions.Permissions;
-import de.bananaco.permissions.info.InfoReader;
-import de.bananaco.permissions.worlds.WorldPermissionsManager;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,12 +36,8 @@ public class Functions {
 
     private final bChatManager plugin;
     private final String displayNameFormat;
-    public InfoReader ir = null;
-    public WorldPermissionsManager wpm;
 
     public Functions(bChatManager plugin) {
-        ir = Permissions.getInfoReader();
-        wpm = Permissions.getWorldPermissionsManager();
         this.plugin = plugin;
         this.displayNameFormat = plugin.getConfig().getString("display-name-format", this.displayNameFormat);
     }
