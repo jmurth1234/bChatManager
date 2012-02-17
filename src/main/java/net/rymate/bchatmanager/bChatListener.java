@@ -27,9 +27,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
 /**
- *
+ * ChatListener for bChatManager
+ * 
  * @author t3hk0d3
+ * @author rymate1234
  */
+
 public class bChatListener implements Listener {
 
     public final static String MESSAGE_FORMAT = "%prefix %player: &f%message";
