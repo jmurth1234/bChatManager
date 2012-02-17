@@ -3,10 +3,10 @@ main: net.rymate.bchatmanager.bChatManager
 depend: [ bPermissions ]
 version: 1.4
 author: rymate1234
-website: www.bukkit.org
+website: www.rymate.co.uk
 description: Chat management plugin for bPermissions based of PEX ChatManager
 commands:
   me:
-    description: Sends a message in the third person
+    description: Sends a message in the third person!
     usage: /me <message>
     aliases: [m, moi]
