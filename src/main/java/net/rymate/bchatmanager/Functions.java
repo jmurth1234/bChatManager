@@ -29,9 +29,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- *
+ * Main functions in bChatManager :D
  * @author rymate1234
  */
+
 public class Functions {
 
     private final bChatManager plugin;
