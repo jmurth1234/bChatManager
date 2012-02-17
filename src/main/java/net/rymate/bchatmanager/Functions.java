@@ -138,9 +138,13 @@ public class Functions {
     }
 
     private String getInfo(Player player, String info) {
-        String output = "";
+        String output;
         output = ApiLayer.getValue(player.getWorld().getName(), CalculableType.USER, player.getName(), info);
         String colored = colorize(output);
-        return colored;
+        if (colored == null) {
+            return "";
+        } else {
+            return colored;
+        }
     }
 }
