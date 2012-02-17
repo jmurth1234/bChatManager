@@ -1,33 +1,33 @@
 package net.rymate.bchatmanager;
 
 /*
- * Copyright 2011 Tyler Blair. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
- *
- *    1. Redistributions of source code must retain the above copyright notice, this list of
- *       conditions and the following disclaimer.
- *
- *    2. Redistributions in binary form must reproduce the above copyright notice, this list
- *       of conditions and the following disclaimer in the documentation and/or other materials
- *       provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * The views and conclusions contained in the software and documentation are those of the
- * authors and contributors and should not be interpreted as representing official policies,
- * either expressed or implied, of anybody else.
- */
- 
+* Copyright 2011 Tyler Blair. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification, are
+* permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this list of
+* conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this list
+* of conditions and the following disclaimer in the documentation and/or other materials
+* provided with the distribution.
+*
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+* FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR
+* CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+* NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+* ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+* The views and conclusions contained in the software and documentation are those of the
+* authors and contributors and should not be interpreted as representing official policies,
+* either expressed or implied, of anybody else.
+*/
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -49,28 +50,34 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Tooling to post to metrics.griefcraft.com
- */
+* Tooling to post to metrics.griefcraft.com
+*/
 public class Metrics {
 
     /**
-     * Interface used to collect custom data for a plugin
-     */
+* Interface used to collect custom data for a plugin
+*/
     public static abstract class Plotter {
 
         /**
-         * Get the column name for the plotted point
-         *
-         * @return the plotted point's column name
-         */
+* Get the column name for the plotted point
+*
+* @return the plotted point's column name
+*/
         public abstract String getColumnName();
 
         /**
-         * Get the current value for the plotted point
-         *
-         * @return
-         */
+* Get the current value for the plotted point
+*
+* @return
+*/
         public abstract int getValue();
+
+        /**
+* Called after the website graphs have been updated
+*/
+        public void reset() {
+        }
 
         @Override
         public int hashCode() {
@@ -90,43 +97,43 @@ public class Metrics {
     }
 
     /**
-     * The metrics revision number
-     */
-    private final static int REVISION = 3;
+* The metrics revision number
+*/
+    private final static int REVISION = 4;
 
     /**
-     * The base url of the metrics domain
-     */
+* The base url of the metrics domain
+*/
     private static final String BASE_URL = "http://metrics.griefcraft.com";
 
     /**
-     * The url used to report a server's status
-     */
+* The url used to report a server's status
+*/
     private static final String REPORT_URL = "/report/%s";
 
     /**
-     * The file where guid and opt out is stored in
-     */
+* The file where guid and opt out is stored in
+*/
     private static final String CONFIG_FILE = "plugins/PluginMetrics/config.yml";
 
     /**
-     * Interval of time to ping in minutes
-     */
+* Interval of time to ping in minutes
+*/
     private final static int PING_INTERVAL = 10;
 
     /**
-     * A map of the custom data plotters for plugins
-     */
+* A map of the custom data plotters for plugins
+*/
     private Map<Plugin, Set<Plotter>> customData = Collections.synchronizedMap(new HashMap<Plugin, Set<Plotter>>());
 
     /**
-     * The plugin configuration file
-     */
+* The plugin configuration file
+*/
     private final YamlConfiguration configuration;
 
     /**
-     * Unique server id
-     */
+* Unique server id
+*/
     private String guid;
 
     public Metrics() throws IOException {
@@ -149,11 +156,11 @@ public class Metrics {
     }
 
     /**
-     * Adds a custom data plotter for a given plugin
-     *
-     * @param plugin
-     * @param plotter
-     */
+* Adds a custom data plotter for a given plugin
+*
+* @param plugin
+* @param plotter
+*/
     public void addCustomData(Plugin plugin, Plotter plotter) {
         Set<Plotter> plotters = customData.get(plugin);
 
@@ -166,10 +173,10 @@ public class Metrics {
     }
 
     /**
-     * Begin measuring a plugin
-     *
-     * @param plugin
-     */
+* Begin measuring a plugin
+*
+* @param plugin
+*/
     public void beginMeasuringPlugin(final Plugin plugin) throws IOException {
         // Did we opt out?
         if (configuration.getBoolean("opt-out", false)) {
@@ -192,10 +199,10 @@ public class Metrics {
     }
 
     /**
-     * Generic method that posts a plugin to the metrics website
-     *
-     * @param plugin
-     */
+* Generic method that posts a plugin to the metrics website
+*
+* @param plugin
+*/
     private void postPlugin(Plugin plugin, boolean isPing) throws IOException {
         // Construct the post data
         String response = "ERR No response";
@@ -215,7 +222,7 @@ public class Metrics {
 
         if (plotters != null) {
             for (Plotter plotter : plotters) {
-                data += "&" + encode ("Custom" + plotter.getColumnName())
+                data += "&" + encode("Custom" + plotter.getColumnName())
                         + "=" + encode(Integer.toString(plotter.getValue()));
             }
         }
@@ -224,7 +231,15 @@ public class Metrics {
         URL url = new URL(BASE_URL + String.format(REPORT_URL, plugin.getDescription().getName()));
 
         // Connect to the website
-        URLConnection connection = url.openConnection();
+        URLConnection connection;
+
+        // Mineshafter creates a socks proxy, so we can safely bypass it
+        if (isMineshafterPresent()) {
+            connection = url.openConnection(Proxy.NO_PROXY);
+        } else {
+            connection = url.openConnection();
+        }
+
         connection.setDoOutput(true);
 
         // Write the data
@@ -240,18 +255,41 @@ public class Metrics {
         writer.close();
         reader.close();
 
-        if (response.startsWith("ERR")){
+        if (response.startsWith("ERR")) {
             throw new IOException(response); //Throw the exception
+        } else {
+            // Is this the first update this hour?
+            if (response.contains("OK This is your first update this hour")) {
+                if (plotters != null) {
+                    for (Plotter plotter : plotters) {
+                        plotter.reset();
+                    }
+                }
+            }
         }
         //if (response.startsWith("OK")) - We should get "OK" followed by an optional description if everything goes right
     }
 
     /**
-     * Encode text as UTF-8
-     *
-     * @param text
-     * @return
-     */
+* Check if mineshafter is present. If it is, we need to bypass it to send POST requests
+*
+* @return
+*/
+    private boolean isMineshafterPresent() {
+        try {
+            Class.forName("mineshafter.MineServer");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+* Encode text as UTF-8
+*
+* @param text
+* @return
+*/
     private static String encode(String text) throws UnsupportedEncodingException {
         return URLEncoder.encode(text, "UTF-8");
     }

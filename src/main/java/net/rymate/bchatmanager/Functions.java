@@ -35,11 +35,9 @@ import org.bukkit.entity.Player;
 
 public class Functions {
 
-    private final bChatManager plugin;
     private final String displayNameFormat;
 
     public Functions(bChatManager plugin) {
-        this.plugin = plugin;
         this.displayNameFormat = plugin.getConfig().getString("display-name-format", this.displayNameFormat);
     }
 
