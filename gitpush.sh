@@ -1,4 +1,4 @@
-echo "What is the commit reason?"
+echo "What is the commit reason:"
 read commit
 git init
 git add *
