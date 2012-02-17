@@ -7,6 +7,6 @@ website: www.bukkit.org
 description: Chat management plugin for bPermissions based of PEX ChatManager
 commands:
   me:
-    description: Sends a message such as * rymate1234 said hai!
+    description: Sends a message in the third person
     usage: /me <message>
     aliases: [m, moi]
