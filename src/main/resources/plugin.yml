@@ -1,7 +1,7 @@
 name: bChatManager
 main: net.rymate.bchatmanager.bChatManager
 depend: [ bPermissions ]
-version: 2.0
+version: 1.4.1
 author: rymate1234
 website: www.rymate.co.uk
 description: Chat management plugin for bPermissions based of PEX ChatManager
