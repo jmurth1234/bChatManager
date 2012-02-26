@@ -21,8 +21,6 @@ package net.rymate.bchatmanager;
 
 import java.util.logging.Logger;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -68,7 +66,7 @@ public class bChatManager extends JavaPlugin {
     public void setupCommands() {
         boolean use = this.getConfig().getBoolean("me-format", true);
         if (use == true) {
-            getCommand("me").setExecutor(new MeCommand(this.getConfig(), this));
+            getCommand("me").setExecutor(new MeCommand((YamlConfiguration) this.getConfig(), this));
         }
     }
 }
