@@ -21,13 +21,12 @@ package net.rymate.bchatmanager;
 
 import java.io.File;
 import java.util.logging.Logger;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Main class for bChatManager
  * 
- * @oldauthor t3hk0d3
+ * @author t3hk0d3
  * @author rymate1234
  */
 public class bChatManager extends JavaPlugin {
@@ -43,13 +42,10 @@ public class bChatManager extends JavaPlugin {
         setupCommands();
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         try {
-            // create a new metrics object
             Metrics metrics = new Metrics();
-            // 'this' in this context is the Plugin object
             metrics.beginMeasuringPlugin(this);
         } catch (Exception e) {
             System.out.println(e);
-            // Failed to submit the stats :-(
         }
         logger.info("[bChatManager] bChatManager enabled.");
     }
