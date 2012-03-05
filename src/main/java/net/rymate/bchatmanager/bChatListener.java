@@ -34,34 +34,25 @@ import org.bukkit.event.player.PlayerChatEvent;
  */
 public class bChatListener implements Listener {
 
-    public final static String MESSAGE_FORMAT = "%prefix %player: &f%message";
-    public final static String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
-    public final static String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
-    public final static Boolean RANGED_MODE = false;
-    public final static double CHAT_RANGE = 100d;
-    protected String messageFormat = MESSAGE_FORMAT;
-    protected String localMessageFormat = LOCAL_MESSAGE_FORMAT;
-    protected boolean rangedMode = RANGED_MODE;
-    protected double chatRange = CHAT_RANGE;
-    protected String displayNameFormat = "%prefix%player%suffix";
-    protected String personalMessageFormat = PERSONAL_MESSAGE_FORMAT;
-    protected String optionChatRange = "chat-range";
-    protected String optionMessageFormat = "message-format";
-    protected String optionRangedMode = "force-ranged-mode";
-    protected String optionDisplayname = "display-name-format";
+    public String MESSAGE_FORMAT = "%prefix %player: &f%message";
+    public String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
+    public String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
+    public String DISPLAY_NAME_FORMAT = "%prefix%player%suffix";
+    public String ALERT_FORMAT = "&c[ALERT] &f%message";
+    public Boolean RANGED_MODE = false;
+    public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
-    private final String alertFormat;
     Functions f;
 
-    public bChatListener(YamlConfiguration config, bChatManager aThis) {
-        this.messageFormat = config.getString("message-format", this.messageFormat);
-        this.localMessageFormat = config.getString("local-message-format", this.localMessageFormat);
-        this.personalMessageFormat = config.getString("personal-message-format", this.personalMessageFormat);
-        this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
-        this.chatRange = config.getDouble("chat-range", this.chatRange);
-        this.displayNameFormat = config.getString("display-name-format", this.displayNameFormat);
-        this.alertFormat = config.getString("alert-format", this.alertFormat);
-        this.plugin = aThis;
+    public bChatListener(YamlConfiguration config, bChatManager p) {
+        this.MESSAGE_FORMAT = config.getString("message-format", this.MESSAGE_FORMAT);
+        this.LOCAL_MESSAGE_FORMAT = config.getString("local-message-format", this.LOCAL_MESSAGE_FORMAT);
+        this.PERSONAL_MESSAGE_FORMAT = config.getString("personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
+        this.RANGED_MODE = config.getBoolean("ranged-mode", this.RANGED_MODE);
+        this.CHAT_RANGE = config.getDouble("chat-range", this.CHAT_RANGE);
+        this.DISPLAY_NAME_FORMAT = config.getString("display-name-format", this.DISPLAY_NAME_FORMAT);
+        this.ALERT_FORMAT = config.getString("alert-format", this.ALERT_FORMAT);
+        this.plugin = p;
         this.f = new Functions(plugin);
     }
 
@@ -73,8 +64,8 @@ public class bChatListener implements Listener {
 
         Player player = event.getPlayer();
 
-        String message = messageFormat;
-        boolean localChat = rangedMode;
+        String message = MESSAGE_FORMAT;
+        boolean localChat = RANGED_MODE;
 
         String chatMessage = event.getMessage();
         if (chatMessage.startsWith("!") && player.hasPermission("bchatmanager.chat.global")) {
@@ -85,7 +76,7 @@ public class bChatListener implements Listener {
         if (chatMessage.startsWith("#") && player.hasPermission("bchatmanager.chat.alert")) {
             localChat = false;
             chatMessage = chatMessage.substring(1);
-            message = alertFormat;
+            message = ALERT_FORMAT;
         }
 
         if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.message")) {
@@ -102,12 +93,12 @@ public class bChatListener implements Listener {
                 event.getRecipients().add(player);
                 event.getRecipients().add(reciever);
                 event.getRecipients().addAll(f.getSpies());
-                message = personalMessageFormat;
+                message = PERSONAL_MESSAGE_FORMAT;
             }
         }
 
         if (localChat == true) {
-            message = localMessageFormat;
+            message = LOCAL_MESSAGE_FORMAT;
         }
 
         message = f.colorize(message);
@@ -124,7 +115,7 @@ public class bChatListener implements Listener {
         event.setMessage(chatMessage);
 
         if (localChat) {
-            double range = chatRange;
+            double range = CHAT_RANGE;
             event.getRecipients().clear();
             event.getRecipients().addAll(f.getLocalRecipients(player, message, range));
             event.getRecipients().addAll(f.getSpies());
