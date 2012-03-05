@@ -18,8 +18,13 @@ public class Configuration {
             if (f.exists()) {
                 config.load(f);
             } else {
+                System.out.println(f.getAbsolutePath());
+                System.out.println(f.getPath());
+                System.out.println(f.getParent());
+                f.getParentFile().mkdirs();
                 f.createNewFile();
                 config.load(f);
+                System.out.println(config);
             }
         } catch (Exception ex) {
             System.out.println(ex);
