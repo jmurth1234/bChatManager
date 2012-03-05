@@ -1,6 +1,12 @@
 package net.rymate.bchatmanager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
@@ -14,25 +20,7 @@ public class Configuration {
 
     public Configuration(File f) {
         config = new YamlConfiguration();
-        try {
-            if (f.exists()) {
-                config.load(f);
-            } else {
-                System.out.println(f.getAbsolutePath());
-                System.out.println(f.getPath());
-                System.out.println(f.getParent());
-                f.getParentFile().mkdirs();
-                f.createNewFile();
-                config.load(f);
-                System.out.println(config);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
-    
-    public void initialize () {
-        
+        this.f = f;
     }
 
     public boolean getBoolean(String s, boolean b) {
@@ -45,5 +33,18 @@ public class Configuration {
 
     double getDouble(String s, double dd) {
         return config.getDouble(s, dd);
+    }
+
+    public void init(bChatManager p) {
+        try {
+            p.saveDefaultConfig();
+            config.load(f);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidConfigurationException ex) {
+            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

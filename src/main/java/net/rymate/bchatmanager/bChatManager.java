@@ -64,7 +64,7 @@ public class bChatManager extends JavaPlugin {
     public void setupConfig() {
         configFile = new File(this.getDataFolder() + File.separator + "config.yml");
         config = new Configuration(configFile);
-        config.initialize();
+        config.init(this);
         this.listener = new bChatListener(configFile, this);
     }
 

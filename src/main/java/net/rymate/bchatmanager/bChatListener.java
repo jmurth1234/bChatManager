@@ -48,6 +48,7 @@ public class bChatListener implements Listener {
 
     bChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
+        config.init(p);
         this.MESSAGE_FORMAT = config.getString("formats.message-format", this.MESSAGE_FORMAT);
         this.LOCAL_MESSAGE_FORMAT = config.getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
         this.PERSONAL_MESSAGE_FORMAT = config.getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
