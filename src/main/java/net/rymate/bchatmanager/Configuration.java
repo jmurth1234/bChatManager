@@ -27,7 +27,7 @@ public class Configuration {
     }
     
     public void initialize () {
-        config.options().copyDefaults(true);
+        
     }
 
     public boolean getBoolean(String s, boolean b) {
