@@ -19,6 +19,7 @@
  */
 package net.rymate.bchatmanager;
 
+import java.io.File;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,9 +43,11 @@ public class bChatListener implements Listener {
     public Boolean RANGED_MODE = false;
     public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
+    Configuration config;
     Functions f;
 
-    public bChatListener(YamlConfiguration config, bChatManager p) {
+    bChatListener(File configFile, bChatManager p) {
+        config = new Configuration(configFile);
         this.MESSAGE_FORMAT = config.getString("message-format", this.MESSAGE_FORMAT);
         this.LOCAL_MESSAGE_FORMAT = config.getString("local-message-format", this.LOCAL_MESSAGE_FORMAT);
         this.PERSONAL_MESSAGE_FORMAT = config.getString("personal-message-format", this.PERSONAL_MESSAGE_FORMAT);

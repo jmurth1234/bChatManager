@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class Configuration {
 
     YamlConfiguration config;
+    File f;
 
     public Configuration(File f) {
         config = new YamlConfiguration();
@@ -23,5 +24,21 @@ public class Configuration {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+    
+    public void initialize () {
+        config.options().copyDefaults(true);
+    }
+
+    public boolean getBoolean(String s, boolean b) {
+        return config.getBoolean(s, b);
+    }
+
+    public String getString(String s, String ss) {
+        return config.getString(s, ss);
+    }
+
+    double getDouble(String s, double dd) {
+        return config.getDouble(s, dd);
     }
 }

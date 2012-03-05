@@ -1,5 +1,6 @@
 package net.rymate.bchatmanager;
 
+import java.io.File;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -19,8 +20,11 @@ class MeCommand implements CommandExecutor {
     private final Functions f;
     private final boolean rangedMode;
     private final double chatRange;
+    private Configuration config;
 
-    public MeCommand(FileConfiguration config, bChatManager aThis) {
+
+    public MeCommand(File configFile, bChatManager aThis) {
+        config = new Configuration(configFile);
         this.meFormat = config.getString("me-format", this.meFormat);
         this.chatRange = config.getDouble("chat-range", this.chatRange);
         this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);

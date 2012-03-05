@@ -19,6 +19,7 @@
  */
 package net.rymate.bchatmanager;
 
+import java.io.File;
 import java.util.logging.Logger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +34,8 @@ public class bChatManager extends JavaPlugin {
 
     protected final static Logger logger = Logger.getLogger("Minecraft");
     protected bChatListener listener;
+    public File configFile;
+    private Configuration config;
 
     @Override
     public void onEnable() {
@@ -58,15 +61,15 @@ public class bChatManager extends JavaPlugin {
     }
 
     public void setupConfig() {
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
-        this.listener = new bChatListener((YamlConfiguration) this.getConfig(), this);
+        config = new Configuration(configFile);
+        config.initialize();
+        this.listener = new bChatListener(configFile, this);
     }
 
     public void setupCommands() {
-        boolean use = this.getConfig().getBoolean("me-format", true);
+        boolean use = config.getBoolean("control-me", true);
         if (use == true) {
-            getCommand("me").setExecutor(new MeCommand((YamlConfiguration) this.getConfig(), this));
+            getCommand("me").setExecutor(new MeCommand(configFile, this));
         }
     }
 }
