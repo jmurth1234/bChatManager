@@ -37,7 +37,9 @@ public class Configuration {
 
     public void init(bChatManager p) {
         try {
-            p.saveDefaultConfig();
+            if (!f.exists()) {
+                p.saveDefaultConfig();
+            }
             config.load(f);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
