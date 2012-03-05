@@ -25,9 +25,9 @@ class MeCommand implements CommandExecutor {
 
     public MeCommand(File configFile, bChatManager aThis) {
         config = new Configuration(configFile);
-        this.meFormat = config.getString("me-format", this.meFormat);
-        this.chatRange = config.getDouble("chat-range", this.chatRange);
-        this.rangedMode = config.getBoolean("ranged-mode", this.rangedMode);
+        this.meFormat = config.getString("formats.me-format", this.meFormat);
+        this.chatRange = config.getDouble("other.chat-range", this.chatRange);
+        this.rangedMode = config.getBoolean("toggles.ranged-mode", this.rangedMode);
         this.plugin = aThis;
         this.f = new Functions(plugin);
     }

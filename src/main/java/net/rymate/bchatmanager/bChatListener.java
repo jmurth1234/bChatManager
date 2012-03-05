@@ -48,13 +48,13 @@ public class bChatListener implements Listener {
 
     bChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
-        this.MESSAGE_FORMAT = config.getString("message-format", this.MESSAGE_FORMAT);
-        this.LOCAL_MESSAGE_FORMAT = config.getString("local-message-format", this.LOCAL_MESSAGE_FORMAT);
-        this.PERSONAL_MESSAGE_FORMAT = config.getString("personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
-        this.RANGED_MODE = config.getBoolean("ranged-mode", this.RANGED_MODE);
-        this.CHAT_RANGE = config.getDouble("chat-range", this.CHAT_RANGE);
-        this.DISPLAY_NAME_FORMAT = config.getString("display-name-format", this.DISPLAY_NAME_FORMAT);
-        this.ALERT_FORMAT = config.getString("alert-format", this.ALERT_FORMAT);
+        this.MESSAGE_FORMAT = config.getString("formats.message-format", this.MESSAGE_FORMAT);
+        this.LOCAL_MESSAGE_FORMAT = config.getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
+        this.PERSONAL_MESSAGE_FORMAT = config.getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
+        this.RANGED_MODE = config.getBoolean("toggles.ranged-mode", this.RANGED_MODE);
+        this.CHAT_RANGE = config.getDouble("other.chat-range", this.CHAT_RANGE);
+        this.DISPLAY_NAME_FORMAT = config.getString("formats.display-name-format", this.DISPLAY_NAME_FORMAT);
+        this.ALERT_FORMAT = config.getString("formats.alert-format", this.ALERT_FORMAT);
         this.plugin = p;
         this.f = new Functions(plugin);
     }

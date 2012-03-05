@@ -67,7 +67,7 @@ public class bChatManager extends JavaPlugin {
     }
 
     public void setupCommands() {
-        boolean use = config.getBoolean("control-me", true);
+        boolean use = config.getBoolean("toggles.control-me", true);
         if (use == true) {
             getCommand("me").setExecutor(new MeCommand(configFile, this));
         }
