@@ -14,7 +14,8 @@ import org.bukkit.command.CommandSender;
 public enum Messages {
 
     PASSWORD_WRONG("Password incorrect."),
-    NO_PERMISSIONS("Thou shalt not use that command.");
+    NO_PERMISSIONS("Thou shalt not use that command."),
+    ENABLED("bChatManager enabled! Have a nice day :)");
     private String format;
 
     Messages(String format) {

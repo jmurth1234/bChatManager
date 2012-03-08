@@ -13,11 +13,11 @@ import org.bukkit.entity.Player;
  */
 public class Channel {
 
-    public String name; //kinda obvious
-    public boolean isPublic; //in case I implement a list of channels (might make a spout one eventually)
-    List<Player> usersInChannel; //duh
-    public boolean isPassworded;
-    public String password;
+    private String name; //kinda obvious
+    private boolean isPublic; //in case I implement a list of channels (might make a spout one eventually)
+    private List<Player> usersInChannel; //duh
+    private boolean isPassworded;
+    private String password;
 
     /**
      * Creates a new channel with the specified name

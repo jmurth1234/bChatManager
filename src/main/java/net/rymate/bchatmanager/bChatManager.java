@@ -52,7 +52,7 @@ public class bChatManager extends JavaPlugin {
         } catch (Exception e) {
             System.out.println(e);
         }
-        logger.info("[bChatManager] bChatManager enabled.");
+        Messages.ENABLED.print();
     }
 
     @Override
