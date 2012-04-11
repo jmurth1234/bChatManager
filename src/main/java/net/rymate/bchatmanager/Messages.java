@@ -15,7 +15,8 @@ public enum Messages {
 
     PASSWORD_WRONG("Password incorrect."),
     NO_PERMISSIONS("Thou shalt not use that command."),
-    ENABLED("bChatManager enabled! Have a nice day :)");
+    ENABLED("bChatManager enabled! Have a nice day :)"), 
+    CHANNEL_REMOVED("You were removed from a channel you were in!");
     private String format;
 
     Messages(String format) {

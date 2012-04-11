@@ -1,5 +1,6 @@
 package net.rymate.bchatmanager;
 
+import java.io.Serializable;
 import java.util.List;
 import org.bukkit.entity.Player;
 
@@ -11,13 +12,14 @@ import org.bukkit.entity.Player;
  * 
  * @author rymate
  */
-public class Channel {
+public class Channel implements Serializable {
 
     private String name; //kinda obvious
     private boolean isPublic; //in case I implement a list of channels (might make a spout one eventually)
     private List<Player> usersInChannel; //duh
     private boolean isPassworded;
     private String password;
+    private String colour; //colour of the channel (for formatting)
 
     /**
      * Creates a new channel with the specified name
@@ -55,6 +57,13 @@ public class Channel {
             }
         } else {
             return false;
+        }
+    }
+    
+    public void destory() {
+        for (int i = 0; i < usersInChannel.size(); i++) {
+            rmPlayer(usersInChannel.get(i));
+            Messages.CHANNEL_REMOVED.send(usersInChannel.get(i));
         }
     }
 }

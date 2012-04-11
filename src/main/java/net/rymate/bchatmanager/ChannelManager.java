@@ -25,4 +25,17 @@ public class ChannelManager implements Serializable {
         return null;
     }
     
+    public void addChannel(String s) {
+        Channel c = new Channel(s);
+        channels.add(c);
+    }
+    
+    public void rmChannel(String s) {
+        Channel c = getChannel(s);
+        for (int i = 0; i < c.getPlayersInChannel().size(); i++) {
+            c.rmPlayer(c.getPlayersInChannel().get(i));
+        }
+        channels.remove(c);
+    }
+    
 }
