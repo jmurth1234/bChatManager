@@ -16,7 +16,8 @@ public enum Messages {
     PASSWORD_WRONG("Password incorrect."),
     NO_PERMISSIONS("Thou shalt not use that command."),
     ENABLED("bChatManager enabled! Have a nice day :)"), 
-    CHANNEL_REMOVED("You were removed from a channel you were in!");
+    CHANNEL_REMOVED("You were removed from a channel you were in!"),
+    JOINED("You joined %channel!");
     private String format;
 
     Messages(String format) {
@@ -26,9 +27,20 @@ public enum Messages {
     /**
      * Sends a message.
      *
-     * @param sender reciever
+     * @param sender receiver
      */
     void send(CommandSender sender) {
+        sender.sendMessage(format);
+    }
+    
+    /**
+     * Sends a formatted message. 
+     * 
+     * @param sender person who will receive the message
+     * @param formatter function being used to format the message
+     */
+    
+    void sendFormatted(CommandSender sender, Object formatter) {
         sender.sendMessage(format);
     }
 

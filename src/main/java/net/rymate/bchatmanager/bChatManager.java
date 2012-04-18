@@ -70,7 +70,7 @@ public class bChatManager extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (("me".equals(command.getName())) && (config.getBoolean("toggles.control-me", true))) {
+        if ((command.getName().equals("me")) && (config.getBoolean("toggles.control-me", true))) {
             String meFormat = config.getString("formats.me-format", "* %player %message");
             Double chatRange = config.getDouble("other.chat-range", 100);
             boolean rangedMode = config.getBoolean("toggles.ranged-mode", false);
@@ -113,6 +113,10 @@ public class bChatManager extends JavaPlugin {
                 getServer().broadcastMessage(message);
             }
             return true;
+        }
+        
+        if ((command.getName().equals("me")) && (config.getBoolean("toggles.chat-channels", true))) {
+            
         }
         return true;
     }
