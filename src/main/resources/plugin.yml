@@ -10,3 +10,7 @@ commands:
     description: Sends a message in the third person!
     usage: /me <message>
     aliases: [m, moi]
+  join:
+    description: Joins a specified channel
+    usage: /join <channel>
+    aliases: [j]

@@ -115,8 +115,8 @@ public class bChatManager extends JavaPlugin {
             return true;
         }
         
-        if ((command.getName().equals("me")) && (config.getBoolean("toggles.chat-channels", true))) {
-            
+        if ((command.getName().equals("join")) && (config.getBoolean("toggles.chat-channels", true))) {
+            sender.sendMessage("Test");
         }
         return true;
     }
