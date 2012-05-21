@@ -17,8 +17,6 @@ public class Channel implements Serializable {
     private String name; //kinda obvious
     private boolean isPublic; //in case I implement a list of channels (might make a spout one eventually)
     private List<Player> usersInChannel; //duh
-    private boolean isPassworded;
-    private String password;
     private String colour; //colour of the channel (for formatting)
 
     /**
@@ -46,18 +44,6 @@ public class Channel implements Serializable {
     
     public String getName() {
         return name;
-    }
-
-    public boolean checkPassword(String s) {
-        if (isPassworded) {
-            if (s == password) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
     
     public void destory() {
