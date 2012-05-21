@@ -39,13 +39,21 @@ public class bChatManager extends JavaPlugin {
 
     protected final static Logger logger = Logger.getLogger("Minecraft");
     protected bChatListener listener;
+    protected LegacyChatListener lListener;
     public File configFile;
     private Configuration config;
 
     @Override
     public void onEnable() {
         setupConfig();
-        this.getServer().getPluginManager().registerEvents(this.listener, this);
+        
+        //don't want channels? don't use 'em! :D
+        if (config.getBoolean("toggles.chat-channels", true) == false) {
+            this.getServer().getPluginManager().registerEvents(this.lListener, this);
+        } else {
+            this.getServer().getPluginManager().registerEvents(this.listener, this);
+        }
+        
         try {
             Metrics metrics = new Metrics();
             metrics.beginMeasuringPlugin(this);
@@ -114,9 +122,16 @@ public class bChatManager extends JavaPlugin {
             }
             return true;
         }
-        
+
         if ((command.getName().equals("join")) && (config.getBoolean("toggles.chat-channels", true))) {
-            sender.sendMessage("Test");
+            if (args.length < 1) {
+                sender.sendMessage(ChatColor.RED + "Please specify a channel to join.");
+                return false;
+            }
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
+                return true;
+            }
         }
         return true;
     }
