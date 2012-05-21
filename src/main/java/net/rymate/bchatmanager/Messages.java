@@ -35,12 +35,15 @@ public enum Messages {
     
     /**
      * Sends a formatted message. 
+     * I wish I could be bothered to make a formatter object :3
      * 
      * @param sender person who will receive the message
-     * @param formatter function being used to format the message
+     * @param toReplace string to replace in the message
+     * @param toReplaceWith what to replace the above string with
+     * 
      */
     
-    void sendFormatted(CommandSender sender, Object formatter) {
+    void sendFormatted(CommandSender sender, String toReplace, String toReplaceWith) {
         sender.sendMessage(format);
     }
 
