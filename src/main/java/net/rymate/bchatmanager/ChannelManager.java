@@ -3,6 +3,7 @@
  * Provides an easy way to make sure they are accessable. basically every class 
  * that requires access to the chat channels will go via this.
  */
+
 package net.rymate.bchatmanager;
 
 import java.io.Serializable;

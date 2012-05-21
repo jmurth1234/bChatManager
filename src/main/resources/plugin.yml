@@ -14,3 +14,7 @@ commands:
     description: Joins a specified channel
     usage: /join <channel>
     aliases: [j]
+  leave:
+    description: Leaves a channel
+    usage: /leave <channel>
+    aliases: [l]
