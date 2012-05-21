@@ -17,7 +17,8 @@ public enum Messages {
     NO_PERMISSIONS("Thou shalt not use that command."),
     ENABLED("bChatManager enabled! Have a nice day :)"), 
     CHANNEL_REMOVED("You were removed from a channel you were in!"),
-    JOINED("You joined %channel!");
+    JOINED("You joined %channel!"),
+    CHANNEL_REMOVE_ERROR("Someone tried to remove a non-existant channel!");
     private String format;
 
     Messages(String format) {

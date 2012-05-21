@@ -32,9 +32,11 @@ public class ChannelManager implements Serializable {
     
     public void rmChannel(String s) {
         Channel c = getChannel(s);
-        for (int i = 0; i < c.getPlayersInChannel().size(); i++) {
-            c.rmPlayer(c.getPlayersInChannel().get(i));
+        if (c == null) {
+            Messages.CHANNEL_REMOVE_ERROR.print();
+            return;
         }
+        c.destory();
         channels.remove(c);
     }
     
