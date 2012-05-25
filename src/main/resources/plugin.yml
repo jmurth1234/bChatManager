@@ -18,3 +18,8 @@ commands:
     description: Leaves a channel
     usage: /leave <channel>
     aliases: [l]
+  focus:
+    description: Focuses a channel so you chat in it
+    usage: /focus <channnel>
+    aliases: [f]
+    

@@ -11,3 +11,6 @@ toggles:
     chat-channels: true
 other:
     chat-range: 100.0
+channels:
+    default-channel: "global"
+    
