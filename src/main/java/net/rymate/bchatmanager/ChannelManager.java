@@ -7,7 +7,9 @@
 package net.rymate.bchatmanager;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,6 +18,13 @@ import java.util.List;
 public class ChannelManager implements Serializable {
     
     private List<Channel> channels; //duh
+    
+    /**
+     * The following hashmap stores 2 strings
+     * The player name and the channel name
+     * Its basically so I can keep track of the player's active channel
+     */
+    private Map<String, String> activeChannel = new HashMap<String, String>();
     
     public Channel getChannel(String name) {
         for (int i = 0; i < channels.size(); i++) {
@@ -39,6 +48,20 @@ public class ChannelManager implements Serializable {
         }
         c.destory();
         channels.remove(c);
+    }
+    
+    
+    /** 
+     * This gets the players active channel (the one they are chatting in).
+     * If they are in a channel, return that channel
+     * If not, return the default global channel :D
+     * 
+     * @param p the name of the player
+     * @return The players current channel
+     */
+    
+    public Channel getActiveChannel(String p) {
+        return getChannel("global");
     }
     
 }
