@@ -2,6 +2,7 @@ package net.rymate.bchatmanager;
 
 import java.io.Serializable;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -16,7 +17,7 @@ public class Channel implements Serializable {
 
     private String name; //kinda obvious
     private boolean isPublic; //in case I implement a list of channels (might make a spout one eventually)
-    private List<Player> usersInChannel; //duh
+    private List<String> usersInChannel; //duh
     private String colour; //colour of the channel (for formatting)
 
     /**
@@ -29,16 +30,16 @@ public class Channel implements Serializable {
     }
 
     public void addPlayer(Player p) {
-        usersInChannel.add(p);
+        usersInChannel.add(p.getName());
     }
 
     public void rmPlayer(Player p) {
-        if (usersInChannel.contains(p)) {
-            usersInChannel.remove(p);
+        if (usersInChannel.contains(p.getName())) {
+            usersInChannel.remove(p.getName());
         }
     }
 
-    public List<Player> getPlayersInChannel() {
+    public List<String> getPlayersInChannel() {
         return usersInChannel;
     }
     
@@ -48,8 +49,8 @@ public class Channel implements Serializable {
     
     public void destory() {
         for (int i = 0; i < usersInChannel.size(); i++) {
-            rmPlayer(usersInChannel.get(i));
-            Messages.CHANNEL_REMOVED.send(usersInChannel.get(i));
+            rmPlayer(Bukkit.getPlayer(usersInChannel.get(i)));
+            Messages.CHANNEL_REMOVED.send(Bukkit.getPlayer(usersInChannel.get(i)));
         }
     }
 }
