@@ -50,7 +50,7 @@ public class Channel implements Serializable {
     public void destory() {
         for (int i = 0; i < usersInChannel.size(); i++) {
             rmPlayer(Bukkit.getPlayer(usersInChannel.get(i)));
-            Messages.CHANNEL_REMOVED.send(Bukkit.getPlayer(usersInChannel.get(i)));
+            Messages.CHANNEL_REMOVED.sendFormatted(Bukkit.getPlayer(usersInChannel.get(i)), "%channel", name);
         }
     }
 }
