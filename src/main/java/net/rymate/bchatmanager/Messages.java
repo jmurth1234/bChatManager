@@ -21,7 +21,7 @@ public enum Messages {
     CHANNEL_REMOVE_ERROR("Someone tried to remove a non-existant channel!");
     private String format;
 
-    Messages(String format) {
+    public Messages(String format) {
         this.format = format;
     }
 
@@ -30,7 +30,7 @@ public enum Messages {
      *
      * @param sender receiver
      */
-    void send(CommandSender sender) {
+    public void send(CommandSender sender) {
         sender.sendMessage(format);
     }
     
@@ -44,14 +44,14 @@ public enum Messages {
      * 
      */
     
-    void sendFormatted(CommandSender sender, String toReplace, String toReplaceWith) {
+    public void sendFormatted(CommandSender sender, String toReplace, String toReplaceWith) {
         sender.sendMessage(format);
     }
 
     /**
      * Prints a message prefixed with [bChatManager] to the console.
      */
-    void print() {
+    public void print() {
         Logger logger = Logger.getLogger("Minecraft");
         logger.info("[bChatManager] " + format);
     }

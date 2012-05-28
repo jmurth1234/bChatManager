@@ -19,6 +19,10 @@
  */
 package net.rymate.bchatmanager;
 
+import net.rymate.bchatmanager.util.Metrics;
+import net.rymate.bchatmanager.util.Configuration;
+import net.rymate.bchatmanager.listeners.bChatListener;
+import net.rymate.bchatmanager.listeners.LegacyChatListener;
 import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;

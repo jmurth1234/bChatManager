@@ -41,12 +41,12 @@ public class Functions {
         this.displayNameFormat = plugin.getConfig().getString("display-name-format", this.displayNameFormat);
     }
 
-    protected String replacePlayerPlaceholders(Player player, String format) {
+    public String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
         return format.replace("%prefix", getInfo(player, "prefix")).replace("%suffix", getInfo(player, "suffix")).replace("%world", worldName).replace("%player", player.getName()).replace("%displayname", player.getDisplayName());
     }
 
-    protected String replaceTime(String message) {
+    public String replaceTime(String message) {
         Calendar calendar = Calendar.getInstance();
 
         if (message.contains("%h")) {
@@ -84,25 +84,25 @@ public class Functions {
         return message;
     }
 
-    protected String colorize(String string) {
+    public String colorize(String string) {
         if (string == null) {
             return "";
         }
         return string.replaceAll("&([a-z0-9])", "\u00A7$1");
     }
 
-    protected void updateDisplayNames() {
+    public void updateDisplayNames() {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             updateDisplayName(player);
         }
     }
 
-    protected void updateDisplayName(Player player) {
+    public void updateDisplayName(Player player) {
         String worldName = player.getWorld().getName();
         player.setDisplayName(colorize(replacePlayerPlaceholders(player, this.displayNameFormat)));
     }
 
-    protected List<Player> getLocalRecipients(Player sender, String message, double range) {
+    public List<Player> getLocalRecipients(Player sender, String message, double range) {
         Location playerLocation = sender.getLocation();
         List<Player> recipients = new LinkedList<Player>();
         double squaredDistance = Math.pow(range, 2);
@@ -119,7 +119,7 @@ public class Functions {
         return recipients;
     }
 
-    protected List<Player> getSpies() {
+    public List<Player> getSpies() {
         List<Player> recipients = new LinkedList<Player>();
         for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
             if (recipient.hasPermission("bchatmanager.spy")) {
@@ -130,7 +130,7 @@ public class Functions {
     }
 
     //IT WORKS!
-    private String getInfo(Player player, String info) { 
+    public String getInfo(Player player, String info) { 
         String output;
         output = ApiLayer.getValue(player.getWorld().getName(), CalculableType.USER, player.getName(), info);
         String colored = colorize(output);
