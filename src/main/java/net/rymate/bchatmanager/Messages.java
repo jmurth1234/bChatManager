@@ -45,6 +45,7 @@ public enum Messages {
      */
     
     public void sendFormatted(CommandSender sender, String toReplace, String toReplaceWith) {
+        format.replaceAll(toReplace, toReplaceWith);
         sender.sendMessage(format);
     }
 
