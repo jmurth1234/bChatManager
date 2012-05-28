@@ -64,4 +64,17 @@ public class ChannelManager implements Serializable {
         return getChannel("global");
     }
     
+    /**
+     * This sets the players active channel.
+     * Returns true if the channel exists, false otherwise.
+     * 
+     * @param p the players's name
+     * @return a boolean
+     */
+    
+    public boolean setActiveChannel(String p) {
+        return false;
+    }
+    
+    
 }
