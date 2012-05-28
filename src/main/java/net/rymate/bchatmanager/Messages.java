@@ -21,7 +21,7 @@ public enum Messages {
     CHANNEL_REMOVE_ERROR("Someone tried to remove a non-existant channel!");
     private String format;
 
-    public Messages(String format) {
+    Messages(String format) {
         this.format = format;
     }
 
