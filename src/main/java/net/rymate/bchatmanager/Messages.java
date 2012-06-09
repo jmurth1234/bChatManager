@@ -19,8 +19,8 @@ public enum Messages {
     CHANNEL_REMOVED("The channel %channel has been destroyed"),
     CHANNEL_JOINED("%player has joined %channel"),
     CHANNEL_REMOVE_ERROR("Someone tried to remove a non-existant channel!"),
-    CHANNEL_LEFT("%player has left %channel");
-    
+    CHANNEL_LEFT("%player has left %channel"),
+    CHANNEL_ACTIVE("Your active channel is now %channel");
     
     private String format;
 
@@ -48,7 +48,7 @@ public enum Messages {
      */
     
     public void sendFormatted(CommandSender sender, String toReplace, String toReplaceWith) {
-        format.replaceAll(toReplace, toReplaceWith);
+        format = format.replaceAll(toReplace, toReplaceWith);
         sender.sendMessage(format);
     }
     
