@@ -7,6 +7,7 @@ package net.rymate.bchatmanager.channels;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,8 @@ import org.bukkit.Bukkit;
  */
 public class ChannelManager implements Serializable {
 
-    private List<Channel> channels; //duh
+    private List<Channel> channels = new ArrayList<Channel>();
+
     /**
      * The following hashmap stores 2 strings The player name and the channel
      * name Its basically so I can keep track of the player's active channel
