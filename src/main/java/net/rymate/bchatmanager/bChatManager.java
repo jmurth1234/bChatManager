@@ -60,7 +60,7 @@ public class bChatManager extends JavaPlugin {
         } else {
             this.getServer().getPluginManager().registerEvents(this.listener, this);
         }
-        
+
         //setup the Metrics
         try {
             Metrics metrics = new Metrics();
@@ -68,10 +68,17 @@ public class bChatManager extends JavaPlugin {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         //setup the ChannelManager
-        chan = new ChannelManager();
-        chan.load();
+        if (config.getBoolean("toggles.chat-channels", true) == true) {
+            chan = new ChannelManager();
+            boolean check = chan.load();
+            if (check == false) {
+                logger.info("[bChatManager] It appears this is your first time using bChatManager! Lets create a default channel...");
+                chan.addChannel(config.getString("channels.default-channel", "global"));
+                chan.save();
+            }
+        }
         //and we're done!
         Messages.ENABLED.print();
     }
@@ -88,7 +95,7 @@ public class bChatManager extends JavaPlugin {
         config.init(this);
         this.listener = new bChatListener(configFile, this);
     }
-    
+
     public ChannelManager getChannelManager() {
         return chan;
     }
