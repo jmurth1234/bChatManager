@@ -23,6 +23,7 @@ import java.io.File;
 import net.rymate.bchatmanager.util.Configuration;
 import net.rymate.bchatmanager.Functions;
 import net.rymate.bchatmanager.bChatManager;
+import net.rymate.bchatmanager.channels.ChannelManager;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,6 +49,7 @@ public class bChatListener implements Listener {
     private final bChatManager plugin;
     Configuration config;
     Functions f;
+    ChannelManager chan;
 
     public bChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
@@ -60,6 +62,7 @@ public class bChatListener implements Listener {
         this.DISPLAY_NAME_FORMAT = config.getString("formats.display-name-format", this.DISPLAY_NAME_FORMAT);
         this.ALERT_FORMAT = config.getString("formats.alert-format", this.ALERT_FORMAT);
         this.plugin = p;
+        this.chan = plugin.getChannelManager();
         this.f = new Functions(plugin);
     }
 

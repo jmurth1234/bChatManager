@@ -51,6 +51,7 @@ public class bChatManager extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        //guess what this does
         setupConfig();
 
         //don't want channels? don't use 'em! :D
@@ -59,13 +60,19 @@ public class bChatManager extends JavaPlugin {
         } else {
             this.getServer().getPluginManager().registerEvents(this.listener, this);
         }
-
+        
+        //setup the Metrics
         try {
             Metrics metrics = new Metrics();
             metrics.beginMeasuringPlugin(this);
         } catch (Exception e) {
             System.out.println(e);
         }
+        
+        //setup the ChannelManager
+        chan = new ChannelManager();
+        chan.load();
+        //and we're done!
         Messages.ENABLED.print();
     }
 
@@ -80,6 +87,10 @@ public class bChatManager extends JavaPlugin {
         config = new Configuration(configFile);
         config.init(this);
         this.listener = new bChatListener(configFile, this);
+    }
+    
+    public ChannelManager getChannelManager() {
+        return chan;
     }
 
     @Override

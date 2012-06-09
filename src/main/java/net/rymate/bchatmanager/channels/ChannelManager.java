@@ -82,4 +82,8 @@ public class ChannelManager implements Serializable {
             return false;
         }
     }
+
+    public void load() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }
