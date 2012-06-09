@@ -5,11 +5,13 @@
  */
 package net.rymate.bchatmanager.channels;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.rymate.bchatmanager.Messages;
+import net.rymate.bchatmanager.util.SLAPI;
 import org.bukkit.Bukkit;
 
 /**
@@ -83,7 +85,37 @@ public class ChannelManager implements Serializable {
         }
     }
 
-    public void load() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public boolean load() {
+        if (new File("channels.bin").exists()) {
+            try {
+                //lets load shitty uneditable persistance!
+                channels = (List<Channel>) SLAPI.load("channels.bin");
+                activeChannel = (Map<String, String>) SLAPI.load("active_channel.bin");
+                return true;
+                //yay, it worked!
+            } catch (Exception e) {
+                //something went wrong!
+                Messages.ERR.printErr("%error", e.getMessage());
+                e.printStackTrace();
+                Messages.ERR_END.printErr(null, null);
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean save() {
+        try {
+            SLAPI.save(channels, "channels.bin");
+            SLAPI.save(activeChannel, "active_channel.bin");
+            return true;
+        } catch (Exception e) {
+            //something went wrong!
+            Messages.ERR.printErr("%error", e.getMessage());
+            e.printStackTrace();
+            Messages.ERR_END.printErr(null, null);
+            return false;
+        }
     }
 }
