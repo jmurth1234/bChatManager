@@ -30,6 +30,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
  * ChatListener for bChatManager
@@ -130,5 +131,10 @@ public class bChatListener implements Listener {
             event.getRecipients().addAll(f.getLocalRecipients(player, message, range));
             event.getRecipients().addAll(f.getSpies());
         }
+    }
+    
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerJoin(PlayerJoinEvent pje) {
+        
     }
 }

@@ -22,7 +22,6 @@ import org.bukkit.Bukkit;
 public class ChannelManager implements Serializable {
 
     private List<Channel> channels = new ArrayList<Channel>();
-
     /**
      * The following hashmap stores 2 strings The player name and the channel
      * name Its basically so I can keep track of the player's active channel
@@ -43,6 +42,11 @@ public class ChannelManager implements Serializable {
         channels.add(c);
     }
 
+    /**
+     * Remove a channel
+     *
+     * @param s name of channel to remove
+     */
     public void rmChannel(String s) {
         Channel c = getChannel(s);
         if (c == null) {
@@ -51,6 +55,22 @@ public class ChannelManager implements Serializable {
         }
         c.destory();
         channels.remove(c);
+    }
+
+    /**
+     * Get a list of channels a player is in.
+     *
+     * @param player the player we are checking
+     * @return a list of channels they are in
+     */
+    public List<Channel> getPlayerChannels(String player) {
+        List<Channel> channelList = new ArrayList<Channel>();
+        for (int i = 0; i < channels.size(); i++) {
+            if (channels.get(i).getPlayersInChannel().contains(player)) {
+                channelList.add(channels.get(i));
+            }
+        }
+        return channelList;
     }
 
     /**

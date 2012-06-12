@@ -86,6 +86,7 @@ public class bChatManager extends JavaPlugin {
     @Override
     public void onDisable() {
         this.listener = null;
+        chan.save();
         logger.info("[bChatManager] bChatManager disabled!");
     }
 
