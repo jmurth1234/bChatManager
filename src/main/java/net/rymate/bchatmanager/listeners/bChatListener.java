@@ -78,36 +78,6 @@ public class bChatListener implements Listener {
         String message = MESSAGE_FORMAT;
         boolean localChat = RANGED_MODE;
 
-        String chatMessage = event.getMessage();
-        if (chatMessage.startsWith("!") && player.hasPermission("bchatmanager.chat.global")) {
-            localChat = false;
-            chatMessage = chatMessage.substring(1);
-        }
-
-        if (chatMessage.startsWith("#") && player.hasPermission("bchatmanager.chat.alert")) {
-            localChat = false;
-            chatMessage = chatMessage.substring(1);
-            message = ALERT_FORMAT;
-        }
-
-        if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.message")) {
-            chatMessage = chatMessage.substring(1);
-            String[] messageSplit = chatMessage.split(" ");
-            Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
-            if (reciever == null) {
-                player.sendMessage("This player isn't online or you just typed the @ symmbol! Ignoring.");
-                event.setCancelled(true);
-            } else {
-                chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
-                localChat = false;
-                event.getRecipients().clear();
-                event.getRecipients().add(player);
-                event.getRecipients().add(reciever);
-                event.getRecipients().addAll(f.getSpies());
-                message = PERSONAL_MESSAGE_FORMAT;
-            }
-        }
-
         if (localChat == true) {
             message = LOCAL_MESSAGE_FORMAT;
         }
@@ -124,13 +94,6 @@ public class bChatListener implements Listener {
 
         event.setFormat(message);
         event.setMessage(chatMessage);
-
-        if (localChat) {
-            double range = CHAT_RANGE;
-            event.getRecipients().clear();
-            event.getRecipients().addAll(f.getLocalRecipients(player, message, range));
-            event.getRecipients().addAll(f.getSpies());
-        }
     }
     
     @EventHandler(priority = EventPriority.NORMAL)
