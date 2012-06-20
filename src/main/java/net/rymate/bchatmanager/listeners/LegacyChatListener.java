@@ -20,9 +20,12 @@
 package net.rymate.bchatmanager.listeners;
 
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 import net.rymate.bchatmanager.util.Configuration;
 import net.rymate.bchatmanager.Functions;
 import net.rymate.bchatmanager.bChatManager;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,7 +34,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
 /**
- * LegacyChatListener for bChatManager
+ * LegacyChatListener for bChatManager. This was the listener used in versions
+ * pre 2.0. It is left in for people that hate the idea of chat channels.
  *
  * @author t3hk0d3
  * @author rymate1234
@@ -48,6 +52,7 @@ public class LegacyChatListener implements Listener {
     private final bChatManager plugin;
     Configuration config;
     Functions f;
+    public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
 
     public LegacyChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
@@ -73,6 +78,7 @@ public class LegacyChatListener implements Listener {
 
         String message = MESSAGE_FORMAT;
         boolean localChat = RANGED_MODE;
+        boolean opMessage = false;
 
         String chatMessage = event.getMessage();
         if (chatMessage.startsWith("!") && player.hasPermission("bchatmanager.chat.global")) {
@@ -104,6 +110,20 @@ public class LegacyChatListener implements Listener {
             }
         }
 
+        if (chatMessage.startsWith("%") && player.isOp()) {
+            List<Player> recipients = new LinkedList<Player>();
+            event.getRecipients().clear();
+            event.getRecipients().add(player);
+            for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
+                if (recipient.isOp()) {
+                    recipients.add(recipient);
+                }
+            }
+            event.getRecipients().addAll(recipients);
+            message = OP_MESSAGE_FORMAT;
+            opMessage = true;
+        }
+
         if (localChat == true) {
             message = LOCAL_MESSAGE_FORMAT;
         }
@@ -120,6 +140,17 @@ public class LegacyChatListener implements Listener {
 
         event.setFormat(message);
         event.setMessage(chatMessage);
+
+        if (opMessage) {
+            event.setCancelled(true);
+            List<Player> pl = (List<Player>) event.getRecipients();
+            message = message.replace("%message", chatMessage).replace("%displayname", "%1$s");
+            message = f.replacePlayerPlaceholders(player, message);
+            message = f.replaceTime(message);
+            for (int j = 0; j < pl.size(); j++) {
+                pl.get(j).sendMessage(message);
+            }
+        }
 
         if (localChat) {
             double range = CHAT_RANGE;

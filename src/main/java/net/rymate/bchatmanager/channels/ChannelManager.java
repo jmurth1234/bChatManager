@@ -23,8 +23,9 @@ public class ChannelManager implements Serializable {
 
     private List<Channel> channels = new ArrayList<Channel>();
     /**
-     * The following hashmap stores 2 strings The player name and the channel
-     * name Its basically so I can keep track of the player's active channel
+     * The following hashmap stores 2 strings
+     * The player name and the channel name
+     * Its basically so I can keep track of the player's active channel
      */
     private Map<String, String> activeChannel = new HashMap<String, String>();
 
