@@ -169,6 +169,18 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
         }
+        
+        if ((command.getName().equals("focus")) && (config.getBoolean("toggles.chat-channels", true))) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
+                return true;
+            }
+            if (args.length < 1) {
+                String chanName = chan.getActiveChannel(sender.getName()).getName();
+                sender.sendMessage(ChatColor.GREEN + "You are currently focused on: " + chanName);
+                return true;
+            }
+        }
         return true;
     }
 }
