@@ -77,6 +77,7 @@ public class bChatListener implements Listener {
 
         String message = MESSAGE_FORMAT;
         boolean localChat = RANGED_MODE;
+        String chatMessage = event.getMessage();
 
         if (localChat == true) {
             message = LOCAL_MESSAGE_FORMAT;
