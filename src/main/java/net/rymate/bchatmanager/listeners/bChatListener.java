@@ -20,10 +20,13 @@
 package net.rymate.bchatmanager.listeners;
 
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 import net.rymate.bchatmanager.util.Configuration;
 import net.rymate.bchatmanager.Functions;
 import net.rymate.bchatmanager.bChatManager;
 import net.rymate.bchatmanager.channels.ChannelManager;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,6 +47,7 @@ public class bChatListener implements Listener {
     public String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
     public String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
     public String DISPLAY_NAME_FORMAT = "%prefix%player%suffix";
+    public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
     public String ALERT_FORMAT = "&c[ALERT] &f%message";
     public Boolean RANGED_MODE = false;
     public double CHAT_RANGE = 100d;
@@ -76,17 +80,39 @@ public class bChatListener implements Listener {
         Player player = event.getPlayer();
 
         String message = MESSAGE_FORMAT;
-        boolean localChat = RANGED_MODE;
         String chatMessage = event.getMessage();
+        boolean opMessage = false;
 
-        if (localChat == true) {
-            message = LOCAL_MESSAGE_FORMAT;
+
+        if (chatMessage.startsWith("%") && player.isOp()) {
+            List<Player> recipients = new LinkedList<Player>();
+            event.getRecipients().clear();
+            event.getRecipients().add(player);
+            for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
+                if (recipient.isOp()) {
+                    recipients.add(recipient);
+                }
+            }
+            event.getRecipients().addAll(recipients);
+            message = OP_MESSAGE_FORMAT;
+            opMessage = true;
         }
 
         message = f.colorize(message);
 
         if (player.hasPermission("bchatmanager.chat.color")) {
             chatMessage = f.colorize(chatMessage);
+        }
+
+        if (opMessage) {
+            event.setCancelled(true);
+            List<Player> pl = (List<Player>) event.getRecipients();
+            message = message.replace("%message", chatMessage).replace("%displayname", "%1$s");
+            message = f.replacePlayerPlaceholders(player, message);
+            message = f.replaceTime(message);
+            for (int j = 0; j < pl.size(); j++) {
+                pl.get(j).sendMessage(message);
+            }
         }
 
         message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
@@ -96,9 +122,8 @@ public class bChatListener implements Listener {
         event.setFormat(message);
         event.setMessage(chatMessage);
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent pje) {
-        
     }
 }
