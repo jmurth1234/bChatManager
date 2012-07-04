@@ -66,6 +66,7 @@ public class bChatListener implements Listener {
         this.CHAT_RANGE = config.getDouble("other.chat-range", this.CHAT_RANGE);
         this.DISPLAY_NAME_FORMAT = config.getString("formats.display-name-format", this.DISPLAY_NAME_FORMAT);
         this.ALERT_FORMAT = config.getString("formats.alert-format", this.ALERT_FORMAT);
+        this.OP_MESSAGE_FORMAT = config.getString("formats.op-message-format", this.OP_MESSAGE_FORMAT);
         this.plugin = p;
         this.chan = plugin.getChannelManager();
         this.f = new Functions(plugin);
