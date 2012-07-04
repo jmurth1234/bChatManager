@@ -25,6 +25,7 @@ import java.util.List;
 import net.rymate.bchatmanager.util.Configuration;
 import net.rymate.bchatmanager.Functions;
 import net.rymate.bchatmanager.bChatManager;
+import net.rymate.bchatmanager.channels.Channel;
 import net.rymate.bchatmanager.channels.ChannelManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -43,14 +44,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class bChatListener implements Listener {
 
-    public String MESSAGE_FORMAT = "%prefix %player: &f%message";
-    public String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
-    public String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
+    public String MESSAGE_FORMAT = "&2[%channel] %prefix %player: &f%message";
     public String DISPLAY_NAME_FORMAT = "%prefix%player%suffix";
     public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
-    public String ALERT_FORMAT = "&c[ALERT] &f%message";
-    public Boolean RANGED_MODE = false;
-    public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
     Configuration config;
     Functions f;
@@ -59,13 +55,8 @@ public class bChatListener implements Listener {
     public bChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
         config.init(p);
-        this.MESSAGE_FORMAT = config.getString("formats.message-format", this.MESSAGE_FORMAT);
-        this.LOCAL_MESSAGE_FORMAT = config.getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
-        this.PERSONAL_MESSAGE_FORMAT = config.getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
-        this.RANGED_MODE = config.getBoolean("toggles.ranged-mode", this.RANGED_MODE);
-        this.CHAT_RANGE = config.getDouble("other.chat-range", this.CHAT_RANGE);
+        this.MESSAGE_FORMAT = config.getString("channels.channel-message-format", this.MESSAGE_FORMAT);
         this.DISPLAY_NAME_FORMAT = config.getString("formats.display-name-format", this.DISPLAY_NAME_FORMAT);
-        this.ALERT_FORMAT = config.getString("formats.alert-format", this.ALERT_FORMAT);
         this.OP_MESSAGE_FORMAT = config.getString("formats.op-message-format", this.OP_MESSAGE_FORMAT);
         this.plugin = p;
         this.chan = plugin.getChannelManager();
@@ -119,6 +110,11 @@ public class bChatListener implements Listener {
         message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
         message = f.replacePlayerPlaceholders(player, message);
         message = f.replaceTime(message);
+        
+        //start channel stuff :D
+        Channel c = chan.getActiveChannel(player.getName());
+        List<String> pls = c.getPlayersInChannel();
+        
 
         event.setFormat(message);
         event.setMessage(chatMessage);

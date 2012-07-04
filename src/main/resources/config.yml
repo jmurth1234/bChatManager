@@ -15,3 +15,4 @@ other:
 channels:
     default-channel: "global"
     channel-limit: 0
+    channel-chat-format: '&2[%channel] %prefix %player: &f%message'
