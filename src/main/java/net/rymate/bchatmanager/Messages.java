@@ -24,7 +24,9 @@ public enum Messages {
     ERR("------------ AN ERROR OCCURED. BELOW IS ERROR ------------"
     + "\n %error \n MORE DETAILS BELOW...."),
     ERR_END("------------ PLEASE REPORT TO THE BUKKIT DEV PAGE ------------"), 
-    IN_CHANNL_ANYWAY("You're already in that channel! Use /focus to focus it.");
+    IN_CHANNL_ANYWAY("You're already in that channel! Use /focus to focus it."), 
+    CANT_LEAVE_CHANNEL_NULL("You can't leave a channel that don't exist!"), 
+    NOT_IN_CHANNEL("You're not even IN that channel.");
     private String format;
 
     Messages(String format) {

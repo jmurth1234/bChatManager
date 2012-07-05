@@ -130,7 +130,6 @@ public class bChatListener implements Listener {
         }
         event.getRecipients().addAll(recipients);
 
-
         event.setFormat(message);
         event.setMessage(chatMessage);
     }

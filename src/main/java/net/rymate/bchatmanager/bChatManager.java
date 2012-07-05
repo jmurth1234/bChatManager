@@ -191,6 +191,8 @@ public class bChatManager extends JavaPlugin {
                 chan.getChannel(args[0]).addPlayer(p);
                 chan.setActiveChannel(p.getName(), args[0]);
                 String message = Messages.CHANNEL_JOINED.get();
+                message = message.replaceAll("%player", p.getName())
+                                 .replaceAll("%channel", args[0]);
                 List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();
                 for (int i = 0; i > playerz.size(); i++) {
                     Player thingy = this.getServer().getPlayer(playerz.get(i));
@@ -209,6 +211,26 @@ public class bChatManager extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
                 return true;
             }
+            Player p = (Player) sender;
+            List<Channel> list = chan.getPlayerChannels(p.getName(), null);
+            if (chan.getChannel(args[0]) != null) {
+                if (list.contains(chan.getChannel(args[0]))) {
+                    chan.getChannel(args[0]).rmPlayer(p);
+                    chan.setActiveChannel(p.getName(), config.getString("channels.default-channel", "global"));
+                    String message = Messages.CHANNEL_LEFT.get();
+                    List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();
+                    for (int i = 0; i > playerz.size(); i++) {
+                        Player thingy = this.getServer().getPlayer(playerz.get(i));
+                        thingy.sendMessage(message);
+                    }
+                } else {
+                    Messages.NOT_IN_CHANNEL.send(p);
+                    return true;
+                }
+            } else {
+                Messages.CANT_LEAVE_CHANNEL_NULL.send(p);
+            }
+            return true;
         }
 
         if ((command.getName().equals("focus")) && (config.getBoolean("toggles.chat-channels", true))) {
