@@ -191,8 +191,7 @@ public class bChatManager extends JavaPlugin {
                 chan.getChannel(args[0]).addPlayer(p);
                 chan.setActiveChannel(p.getName(), args[0]);
                 String message = Messages.CHANNEL_JOINED.get();
-                message = message.replaceAll("%player", p.getName())
-                                 .replaceAll("%channel", args[0]);
+                message = message.replaceAll("%player", p.getName()).replaceAll("%channel", args[0]);
                 List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();
                 for (int i = 0; i > playerz.size(); i++) {
                     Player thingy = this.getServer().getPlayer(playerz.get(i));
@@ -241,6 +240,20 @@ public class bChatManager extends JavaPlugin {
             if (args.length < 1) {
                 String chanName = chan.getActiveChannel(sender.getName()).getName();
                 sender.sendMessage(ChatColor.GREEN + "You are currently focused on: " + chanName);
+                return true;
+            }
+            Player p = (Player) sender;
+            List<Channel> list = chan.getPlayerChannels(p.getName(), null);
+            if (chan.getChannel(args[0]) != null) {
+                if (list.contains(chan.getChannel(args[0]))) {
+                    Channel c = chan.getChannel(args[0]);
+                    chan.setActiveChannel(p.getName(), c.getName());
+                } else {
+                    Messages.NOT_IN_CHANNEL.send(p);
+                    return true;
+                }
+            } else {
+                Messages.NOT_IN_CHANNEL.send(p);
                 return true;
             }
         }
