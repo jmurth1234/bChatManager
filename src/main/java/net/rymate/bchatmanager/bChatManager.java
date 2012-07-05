@@ -197,6 +197,7 @@ public class bChatManager extends JavaPlugin {
                     thingy.sendMessage(message);
                 }
             }
+            return true;
         }
 
         if ((command.getName().equals("leave")) && (config.getBoolean("toggles.chat-channels", true))) {
