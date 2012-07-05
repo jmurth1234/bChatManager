@@ -177,14 +177,25 @@ public class bChatManager extends JavaPlugin {
                     chan.getChannel(args[0]).addPlayer(p);
                     chan.setActiveChannel(p.getName(), args[0]);
                     String message = Messages.CHANNEL_JOINED.get();
+                    List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();
+                    for (int i = 0; i > playerz.size(); i++) {
+                        Player thingy = this.getServer().getPlayer(playerz.get(i));
+                        thingy.sendMessage(message);
+                    }
                 } else {
                     Messages.IN_CHANNL_ANYWAY.send(p);
+                    return true;
                 }
             } else {
                 chan.addChannel(args[0]);
                 chan.getChannel(args[0]).addPlayer(p);
                 chan.setActiveChannel(p.getName(), args[0]);
                 String message = Messages.CHANNEL_JOINED.get();
+                List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();
+                for (int i = 0; i > playerz.size(); i++) {
+                    Player thingy = this.getServer().getPlayer(playerz.get(i));
+                    thingy.sendMessage(message);
+                }
             }
         }
 
@@ -210,6 +221,7 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
         }
+
         return true;
     }
 }
