@@ -1,6 +1,7 @@
 package net.rymate.bchatmanager.channels;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import net.rymate.bchatmanager.Messages;
 import org.bukkit.Bukkit;
@@ -17,7 +18,7 @@ import org.bukkit.entity.Player;
 public class Channel implements Serializable {
 
     private String name; //kinda obvious
-    private List<String> usersInChannel; //duh
+    private List<String> usersInChannel = new ArrayList<String>(); //duh
     private String colour; //colour of the channel (for formatting)
 
     /**

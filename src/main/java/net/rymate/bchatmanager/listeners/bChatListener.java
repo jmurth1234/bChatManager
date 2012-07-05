@@ -121,6 +121,7 @@ public class bChatListener implements Listener {
 
         event.getRecipients().clear();
         event.getRecipients().add(player);
+        System.out.println("LOL READ THIS " + pls.size());
         for (int i = 0; i < pls.size(); i++) {
             recipients.add(Bukkit.getPlayer(pls.get(i)));
         }
@@ -133,7 +134,7 @@ public class bChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+        Player player = (Player) event.getPlayer();
         //shove them in the default channel if they ain't in it
         if (chan.getPlayerChannels(player.getName(), glob).isEmpty()) {
             //chan.getChannel(config.getString("channels.default-channel", "global")).addPlayer(player);

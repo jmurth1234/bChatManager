@@ -67,7 +67,6 @@ public class ChannelManager implements Serializable {
      */
     public List<Channel> getPlayerChannels(String player, String def) {
         List<Channel> channelList = new ArrayList<Channel>();
-        
         for (int i = 0; i < channels.size(); i++) {
             if (channels.get(i).getPlayersInChannel().contains(player)) {
                 channelList.add(channels.get(i));
