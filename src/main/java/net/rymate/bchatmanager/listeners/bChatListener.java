@@ -123,7 +123,10 @@ public class bChatListener implements Listener {
         event.getRecipients().add(player);
         System.out.println("LOL READ THIS " + pls.size());
         for (int i = 0; i < pls.size(); i++) {
-            recipients.add(Bukkit.getPlayer(pls.get(i)));
+            Player p = Bukkit.getPlayer(pls.get(i));
+            if (p.isOnline()) {
+                recipients.add(Bukkit.getPlayer(pls.get(i)));
+            }
         }
         event.getRecipients().addAll(recipients);
 
