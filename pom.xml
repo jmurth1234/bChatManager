@@ -14,10 +14,6 @@
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>cward-repo</id>
-            <url>http://repo.chrisgward.com/repository</url>
-        </repository>
     </repositories>
     
     <properties>
@@ -33,7 +29,7 @@
         <dependency>
             <groupId>de.bananaco</groupId>
             <artifactId>bPermissions</artifactId>
-            <version>1337-SNAPSHOT</version>
+            <version>v2.9.8</version>
         </dependency>
     </dependencies>
     

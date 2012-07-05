@@ -59,18 +59,26 @@ public class ChannelManager implements Serializable {
     }
 
     /**
-     * Get a list of channels a player is in.
+     * Get a list of channels a player is in. If they aren't in a channel, 
+     * add them to the default.
      *
      * @param player the player we are checking
      * @return a list of channels they are in
      */
-    public List<Channel> getPlayerChannels(String player) {
+    public List<Channel> getPlayerChannels(String player, String def) {
         List<Channel> channelList = new ArrayList<Channel>();
+        
         for (int i = 0; i < channels.size(); i++) {
             if (channels.get(i).getPlayersInChannel().contains(player)) {
                 channelList.add(channels.get(i));
             }
         }
+        
+        if (channelList.isEmpty()) {
+            getChannel(def).addPlayer(Bukkit.getPlayer(player));
+            channelList.add(getChannel(def));
+        }    
+        
         return channelList;
     }
 

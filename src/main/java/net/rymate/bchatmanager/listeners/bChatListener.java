@@ -51,6 +51,7 @@ public class bChatListener implements Listener {
     Configuration config;
     Functions f;
     ChannelManager chan;
+    private final String glob;
 
     public bChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
@@ -58,6 +59,7 @@ public class bChatListener implements Listener {
         this.MESSAGE_FORMAT = config.getString("channels.channel-message-format", this.MESSAGE_FORMAT);
         this.DISPLAY_NAME_FORMAT = config.getString("formats.display-name-format", this.DISPLAY_NAME_FORMAT);
         this.OP_MESSAGE_FORMAT = config.getString("formats.op-message-format", this.OP_MESSAGE_FORMAT);
+        this.glob = config.getString("channels.default-channel", "global");
         this.plugin = p;
         this.chan = plugin.getChannelManager();
         this.f = new Functions(plugin);
@@ -110,11 +112,20 @@ public class bChatListener implements Listener {
         message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
         message = f.replacePlayerPlaceholders(player, message);
         message = f.replaceTime(message);
-        
+        message = message.replace("%channel", chan.getActiveChannel(player.getName()).getName());
+
         //start channel stuff :D
         Channel c = chan.getActiveChannel(player.getName());
         List<String> pls = c.getPlayersInChannel();
-        
+        List<Player> recipients = new LinkedList<Player>();
+
+        event.getRecipients().clear();
+        event.getRecipients().add(player);
+        for (int i = 0; i < pls.size(); i++) {
+            recipients.add(Bukkit.getPlayer(pls.get(i)));
+        }
+        event.getRecipients().addAll(recipients);
+
 
         event.setFormat(message);
         event.setMessage(chatMessage);
@@ -124,8 +135,8 @@ public class bChatListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         //shove them in the default channel if they ain't in it
-        if (chan.getPlayerChannels(player.getName()).isEmpty()) {
-            chan.getChannel(config.getString("channels.default-channel", "global")).addPlayer(player);
+        if (chan.getPlayerChannels(player.getName(), glob).isEmpty()) {
+            //chan.getChannel(config.getString("channels.default-channel", "global")).addPlayer(player);
             chan.setActiveChannel(player.getName(), config.getString("channels.default-channel", "global"));
             chan.save();
         }

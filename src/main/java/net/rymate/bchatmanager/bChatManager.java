@@ -26,7 +26,9 @@ import net.rymate.bchatmanager.listeners.LegacyChatListener;
 import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
+import net.rymate.bchatmanager.channels.Channel;
 import net.rymate.bchatmanager.channels.ChannelManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -54,10 +56,32 @@ public class bChatManager extends JavaPlugin {
         //guess what this does
         setupConfig();
 
+        //setup the channel manager.
+        if (config.getBoolean("toggles.chat-channels", true) == true) {
+            chan = new ChannelManager();
+            boolean check = chan.load();
+            if (check == false) {
+                logger.info("[bChatManager] It appears this is your first time using bChatManager! Lets create a default channel...");
+                chan.addChannel(config.getString("channels.default-channel", "global"));
+                chan.save();
+            }
+
+            String glob = config.getString("channels.default-channel", "global");
+
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                if (chan.getPlayerChannels(player.getName(), glob).isEmpty()) {
+                    chan.setActiveChannel(player.getName(), glob);
+                    chan.save();
+                }
+            }
+        }
+
         //don't want channels? don't use 'em! :D
         if (config.getBoolean("toggles.chat-channels", true) == false) {
+            this.lListener = new LegacyChatListener(configFile, this);
             this.getServer().getPluginManager().registerEvents(this.lListener, this);
         } else {
+            this.listener = new bChatListener(configFile, this);
             this.getServer().getPluginManager().registerEvents(this.listener, this);
         }
 
@@ -69,16 +93,6 @@ public class bChatManager extends JavaPlugin {
             System.out.println(e);
         }
 
-        //setup the ChannelManager
-        if (config.getBoolean("toggles.chat-channels", true) == true) {
-            chan = new ChannelManager();
-            boolean check = chan.load();
-            if (check == false) {
-                logger.info("[bChatManager] It appears this is your first time using bChatManager! Lets create a default channel...");
-                chan.addChannel(config.getString("channels.default-channel", "global"));
-                chan.save();
-            }
-        }
         //and we're done!
         Messages.ENABLED.print();
     }
@@ -94,7 +108,6 @@ public class bChatManager extends JavaPlugin {
         configFile = new File(this.getDataFolder() + File.separator + "config.yml");
         config = new Configuration(configFile);
         config.init(this);
-        this.listener = new bChatListener(configFile, this);
     }
 
     public ChannelManager getChannelManager() {
@@ -157,6 +170,22 @@ public class bChatManager extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
                 return true;
             }
+            Player p = (Player) sender;
+            List<Channel> list = chan.getPlayerChannels(p.getName(), null);
+            if (chan.getChannel(args[0]) != null) {
+                if (!list.contains(chan.getChannel(args[0]))) {
+                    chan.getChannel(args[0]).addPlayer(p);
+                    chan.setActiveChannel(p.getName(), args[0]);
+                    String message = Messages.CHANNEL_JOINED.get();
+                } else {
+                    Messages.IN_CHANNL_ANYWAY.send(p);
+                }
+            } else {
+                chan.addChannel(args[0]);
+                chan.getChannel(args[0]).addPlayer(p);
+                chan.setActiveChannel(p.getName(), args[0]);
+                String message = Messages.CHANNEL_JOINED.get();
+            }
         }
 
         if ((command.getName().equals("leave")) && (config.getBoolean("toggles.chat-channels", true))) {
@@ -169,7 +198,7 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
         }
-        
+
         if ((command.getName().equals("focus")) && (config.getBoolean("toggles.chat-channels", true))) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED + "You are not an in-game player!");

@@ -23,7 +23,8 @@ public enum Messages {
     CHANNEL_ACTIVE("Your active channel is now %channel"),
     ERR("------------ AN ERROR OCCURED. BELOW IS ERROR ------------"
     + "\n %error \n MORE DETAILS BELOW...."),
-    ERR_END("------------ PLEASE REPORT TO THE BUKKIT DEV PAGE ------------");
+    ERR_END("------------ PLEASE REPORT TO THE BUKKIT DEV PAGE ------------"), 
+    IN_CHANNL_ANYWAY("You're already in that channel! Use /focus to focus it.");
     private String format;
 
     Messages(String format) {
