@@ -258,6 +258,17 @@ public class bChatManager extends JavaPlugin {
             }
         }
 
+        if ((command.getName().equals("invite")) && (config.getBoolean("toggles.chat-channels", true))) {
+            if (args.length < 1) {
+                sender.sendMessage(ChatColor.RED + "Please specify owsomeone to invite");
+                return false;
+            }
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
+                return true;
+            }
+        }
+
         return true;
     }
 }
