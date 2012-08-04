@@ -31,7 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  * LegacyChatListener for bChatManager. This was the listener used in versions
@@ -69,7 +69,7 @@ public class LegacyChatListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerChat(PlayerChatEvent event) {
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
         if (event.isCancelled()) {
             return;
         }
