@@ -77,7 +77,7 @@ public class bChatManager extends JavaPlugin {
         }
 
         //don't want channels? don't use 'em! :D
-        if (config.getBoolean("toggles.chat-channels", true) == false) {
+        if (!config.getBoolean("toggles.chat-channels", true)) {
             this.lListener = new LegacyChatListener(configFile, this);
             this.getServer().getPluginManager().registerEvents(this.lListener, this);
         } else {
@@ -100,7 +100,9 @@ public class bChatManager extends JavaPlugin {
     @Override
     public void onDisable() {
         this.listener = null;
-        chan.save();
+        if (config.getBoolean("toggles.chat-channels", true)) {
+            chan.save();
+        }
         logger.info("[bChatManager] bChatManager disabled!");
     }
 
@@ -267,7 +269,7 @@ public class bChatManager extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
                 return true;
             }
-	    
+
         }
 
         return true;
