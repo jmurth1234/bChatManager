@@ -50,6 +50,8 @@ public class bChatManager extends JavaPlugin {
     public File configFile;
     private Configuration config;
     ChannelManager chan;
+    
+    public bChatManager() { super(); }
 
     @Override
     public void onEnable() {
