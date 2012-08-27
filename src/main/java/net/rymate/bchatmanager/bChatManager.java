@@ -50,8 +50,10 @@ public class bChatManager extends JavaPlugin {
     public File configFile;
     private Configuration config;
     ChannelManager chan;
-    
-    public bChatManager() { super(); }
+
+    public bChatManager() {
+        super();
+    }
 
     @Override
     public void onEnable() {
@@ -272,6 +274,22 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
+        }
+
+        if ((command.getName().equals("bchatreload"))) {
+            if (!(sender instanceof Player)) {
+                getServer().getPluginManager().disablePlugin(this);
+                getServer().getPluginManager().enablePlugin(this);
+                sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
+                return true;
+            }
+            
+            if (sender.hasPermission("bchatmanager.reload")) {
+                getServer().getPluginManager().disablePlugin(this);
+                getServer().getPluginManager().enablePlugin(this);
+                sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
+                return true;
+            }
         }
 
         return true;
