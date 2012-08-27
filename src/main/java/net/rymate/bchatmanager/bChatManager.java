@@ -19,11 +19,11 @@
  */
 package net.rymate.bchatmanager;
 
-import net.rymate.bchatmanager.util.Metrics;
 import net.rymate.bchatmanager.util.Configuration;
 import net.rymate.bchatmanager.listeners.bChatListener;
 import net.rymate.bchatmanager.listeners.LegacyChatListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 import net.rymate.bchatmanager.channels.Channel;
@@ -35,6 +35,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 /**
  * Main class for bChatManager
@@ -91,10 +92,10 @@ public class bChatManager extends JavaPlugin {
 
         //setup the Metrics
         try {
-            Metrics metrics = new Metrics();
-            metrics.beginMeasuringPlugin(this);
-        } catch (Exception e) {
-            System.out.println(e);
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         //and we're done!
@@ -283,7 +284,7 @@ public class bChatManager extends JavaPlugin {
                 sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
                 return true;
             }
-            
+
             if (sender.hasPermission("bchatmanager.reload")) {
                 getServer().getPluginManager().disablePlugin(this);
                 getServer().getPluginManager().enablePlugin(this);
