@@ -97,7 +97,7 @@ public class LegacyChatListener implements Listener {
             String[] messageSplit = chatMessage.split(" ");
             Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
             if (reciever == null) {
-                player.sendMessage("This player isn't online or you just typed the @ symmbol! Ignoring.");
+                player.sendMessage("This player isn't online or you just typed the @ symbol! Ignoring.");
                 event.setCancelled(true);
             } else {
                 chatMessage = chatMessage.replaceFirst(messageSplit[0], "");

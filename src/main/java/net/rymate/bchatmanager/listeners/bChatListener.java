@@ -45,21 +45,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class bChatListener implements Listener {
 
     public String MESSAGE_FORMAT = "&2[%channel] %prefix %player: &f%message";
-
     public String DISPLAY_NAME_FORMAT = "%prefix%player%suffix";
-
     public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
-
     public String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
 
     private final bChatManager plugin;
-
     Configuration config;
-
     Functions f;
-
     ChannelManager chan;
-
     private final String glob;
 
     private boolean channelChat = true;

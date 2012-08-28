@@ -19,7 +19,7 @@ public class Channel implements Serializable {
 
     private String name; //kinda obvious
     private List<String> usersInChannel = new ArrayList<String>(); //duh
-    private String colour; //colour of the channel (for formatting)
+    //private String colour; //colour of the channel (for formatting)
 
     /**
      * Creates a new channel with the specified name
