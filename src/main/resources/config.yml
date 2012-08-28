@@ -2,7 +2,7 @@ formats:
     display-name-format: '%player'
     message-format: '%prefix %player: &f%message'
     local-message-format: '[LOCAL] %prefix %player: &f%message'
-    personal-message-format: '[FROM] %prefix %player ---> &f%message'
+    personal-message-format: '[MSG] [%player -> %reciever] &f%message'
     alert-format: '&c[ALERT] &f%message'
     me-format: '* %player %message'
     op-message-format: '&c[OPS ONLY] %player: &f%message'

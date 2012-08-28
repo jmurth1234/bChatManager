@@ -101,6 +101,7 @@ public class LegacyChatListener implements Listener {
                 event.setCancelled(true);
             } else {
                 chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
+                chatMessage = chatMessage.replaceAll("%reciever", messageSplit[0]);
                 localChat = false;
                 event.getRecipients().clear();
                 event.getRecipients().add(player);
