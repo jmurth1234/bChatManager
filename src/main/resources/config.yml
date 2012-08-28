@@ -10,6 +10,7 @@ toggles:
     control-me: true
     ranged-mode: false
     chat-channels: true
+    filter-ips: true
 other:
     chat-range: 100.0
 channels:

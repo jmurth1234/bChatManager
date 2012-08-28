@@ -49,11 +49,18 @@ public class bChatListener implements Listener {
     public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
     public String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
 
+    public boolean IP_FILTER = true;
+
     private final bChatManager plugin;
     Configuration config;
     Functions f;
     ChannelManager chan;
     private final String glob;
+
+    private static final String IPADDRESS_PATTERN = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+	    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+	    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+	    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 
     private boolean channelChat = true;
 
@@ -69,6 +76,7 @@ public class bChatListener implements Listener {
 	this.PERSONAL_MESSAGE_FORMAT = config
 		.getString("formats.personal-message-format",
 			this.PERSONAL_MESSAGE_FORMAT);
+	this.IP_FILTER = config.getBoolean("toggles.ip-filter", true);
 
 	this.glob = config.getString("channels.default-channel", "global");
 	this.plugin = p;
@@ -147,6 +155,11 @@ public class bChatListener implements Listener {
 	message = f.replaceTime(message);
 	message = message.replace("%channel",
 		chan.getActiveChannel(player.getName()).getName());
+
+	if (IP_FILTER) {
+	    message = message.replaceAll(IPADDRESS_PATTERN, "derp");
+	}
+	
 	if (channelChat) {
 	    // start channel stuff :D
 	    Channel c = chan.getActiveChannel(player.getName());
