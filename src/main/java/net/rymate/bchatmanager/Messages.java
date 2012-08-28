@@ -58,6 +58,7 @@ public enum Messages {
 
     /**
      * Gets a String from this Enum.
+     * This is useful for... getting strings!
      *
      * @return a string
      */
