@@ -53,6 +53,7 @@ public class LegacyChatListener implements Listener {
     Configuration config;
     Functions f;
     public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
+    private boolean IP_FILTER = true;
 
     public LegacyChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
@@ -64,6 +65,8 @@ public class LegacyChatListener implements Listener {
         this.CHAT_RANGE = config.getDouble("other.chat-range", this.CHAT_RANGE);
         this.DISPLAY_NAME_FORMAT = config.getString("formats.display-name-format", this.DISPLAY_NAME_FORMAT);
         this.ALERT_FORMAT = config.getString("formats.alert-format", this.ALERT_FORMAT);
+        this.IP_FILTER = config.getBoolean("toggles.ip-filter", true);
+
         this.plugin = p;
         this.f = new Functions(plugin);
     }
@@ -138,6 +141,10 @@ public class LegacyChatListener implements Listener {
         message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
         message = f.replacePlayerPlaceholders(player, message);
         message = f.replaceTime(message);
+
+        if (IP_FILTER) {
+            message = message.replaceAll("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}", "lmao");
+        }
 
         event.setFormat(message);
         event.setMessage(chatMessage);

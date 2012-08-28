@@ -57,11 +57,6 @@ public class bChatListener implements Listener {
     ChannelManager chan;
     private final String glob;
 
-    private static final String IPADDRESS_PATTERN = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-	    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-	    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-	    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-
     private boolean channelChat = true;
 
     public bChatListener(File configFile, bChatManager p) {
@@ -157,7 +152,7 @@ public class bChatListener implements Listener {
 		chan.getActiveChannel(player.getName()).getName());
 
 	if (IP_FILTER) {
-	    message = message.replaceAll(IPADDRESS_PATTERN, "derp");
+	    message = message.replaceAll("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}", "lmao");
 	}
 	
 	if (channelChat) {
