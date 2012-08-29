@@ -178,9 +178,10 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-            if (sender.hasPermissions("bchatmanager.join")) {
+            if (sender.hasPermission("bchatmanager.join")) {
             	Messages.NO_PERMISSIONS.send(sender);
             }
+
             Player p = (Player) sender;
             List<Channel> list = chan.getPlayerChannels(p.getName(), null);
             if (chan.getChannel(args[0]) != null) {
@@ -223,7 +224,7 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-			if (sender.hasPermissions("bchatmanager.leave")) {
+			if (sender.hasPermission("bchatmanager.leave")) {
             	Messages.NO_PERMISSIONS.send(sender);
             }
 
@@ -260,7 +261,7 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-			if (sender.hasPermissions("bchatmanager.focua")) {
+			if (sender.hasPermission("bchatmanager.focua")) {
             	Messages.NO_PERMISSIONS.send(sender);
             }
 
@@ -278,22 +279,6 @@ public class bChatManager extends JavaPlugin {
                 Messages.NOT_IN_CHANNEL.send(p);
                 return true;
             }
-        }
-
-        if ((command.getName().equals("invite")) && (config.getBoolean("toggles.chat-channels", true))) {
-            if (args.length < 1) {
-                sender.sendMessage(ChatColor.RED + "Please specify someone to invite");
-                return false;
-            }
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
-                return true;
-            }
-
-			if (sender.hasPermissions("bchatmanager.invite")) {
-            	Messages.NO_PERMISSIONS.send(sender);
-            }
-
         }
 
         if ((command.getName().equals("bchatreload"))) {
