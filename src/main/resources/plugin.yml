@@ -22,10 +22,6 @@ commands:
     description: Focuses a channel so you chat in it
     usage: /focus <channnel>
     aliases: [f]
-  invite:
-    description: Sends a message to a player inviting them to join a channel.
-    usage: /invite <playername>
-    aliases: [in]
   bchatreload:
     description: Reloads bChatManager
     usage: /bchatreload
