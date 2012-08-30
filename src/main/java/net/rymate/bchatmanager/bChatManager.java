@@ -179,7 +179,7 @@ public class bChatManager extends JavaPlugin {
             }
 
             if (sender.hasPermission("bchatmanager.join")) {
-            	Messages.NO_PERMISSIONS.send(sender);
+                Messages.NO_PERMISSIONS.send(sender);
             }
 
             Player p = (Player) sender;
@@ -224,8 +224,8 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-			if (sender.hasPermission("bchatmanager.leave")) {
-            	Messages.NO_PERMISSIONS.send(sender);
+            if (sender.hasPermission("bchatmanager.leave")) {
+                Messages.NO_PERMISSIONS.send(sender);
             }
 
             Player p = (Player) sender;
@@ -261,8 +261,8 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-			if (sender.hasPermission("bchatmanager.focua")) {
-            	Messages.NO_PERMISSIONS.send(sender);
+            if (sender.hasPermission("bchatmanager.focua")) {
+                Messages.NO_PERMISSIONS.send(sender);
             }
 
             Player p = (Player) sender;
@@ -290,8 +290,8 @@ public class bChatManager extends JavaPlugin {
             }
 
             if (sender.hasPermission("bchatmanager.reload")) {
-            	Messages.NO_PERMISSIONS.send(sender);
-            	return true;
+                Messages.NO_PERMISSIONS.send(sender);
+                return true;
             }
 
             getServer().getPluginManager().disablePlugin(this);
