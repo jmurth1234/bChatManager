@@ -16,22 +16,11 @@
 	"buffers":
 	[
 		{
-			"contents": "/*\n * bChatManager - bPermissions chat management plugin for Bukkit\n * Originally - PermissionsEx chat management plugin for Bukkit\n * Copyright (C) 2011 t3hk0d3 http://www.tehkode.ru\n *\n * This program is free software; you can redistribute it and/or\n * modify it under the terms of the GNU General Public License\n * as published by the Free Software Foundation; either version 2\n * of the License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n */\npackage net.rymate.bchatmanager;\n\nimport net.rymate.bchatmanager.util.Configuration;\nimport net.rymate.bchatmanager.listeners.bChatListener;\nimport net.rymate.bchatmanager.listeners.LegacyChatListener;\nimport java.io.File;\nimport java.io.IOException;\nimport java.util.List;\nimport java.util.logging.Logger;\nimport net.rymate.bchatmanager.channels.Channel;\nimport net.rymate.bchatmanager.channels.ChannelManager;\nimport org.bukkit.Bukkit;\nimport org.bukkit.ChatColor;\nimport org.bukkit.command.Command;\nimport org.bukkit.command.CommandSender;\nimport org.bukkit.command.PluginCommand;\nimport org.bukkit.entity.Player;\nimport org.bukkit.plugin.java.JavaPlugin;\nimport org.mcstats.Metrics;\n\n/**\n * Main class for bChatManager\n *\n * @author t3hk0d3\n * @author rymate1234\n */\npublic class bChatManager extends JavaPlugin {\n\n    protected final static Logger logger = Logger.getLogger(\"Minecraft\");\n    protected bChatListener listener;\n    protected LegacyChatListener lListener;\n    public File configFile;\n    private Configuration config;\n    ChannelManager chan;\n\n    public bChatManager() {\n        super();\n    }\n\n    @Override\n    public void onEnable() {\n        //guess what this does\n        setupConfig();\n\n        //setup the channel manager.\n        if (config.getBoolean(\"toggles.chat-channels\", true) == true) {\n            chan = new ChannelManager();\n            boolean check = chan.load();\n            if (check == false) {\n                logger.info(\"[bChatManager] It appears this is your first time using bChatManager! Lets create a default channel...\");\n                chan.addChannel(config.getString(\"channels.default-channel\", \"global\"));\n                chan.save();\n            }\n\n            String glob = config.getString(\"channels.default-channel\", \"global\");\n\n            for (Player player : Bukkit.getServer().getOnlinePlayers()) {\n                if (chan.getPlayerChannels(player.getName(), glob).isEmpty()) {\n                    chan.setActiveChannel(player.getName(), glob);\n                    chan.save();\n                }\n            }\n        }\n\n        //don't want channels? don't use 'em! :D\n        if (!config.getBoolean(\"toggles.chat-channels\", true)) {\n            this.lListener = new LegacyChatListener(configFile, this);\n            this.getServer().getPluginManager().registerEvents(this.lListener, this);\n        } else {\n            this.listener = new bChatListener(configFile, this);\n            this.getServer().getPluginManager().registerEvents(this.listener, this);\n        }\n\n        //setup the Metrics\n        try {\n            Metrics metrics = new Metrics(this);\n            metrics.start();\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n\n        //and we're done!\n        Messages.ENABLED.print();\n    }\n\n    @Override\n    public void onDisable() {\n        this.listener = null;\n        if (config.getBoolean(\"toggles.chat-channels\", true)) {\n            chan.save();\n        }\n        logger.info(\"[bChatManager] bChatManager disabled!\");\n    }\n\n    public void setupConfig() {\n        configFile = new File(this.getDataFolder() + File.separator + \"config.yml\");\n        config = new Configuration(configFile);\n        config.init(this);\n    }\n\n    public ChannelManager getChannelManager() {\n        return chan;\n    }\n\n    @Override\n    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {\n        if ((command.getName().equals(\"me\")) && (config.getBoolean(\"toggles.control-me\", true))) {\n            String meFormat = config.getString(\"formats.me-format\", \"* %player %message\");\n            Double chatRange = config.getDouble(\"other.chat-range\", 100);\n            boolean rangedMode = config.getBoolean(\"toggles.ranged-mode\", false);\n            Functions f = new Functions(this);\n            if (args.length < 1) {\n                sender.sendMessage(ChatColor.RED + \"Ya need to type something after it :P\");\n                return false;\n            }\n            if (!(sender instanceof Player)) {\n                sender.sendMessage(ChatColor.RED + \"You are not an in-game player!\");\n                return true;\n            }\n            Player player = (Player) sender;\n            int i;\n            StringBuilder me = new StringBuilder();\n            for (i = 0; i < args.length; i++) {\n                me.append(args[i]);\n                me.append(\" \");\n            }\n            String meMessage = me.toString();\n            String message = meFormat;\n            message = f.colorize(message);\n\n            if (sender.hasPermission(\"bchatmanager.chat.color\")) {\n                meMessage = f.colorize(meMessage);\n            }\n\n            message = message.replace(\"%message\", meMessage).replace(\"%displayname\", \"%1$s\");\n            message = f.replacePlayerPlaceholders(player, message);\n            message = f.replaceTime(message);\n\n            if (rangedMode) {\n                List<Player> pl = f.getLocalRecipients(player, message, chatRange);\n                for (int j = 0; j < pl.size(); j++) {\n                    pl.get(j).sendMessage(message);\n                }\n                sender.sendMessage(message);\n                System.out.println(message);\n            } else {\n                getServer().broadcastMessage(message);\n            }\n            return true;\n        }\n\n        if ((command.getName().equals(\"join\")) && (config.getBoolean(\"toggles.chat-channels\", true))) {\n            if (args.length < 1) {\n                sender.sendMessage(ChatColor.RED + \"Please specify a channel to join.\");\n                return false;\n            }\n            if (!(sender instanceof Player)) {\n                sender.sendMessage(ChatColor.RED + \"You are not an in-game player!\");\n                return true;\n            }\n\n            if (sender.hasPermission(\"bchatmanager.join\")) {\n            	Messages.NO_PERMISSIONS.send(sender);\n            }\n\n            Player p = (Player) sender;\n            List<Channel> list = chan.getPlayerChannels(p.getName(), null);\n            if (chan.getChannel(args[0]) != null) {\n                if (!list.contains(chan.getChannel(args[0]))) {\n                    chan.getChannel(args[0]).addPlayer(p);\n                    chan.setActiveChannel(p.getName(), args[0]);\n                    String message = Messages.CHANNEL_JOINED.get();\n                    List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();\n                    for (int i = 0; i > playerz.size(); i++) {\n                        Player thingy = this.getServer().getPlayer(playerz.get(i));\n                        thingy.sendMessage(message);\n                    }\n                } else {\n                    Messages.IN_CHANNL_ANYWAY.send(p);\n                    return true;\n                }\n            } else {\n                chan.addChannel(args[0]);\n                chan.getChannel(args[0]).addPlayer(p);\n                chan.setActiveChannel(p.getName(), args[0]);\n                String message = Messages.CHANNEL_JOINED.get();\n                message = message.replaceAll(\"%player\", p.getName()).replaceAll(\"%channel\", args[0]);\n                List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();\n                for (int i = 0; i > playerz.size(); i++) {\n                    Player thingy = this.getServer().getPlayer(playerz.get(i));\n                    thingy.sendMessage(message);\n                }\n            }\n            return true;\n        }\n\n        if ((command.getName().equals(\"leave\")) && (config.getBoolean(\"toggles.chat-channels\", true))) {\n            if (args.length < 1) {\n                sender.sendMessage(ChatColor.RED + \"Please specify a channel to leave.\");\n                return false;\n            }\n\n            if (!(sender instanceof Player)) {\n                sender.sendMessage(ChatColor.RED + \"You are not an in-game player!\");\n                return true;\n            }\n\n			if (sender.hasPermission(\"bchatmanager.leave\")) {\n            	Messages.NO_PERMISSIONS.send(sender);\n            }\n\n            Player p = (Player) sender;\n            List<Channel> list = chan.getPlayerChannels(p.getName(), null);\n            if (chan.getChannel(args[0]) != null) {\n                if (list.contains(chan.getChannel(args[0]))) {\n                    chan.getChannel(args[0]).rmPlayer(p);\n                    chan.setActiveChannel(p.getName(), config.getString(\"channels.default-channel\", \"global\"));\n                    String message = Messages.CHANNEL_LEFT.get();\n                    List<String> playerz = chan.getChannel(args[0]).getPlayersInChannel();\n                    for (int i = 0; i > playerz.size(); i++) {\n                        Player thingy = this.getServer().getPlayer(playerz.get(i));\n                        thingy.sendMessage(message);\n                    }\n                } else {\n                    Messages.NOT_IN_CHANNEL.send(p);\n                    return true;\n                }\n            } else {\n                Messages.CANT_LEAVE_CHANNEL_NULL.send(p);\n            }\n            return true;\n        }\n\n        if ((command.getName().equals(\"focus\")) && (config.getBoolean(\"toggles.chat-channels\", true))) {\n            if (!(sender instanceof Player)) {\n                sender.sendMessage(ChatColor.RED + \"You are not an in-game player!\");\n                return true;\n            }\n            if (args.length < 1) {\n                String chanName = chan.getActiveChannel(sender.getName()).getName();\n                sender.sendMessage(ChatColor.GREEN + \"You are currently focused on: \" + chanName);\n                return true;\n            }\n\n			if (sender.hasPermission(\"bchatmanager.focua\")) {\n            	Messages.NO_PERMISSIONS.send(sender);\n            }\n\n            Player p = (Player) sender;\n            List<Channel> list = chan.getPlayerChannels(p.getName(), null);\n            if (chan.getChannel(args[0]) != null) {\n                if (list.contains(chan.getChannel(args[0]))) {\n                    Channel c = chan.getChannel(args[0]);\n                    chan.setActiveChannel(p.getName(), c.getName());\n                } else {\n                    Messages.NOT_IN_CHANNEL.send(p);\n                    return true;\n                }\n            } else {\n                Messages.NOT_IN_CHANNEL.send(p);\n                return true;\n            }\n        }\n\n        if ((command.getName().equals(\"bchatreload\"))) {\n            if (!(sender instanceof Player)) {\n                getServer().getPluginManager().disablePlugin(this);\n                getServer().getPluginManager().enablePlugin(this);\n                sender.sendMessage(ChatColor.AQUA + \"[bChatManager] Plugin reloaded!\");\n                return true;\n            }\n\n            if (sender.hasPermission(\"bchatmanager.reload\")) {\n            	Messages.NO_PERMISSIONS.send(sender);\n            	return true;\n            }\n\n            getServer().getPluginManager().disablePlugin(this);\n            getServer().getPluginManager().enablePlugin(this);\n            sender.sendMessage(ChatColor.AQUA + \"[bChatManager] Plugin reloaded!\");\n            return true;\n        }\n        return true;\n    }\n}",
 			"file": "src/main/java/net/rymate/bchatmanager/bChatManager.java",
-			"file_size": 12372,
-			"file_write_time": 129907840430776876,
 			"settings":
 			{
 				"buffer_size": 12067,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/SublimeJava/SublimeJava.sublime-settings",
-			"settings":
-			{
-				"buffer_size": 1574,
-				"line_ending": "Unix"
 			}
 		},
 		{
@@ -51,19 +40,35 @@
 			}
 		},
 		{
-			"file": "Project.sublime-project",
+			"file": "src/main/java/net/rymate/bchatmanager/listeners/LegacyChatListener.java",
 			"settings":
 			{
-				"buffer_size": 313,
+				"buffer_size": 6982,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+			"file": "src/main/java/net/rymate/bchatmanager/listeners/bChatListener.java",
 			"settings":
 			{
-				"buffer_size": 122,
-				"line_ending": "Unix"
+				"buffer_size": 6557,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/net/rymate/bchatmanager/util/SLAPI.java",
+			"settings":
+			{
+				"buffer_size": 816,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/resources/config.yml",
+			"settings":
+			{
+				"buffer_size": 620,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -76,13 +81,17 @@
 			[
 				"Package Control: ",
 				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
 			]
 		],
 		"width": 400.0
 	},
 	"console":
 	{
-		"height": 73.0
+		"height": 50.0
 	},
 	"distraction_free":
 	{
@@ -95,7 +104,15 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/SublimeAStyleFormatter/SublimeAStyleFormatter.sublime-settings",
+		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/User/SublimeAStyleFormatter.sublime-settings",
+		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/SublimeAStyleFormatter/Default (Windows).sublime-keymap",
+		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/EclipseJavaFormatter/EclipseJavaFormatter.sublime-settings",
+		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/EclipseJavaFormatter/EclipseJavaFormatter.sublime-commands",
+		"/C/Users/Ryan/bChatManager/.gitignore",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/SublimeJava/SublimeJava.sublime-settings",
+		"/C/Users/Ryan/bChatManager/Project.sublime-project",
+		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/C/Users/Ryan/Documents/GitHub/ChatManager/src/main/java/net/rymate/bchatmanager/bChatManager.java",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings"
@@ -133,7 +150,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -148,8 +165,8 @@
 						"selection":
 						[
 							[
-								12028,
-								12028
+								12003,
+								12003
 							]
 						],
 						"settings":
@@ -159,69 +176,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4338.0,
+						"translation.y": 5076.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/SublimeJava/SublimeJava.sublime-settings",
-					"settings":
-					{
-						"buffer_size": 1574,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1062,
-								1062
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/SublimeJava/SublimeJava.sublime-settings",
-					"settings":
-					{
-						"buffer_size": 1574,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1062,
-								1062
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "src/main/java/net/rymate/bchatmanager/Functions.java",
 					"settings":
 					{
@@ -232,8 +193,8 @@
 						"selection":
 						[
 							[
-								1795,
-								1795
+								4299,
+								4299
 							]
 						],
 						"settings":
@@ -243,13 +204,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1935.0,
+						"translation.y": 1746.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "src/main/java/net/rymate/bchatmanager/Messages.java",
 					"settings":
 					{
@@ -271,30 +232,58 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 45.0,
+						"translation.y": 162.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "Project.sublime-project",
+					"buffer": 3,
+					"file": "src/main/java/net/rymate/bchatmanager/listeners/LegacyChatListener.java",
 					"settings":
 					{
-						"buffer_size": 313,
+						"buffer_size": 6982,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								69,
-								69
+								1903,
+								1903
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/main/java/net/rymate/bchatmanager/listeners/bChatListener.java",
+					"settings":
+					{
+						"buffer_size": 6557,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6550,
+								6550
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -305,23 +294,52 @@
 				},
 				{
 					"buffer": 5,
-					"file": "/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+					"file": "src/main/java/net/rymate/bchatmanager/util/SLAPI.java",
 					"settings":
 					{
-						"buffer_size": 122,
+						"buffer_size": 816,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								87,
-								87
+								519,
+								519
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/main/resources/config.yml",
+					"settings":
+					{
+						"buffer_size": 620,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								189,
+								228
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/YAML/YAML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -392,6 +410,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 234.0,
+	"side_bar_width": 251.0,
 	"status_bar_visible": true
 }
