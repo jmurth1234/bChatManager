@@ -50,7 +50,7 @@ public class bChatManager extends JavaPlugin {
     protected LegacyChatListener lListener;
     public File configFile;
     private Configuration config;
-    ChannelManager chan;
+    private ChannelManager chan;
 
     public bChatManager() {
         super();

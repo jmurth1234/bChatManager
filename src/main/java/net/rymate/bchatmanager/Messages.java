@@ -20,10 +20,7 @@ public enum Messages {
     CHANNEL_JOINED("%player has joined %channel"),
     CHANNEL_REMOVE_ERROR("Someone tried to remove a non-existant channel!"),
     CHANNEL_LEFT("%player has left %channel"),
-    CHANNEL_ACTIVE("Your active channel is now %channel"),
-    ERR("------------ AN ERROR OCCURED. BELOW IS ERROR ------------"
-    + "\n %error \n MORE DETAILS BELOW...."),
-    ERR_END("------------ PLEASE REPORT TO THE BUKKIT DEV PAGE ------------"), 
+    CHANNEL_ACTIVE("Your active channel is now %channel"), 
     IN_CHANNL_ANYWAY("You're already in that channel! Use /focus to focus it."), 
     CANT_LEAVE_CHANNEL_NULL("You can't leave a channel that don't exist!"), 
     NOT_IN_CHANNEL("You're not even IN that channel.");
@@ -72,15 +69,5 @@ public enum Messages {
     public void print() {
         Logger logger = Logger.getLogger("Minecraft");
         logger.info("[bChatManager] " + format);
-    }
-
-    /**
-     * Prints an error message prefixed with [bChatManager] to the console. Can
-     * have optional error message/stack trace
-     */
-    public void printErr(String toReplace, String toReplaceWith) {
-        format = format.replaceAll(toReplace, toReplaceWith);
-        Logger logger = Logger.getLogger("Minecraft");
-        logger.severe("[bChatManager] " + format);
     }
 }
