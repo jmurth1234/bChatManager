@@ -174,10 +174,15 @@ public class bChatListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = (Player) event.getPlayer();
 		// shove them in the default channel if they ain't in it
-		if (chan.getPlayerChannels(player.getName(), glob).isEmpty()) {
-			// chan.getChannel(config.getString("channels.default-channel",
-			// "global")).addPlayer(player);
-			chan.setActiveChannel(player.getName(), config.getString("channels.default-channel", "global"));
+		if (chan.getPlayerChannels(player.getName(), glob) != null) {
+			if (chan.getPlayerChannels(player.getName(), glob).isEmpty()) {
+				// chan.getChannel(config.getString("channels.default-channel",
+				// "global")).addPlayer(player);
+				chan.setActiveChannel(player.getName(), config.getString("channels.default-channel", "global"));
+				chan.save();
+			}
+		} else {	
+			chan.setActiveChannel(player.getName(), config.getString("channels.default-channel", "global"));			
 			chan.save();
 		}
 	}
