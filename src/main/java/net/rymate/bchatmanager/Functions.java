@@ -43,7 +43,11 @@ public class Functions {
 
     public String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
-        return format.replace("%prefix", getInfo(player, "prefix")).replace("%suffix", getInfo(player, "suffix")).replace("%world", worldName).replace("%player", player.getName()).replace("%displayname", player.getDisplayName());
+        return format.replace("%prefix", getInfo(player, "prefix"))
+            .replace("%suffix", getInfo(player, "suffix"))
+            .replace("%world", worldName)
+            .replace("%player", player.getName())
+            .replace("%displayname", player.getDisplayName());
     }
 
     public String replaceTime(String message) {

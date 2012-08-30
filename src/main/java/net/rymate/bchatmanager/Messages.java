@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 public enum Messages {
 
     PASSWORD_WRONG("Password incorrect."),
-    NO_PERMISSIONS("Your server administrator does not allow you to use this command."),
+    NO_PERMISSIONS("Your server administrator does not allow you to use this command. :("),
     ENABLED("bChatManager enabled! Have a nice day :)"),
     CHANNEL_REMOVED("The channel %channel has been destroyed"),
     CHANNEL_JOINED("%player has joined %channel"),

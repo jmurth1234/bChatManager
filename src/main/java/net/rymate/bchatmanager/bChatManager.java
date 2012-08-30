@@ -290,11 +290,14 @@ public class bChatManager extends JavaPlugin {
             }
 
             if (sender.hasPermission("bchatmanager.reload")) {
-                getServer().getPluginManager().disablePlugin(this);
-                getServer().getPluginManager().enablePlugin(this);
-                sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
-                return true;
+            	Messages.NO_PERMISSIONS.send(sender);
+            	return true;
             }
+
+            getServer().getPluginManager().disablePlugin(this);
+            getServer().getPluginManager().enablePlugin(this);
+            sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
+            return true;
         }
 
         return true;
