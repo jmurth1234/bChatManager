@@ -44,7 +44,7 @@ public class LegacyChatListener implements Listener {
 
     public String MESSAGE_FORMAT = "%prefix %player: &f%message";
     public String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
-    public String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
+    public String PERSONAL_MESSAGE_FORMAT = "[MSG] [%player -> %reciever] &f%message";
     public String DISPLAY_NAME_FORMAT = "%prefix%player%suffix";
     public String ALERT_FORMAT = "&c[ALERT] &f%message";
     public Boolean RANGED_MODE = false;

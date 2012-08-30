@@ -299,7 +299,6 @@ public class bChatManager extends JavaPlugin {
             sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
             return true;
         }
-
         return true;
     }
 }
