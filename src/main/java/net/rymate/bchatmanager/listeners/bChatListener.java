@@ -47,7 +47,7 @@ public class bChatListener implements Listener {
 	public String MESSAGE_FORMAT = "&2[%channel] %prefix %player: &f%message";
 	public String DISPLAY_NAME_FORMAT = "%prefix%player%suffix";
 	public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
-	public String PERSONAL_MESSAGE_FORMAT = "[FROM] %prefix %player ---> &f%message";
+	public String PERSONAL_MESSAGE_FORMAT = "[MSG] [%player -> %reciever] &f%message";
 
 	private final bChatManager plugin;
 	Configuration config;
@@ -177,8 +177,7 @@ public class bChatListener implements Listener {
 		if (chan.getPlayerChannels(player.getName(), glob).isEmpty()) {
 			// chan.getChannel(config.getString("channels.default-channel",
 			// "global")).addPlayer(player);
-			chan.setActiveChannel(player.getName(),
-					config.getString("channels.default-channel", "global"));
+			chan.setActiveChannel(player.getName(), config.getString("channels.default-channel", "global"));
 			chan.save();
 		}
 	}
