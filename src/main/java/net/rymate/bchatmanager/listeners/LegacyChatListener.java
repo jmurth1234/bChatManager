@@ -99,7 +99,23 @@ public class LegacyChatListener implements Listener {
             chatMessage = chatMessage.substring(1);
             String[] messageSplit = chatMessage.split(" ");
             Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
-            if (reciever == null) {
+            if (messageSplit[0] == ops) {
+                chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
+                chatMessage = chatMessage.replaceAll("%reciever", messageSplit[0]);
+
+                List<Player> recipients = new LinkedList<Player>();
+                event.getRecipients().clear();
+                event.getRecipients().add(player);
+
+                for (Player recipient : Bukkit.getServer().getOnlinePlayers()) {
+                    if (recipient.isOp()) {
+                        recipients.add(recipient);
+                    }
+                }
+
+                event.getRecipients().addAll(recipients);
+                message = PERSONAL_MESSAGE_FORMAT;
+            } else if (reciever == null) {
                 player.sendMessage("This player isn't online or you just typed the @ symbol! Ignoring.");
                 event.setCancelled(true);
             } else {
