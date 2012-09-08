@@ -125,9 +125,9 @@ public class ChannelManager implements Serializable {
                 //yay, it worked!
             } catch (Exception e) {
                 //something went wrong!
-                Messages.ERR.printErr("%error", e.getMessage());
+                //Messages.ERR.printErr("%error", e.getMessage());
                 e.printStackTrace();
-                Messages.ERR_END.printErr(null, null);
+                //Messages.ERR_END.printErr(null, null);
                 return false;
             }
         } else {
@@ -142,9 +142,9 @@ public class ChannelManager implements Serializable {
             return true;
         } catch (Exception e) {
             //something went wrong!
-            Messages.ERR.printErr("%error", e.getMessage());
+            //Messages.ERR.printErr("%error", e.getMessage());
             e.printStackTrace();
-            Messages.ERR_END.printErr(null, null);
+            //Messages.ERR_END.printErr(null, null);
             return false;
         }
     }

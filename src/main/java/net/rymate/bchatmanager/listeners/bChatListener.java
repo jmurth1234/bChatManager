@@ -91,7 +91,7 @@ public class bChatListener implements Listener {
             chatMessage = chatMessage.substring(1);
             String[] messageSplit = chatMessage.split(" ");
             Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
-            if (messageSplit[0] == ops) {
+            if (messageSplit[0] == "ops") {
                 chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
                 chatMessage = chatMessage.replaceAll("%reciever", messageSplit[0]);
 
