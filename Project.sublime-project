@@ -2,7 +2,7 @@
 	"folders":
 	[
 		{
-			"path": "/C/Users/Ryan/bChatManager"
+			"path": "~/bChatManager"
 		}
 	],
 
@@ -10,8 +10,8 @@
 		{
 	        "sublimejava_classpath":
 	        [
-	            "C:/Users/Ryan/.m2/repository/org/bukkit/bukkit/1.3.1-R1.0/bukkit-1.3.1-R1.0.jar",
-	            "C:/Users/Ryan/bChatManager/target/classes"
+	            "~/.m2/repository/org/bukkit/bukkit/1.3.1-R1.0/bukkit-1.3.1-R1.0.jar",
+	            "~/bChatManager/target/classes"
 	        ]
 	    }
     

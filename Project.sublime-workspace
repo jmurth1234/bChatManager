@@ -32,14 +32,11 @@
 			}
 		},
 		{
-			"contents": "formats: \n    display-name-format: '%player'\n    message-format: '%prefix %player: &f%message'\n    local-message-format: '[LOCAL] %prefix %player: &f%message'\n    personal-message-format: '[MSG] [%player -> %reciever] &f%message'\n    alert-format: '&c[ALERT] &f%message'\n    me-format: '* %player %message'\n    op-message-format: '&c[OPS ONLY] %player: &f%message'\ntoggles:\n    control-me: true\n    ranged-mode: false\n    chat-channels: true\n    filter-ips: true\nother:\n    chat-range: 100.0\nchannels:\n    default-channel: \"global\"\n    channel-limit: 0\n    channel-chat-format: '&2[%channel] %prefix %player: &f%message'",
 			"file": "src/main/resources/config.yml",
-			"file_size": 638,
-			"file_write_time": 129908161222997862,
 			"settings":
 			{
 				"buffer_size": 620,
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -135,6 +132,7 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -149,8 +147,8 @@
 						"selection":
 						[
 							[
-								1959,
-								1959
+								2960,
+								2960
 							]
 						],
 						"settings":
@@ -160,7 +158,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 648.0,
+						"translation.y": 873.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -257,7 +255,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 100.0
+		"height": 160.0
 	},
 	"replace":
 	{
