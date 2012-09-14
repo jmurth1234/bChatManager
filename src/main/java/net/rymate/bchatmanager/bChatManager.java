@@ -261,7 +261,7 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-            if (sender.hasPermission("bchatmanager.focua")) {
+            if (sender.hasPermission("bchatmanager.focus")) {
                 Messages.NO_PERMISSIONS.send(sender);
             }
 
