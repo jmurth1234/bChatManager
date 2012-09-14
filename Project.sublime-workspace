@@ -32,13 +32,18 @@
 			}
 		},
 		{
-			"contents": "formats: \n    display-name-format: '%player'\n    message-format: '%prefix %player: &f%message'\n    local-message-format: '[LOCAL] %prefix %player: &f%message'\n    personal-message-format: '[MSG] [%player -> %reciever] &f%message'\n    alert-format: '&c[ALERT] &f%message'\n    me-format: '* %player %message'\n    op-message-format: '&c[OPS ONLY] %player: &f%message'\ntoggles:\n    control-me: true\n    ranged-mode: false\n    chat-channels: true\n    filter-ips: true\nother:\n    chat-range: 100.0\nchannels:\n    default-channel: \"global\"\n    channel-limit: 0\n    channel-chat-format: '&2[%channel] %prefix %player: &f%message'",
-			"file": "src/main/resources/config.yml",
-			"file_size": 638,
-			"file_write_time": 129908161222997862,
+			"file": "src/main/java/net/rymate/bchatmanager/Functions.java",
 			"settings":
 			{
-				"buffer_size": 620,
+				"buffer_size": 5177,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Ryan/Downloads/ubuntu_12.04.sh",
+			"settings":
+			{
+				"buffer_size": 5523,
 				"line_ending": "Windows"
 			}
 		}
@@ -79,13 +84,19 @@
 	},
 	"file_history":
 	[
-		"/C/Users/Ryan/aseprite-0.9.5-win32/aseprite.ini",
+		"/C/Users/Ryan/FusionLeaf/webroot/localhost/_hidden/php_script/define.php",
+		"/C/Users/Ryan/FusionLeaf/webroot/localhost/404.php",
+		"/C/Users/Ryan/FusionLeaf/webroot/localhost/index.php",
+		"/C/Users/Ryan/FusionLeaf/webroot/fusionleaf/com/index.php",
+		"/C/Users/Ryan/FusionLeaf/webroot/localhost/_hidden/php_script/setup.php",
 		"/C/Users/Ryan/bChatManager/src/main/resources/plugin.yml",
+		"/C/Users/Ryan/bChatManager/src/main/resources/config.yml",
+		"/C/Users/Ryan/FusionLeaf/webroot/localhost/_hidden/indexinc.php",
+		"/C/Users/Ryan/aseprite-0.9.5-win32/aseprite.ini",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
-		"/C/Users/Ryan/bChatManager/src/main/resources/config.yml",
 		"/C/Users/Ryan/bChatManager/src/main/java/net/rymate/bchatmanager/util/SLAPI.java",
 		"/C/Users/Ryan/bChatManager/src/main/java/net/rymate/bchatmanager/listeners/bChatListener.java",
 		"/C/Users/Ryan/bChatManager/src/main/java/net/rymate/bchatmanager/listeners/LegacyChatListener.java",
@@ -135,6 +146,7 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -195,28 +207,56 @@
 				},
 				{
 					"buffer": 2,
-					"file": "src/main/resources/config.yml",
+					"file": "src/main/java/net/rymate/bchatmanager/Functions.java",
 					"settings":
 					{
-						"buffer_size": 620,
+						"buffer_size": 5177,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								462,
-								462
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/YAML/YAML.tmLanguage",
+							"syntax": "Packages/Java/Java.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/Users/Ryan/Downloads/ubuntu_12.04.sh",
+					"settings":
+					{
+						"buffer_size": 5523,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2489,
+								2506
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1080.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
