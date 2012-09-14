@@ -55,6 +55,7 @@ public class bChatListener implements Listener {
     ChannelManager chan;
     private final String glob;
     private boolean channelChat = true;
+    private boolean IP_FILTER = true;
 
     public bChatListener(File configFile, bChatManager p) {
         config = new Configuration(configFile);
@@ -68,6 +69,10 @@ public class bChatListener implements Listener {
         this.PERSONAL_MESSAGE_FORMAT = config
                                        .getString("formats.personal-message-format",
                                                this.PERSONAL_MESSAGE_FORMAT);
+
+
+        this.IP_FILTER = config.getBoolean("toggles.ip-filter", true);
+
 
         this.glob = config.getString("channels.default-channel", "global");
         this.plugin = p;
@@ -161,6 +166,10 @@ public class bChatListener implements Listener {
         message = f.replaceTime(message);
         message = message.replace("%channel",
                                   chan.getActiveChannel(player.getName()).getName());
+
+        if (IP_FILTER) {
+            message = message.replaceAll("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}", "lmao");
+        }
         if (channelChat) {
             // start channel stuff :D
             Channel c = chan.getActiveChannel(player.getName());

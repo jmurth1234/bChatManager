@@ -32,10 +32,42 @@
 			}
 		},
 		{
-			"file": "src/main/resources/config.yml",
+			"file": "pom.xml",
 			"settings":
 			{
-				"buffer_size": 620,
+				"buffer_size": 3397,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/java/net/rymate/bchatmanager/channels/ChannelManager.java",
+			"settings":
+			{
+				"buffer_size": 4580,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/net/rymate/bchatmanager/listeners/LegacyChatListener.java",
+			"settings":
+			{
+				"buffer_size": 7688,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/java/net/rymate/bchatmanager/listeners/bChatListener.java",
+			"settings":
+			{
+				"buffer_size": 8697,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/rymate/bukkit/launch.sh",
+			"settings":
+			{
+				"buffer_size": 77,
 				"line_ending": "Unix"
 			}
 		}
@@ -76,6 +108,8 @@
 	},
 	"file_history":
 	[
+		"/home/rymate/.m2/repository/de/bananaco/bPermissions/maven-metadata-local.xml",
+		"/home/rymate/bChatManager/src/main/resources/config.yml",
 		"/C/Users/Ryan/aseprite-0.9.5-win32/aseprite.ini",
 		"/C/Users/Ryan/bChatManager/src/main/resources/plugin.yml",
 		"/C/Users/Ryan/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
@@ -115,6 +149,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ops"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -132,7 +167,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -158,7 +193,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 873.0,
+						"translation.y": 315.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -175,8 +210,8 @@
 						"selection":
 						[
 							[
-								560,
-								560
+								1220,
+								1220
 							]
 						],
 						"settings":
@@ -186,32 +221,142 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 130.0,
+						"translation.y": 60.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "src/main/resources/config.yml",
+					"file": "pom.xml",
 					"settings":
 					{
-						"buffer_size": 620,
+						"buffer_size": 3397,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								462,
-								462
+								1994,
+								1994
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/YAML/YAML.tmLanguage",
+							"syntax": "Packages/XML/XML.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/main/java/net/rymate/bchatmanager/channels/ChannelManager.java",
+					"settings":
+					{
+						"buffer_size": 4580,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4497,
+								4497
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1305.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/main/java/net/rymate/bchatmanager/listeners/LegacyChatListener.java",
+					"settings":
+					{
+						"buffer_size": 7688,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6750,
+								6750
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2025.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/main/java/net/rymate/bchatmanager/listeners/bChatListener.java",
+					"settings":
+					{
+						"buffer_size": 8697,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6897,
+								6897
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2335.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/home/rymate/bukkit/launch.sh",
+					"settings":
+					{
+						"buffer_size": 77,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								34,
+								34
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -255,7 +400,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 160.0
+		"height": 240.0
 	},
 	"replace":
 	{
