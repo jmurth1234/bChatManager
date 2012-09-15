@@ -48,7 +48,6 @@ public class bChatListener implements Listener {
     public String DISPLAY_NAME_FORMAT = "%prefix%player%suffix";
     public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
     public String PERSONAL_MESSAGE_FORMAT = "[MSG] [%player -> %reciever] &f%message";
-
     private final bChatManager plugin;
     Configuration config;
     Functions f;
@@ -61,14 +60,14 @@ public class bChatListener implements Listener {
         config = new Configuration(configFile);
         config.init(p);
         this.MESSAGE_FORMAT = config.getString(
-                                  "channels.channel-message-format", this.MESSAGE_FORMAT);
+                "channels.channel-chat-format", this.MESSAGE_FORMAT);
         this.DISPLAY_NAME_FORMAT = config.getString(
-                                       "formats.display-name-format", this.DISPLAY_NAME_FORMAT);
+                "formats.display-name-format", this.DISPLAY_NAME_FORMAT);
         this.OP_MESSAGE_FORMAT = config.getString("formats.op-message-format",
-                                 this.OP_MESSAGE_FORMAT);
+                this.OP_MESSAGE_FORMAT);
         this.PERSONAL_MESSAGE_FORMAT = config
-                                       .getString("formats.personal-message-format",
-                                               this.PERSONAL_MESSAGE_FORMAT);
+                .getString("formats.personal-message-format",
+                this.PERSONAL_MESSAGE_FORMAT);
 
 
         this.IP_FILTER = config.getBoolean("toggles.ip-filter", true);
@@ -118,7 +117,7 @@ public class bChatListener implements Listener {
             } else {
                 chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
                 chatMessage = chatMessage.replaceAll("%reciever",
-                                                     messageSplit[0]);
+                        messageSplit[0]);
                 channelChat = false;
                 event.getRecipients().clear();
                 event.getRecipients().add(player);
@@ -152,7 +151,7 @@ public class bChatListener implements Listener {
             event.setCancelled(true);
             List<Player> pl = (List<Player>) event.getRecipients();
             message = message.replace("%message", chatMessage).replace(
-                          "%displayname", "%1$s");
+                    "%displayname", "%1$s");
             message = f.replacePlayerPlaceholders(player, message);
             message = f.replaceTime(message);
             for (int j = 0; j < pl.size(); j++) {
@@ -161,11 +160,11 @@ public class bChatListener implements Listener {
         }
 
         message = message.replace("%message", "%2$s").replace("%displayname",
-                  "%1$s");
+                "%1$s");
         message = f.replacePlayerPlaceholders(player, message);
         message = f.replaceTime(message);
         message = message.replace("%channel",
-                                  chan.getActiveChannel(player.getName()).getName());
+                chan.getActiveChannel(player.getName()).getName());
 
         if (IP_FILTER) {
             message = message.replaceAll("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}", "lmao");
