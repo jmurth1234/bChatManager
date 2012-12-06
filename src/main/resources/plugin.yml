@@ -1,7 +1,7 @@
 name: bChatManager
 main: net.rymate.bchatmanager.bChatManager
-depend: [ bPermissions ]
-version: 2.0
+depend: [ Vault ]
+version: 3.0-RECODE
 author: rymate1234
 website: www.rymate.co.uk
 description: Chat management plugin for bPermissions based of PEX ChatManager
@@ -10,18 +10,6 @@ commands:
     description: Sends a message in the third person!
     usage: /me <message>
     aliases: [m, moi]
-  join:
-    description: Joins a specified channel
-    usage: /join <channel>
-    aliases: [j]
-  leave:
-    description: Leaves a channel
-    usage: /leave <channel>
-    aliases: [l]
-  focus:
-    description: Focuses a channel so you chat in it
-    usage: /focus <channnel>
-    aliases: [f]
   bchatreload:
     description: Reloads bChatManager
     usage: /bchatreload

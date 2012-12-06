@@ -1,19 +1,11 @@
 formats: 
-    display-name-format: '%player'
     message-format: '%prefix %player: &f%message'
     local-message-format: '[LOCAL] %prefix %player: &f%message'
     personal-message-format: '[MSG] [%player -> %reciever] &f%message'
-    alert-format: '&c[ALERT] &f%message'
     me-format: '* %player %message'
     op-message-format: '&c[OPS ONLY] %player: &f%message'
 toggles:
     control-me: true
     ranged-mode: false
-    chat-channels: true
-    filter-ips: true
 other:
     chat-range: 100.0
-channels:
-    default-channel: "global"
-    channel-limit: 0
-    channel-chat-format: '&2[%channel] %prefix %player: &f%message'
