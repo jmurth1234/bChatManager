@@ -1,0 +1,37 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.rymate.bchatmanager;
+
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.Listener;
+
+/**
+ * @author rymate
+ */
+public class bChatListener implements Listener {
+    public String MESSAGE_FORMAT = "%prefix %player: &f%message";
+    public String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
+    public String PERSONAL_MESSAGE_FORMAT = "[MSG] [%player -> %reciever] &f%message";
+    public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
+
+    public Boolean RANGED_MODE = false;
+    public double CHAT_RANGE = 100d;
+    private final bChatManager plugin;
+    YamlConfiguration config;
+
+    public bChatListener(bChatManager aThis) {
+        config = new YamlConfiguration();
+        //config.load();
+        this.MESSAGE_FORMAT = config.getString("formats.message-format", this.MESSAGE_FORMAT);
+        this.LOCAL_MESSAGE_FORMAT = config.getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
+        this.PERSONAL_MESSAGE_FORMAT = config.getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
+        this.RANGED_MODE = config.getBoolean("toggles.ranged-mode", this.RANGED_MODE);
+        this.CHAT_RANGE = config.getDouble("other.chat-range", this.CHAT_RANGE);
+
+        this.plugin = aThis;
+    }
+
+}
