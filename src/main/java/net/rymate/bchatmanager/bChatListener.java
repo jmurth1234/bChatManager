@@ -4,9 +4,12 @@
  */
 package net.rymate.bchatmanager;
 
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  * @author rymate
@@ -34,4 +37,29 @@ public class bChatListener implements Listener {
         this.plugin = aThis;
     }
 
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        String message = MESSAGE_FORMAT;
+        boolean localChat = RANGED_MODE;
+
+        String chatMessage = event.getMessage();
+
+        message = plugin.replacePlayerPlaceholders(player, message);
+        message = plugin.colorize(message);
+
+        if (player.hasPermission("bchatmanager.color")) {
+            chatMessage = plugin.colorize(chatMessage);
+        }
+
+        message = message.replace("%message", chatMessage);
+
+        event.setFormat(message);
+        event.setMessage(chatMessage);
+
+    }
 }

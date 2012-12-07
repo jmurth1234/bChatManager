@@ -43,15 +43,6 @@ public class bChatManager extends JavaPlugin {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public String replacePlayerPlaceholders(Player player, String format) {
-        String worldName = player.getWorld().getName();
-        return format.replace("%prefix", chat.getPlayerPrefix(player))
-                .replace("%suffix", chat.getPlayerSuffix(player))
-                .replace("%world", worldName)
-                .replace("%player", player.getName())
-                .replace("%displayname", player.getDisplayName());
-    }
-
     /*
      * Code to setup the Chat variable in Vault. Allows me to hook to all the prefix plugins.
      */
@@ -62,6 +53,26 @@ public class bChatManager extends JavaPlugin {
         }
 
         return (chat != null);
+    }
+
+    //
+    //  Begin methods from Functions.java
+    //
+
+    public String replacePlayerPlaceholders(Player player, String format) {
+        String worldName = player.getWorld().getName();
+        return format.replace("%prefix", chat.getPlayerPrefix(player))
+                .replace("%suffix", chat.getPlayerSuffix(player))
+                .replace("%world", worldName)
+                .replace("%player", player.getName())
+                .replace("%displayname", player.getDisplayName());
+    }
+
+    public String colorize(String string) {
+        if (string == null) {
+            return "";
+        }
+        return string.replaceAll("&([a-z0-9])", "\u00A7$1");
     }
 
 
