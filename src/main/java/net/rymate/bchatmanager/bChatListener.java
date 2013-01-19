@@ -26,15 +26,12 @@ public class bChatListener implements Listener {
     YamlConfiguration config;
 
     public bChatListener(bChatManager aThis) {
-        config = new YamlConfiguration();
-        //config.load();
-        this.MESSAGE_FORMAT = config.getString("formats.message-format", this.MESSAGE_FORMAT);
-        this.LOCAL_MESSAGE_FORMAT = config.getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
-        this.PERSONAL_MESSAGE_FORMAT = config.getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
-        this.RANGED_MODE = config.getBoolean("toggles.ranged-mode", this.RANGED_MODE);
-        this.CHAT_RANGE = config.getDouble("other.chat-range", this.CHAT_RANGE);
-
         this.plugin = aThis;
+        this.MESSAGE_FORMAT = plugin.config.getString("formats.message-format", this.MESSAGE_FORMAT);
+        this.LOCAL_MESSAGE_FORMAT = plugin.config.getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
+        this.PERSONAL_MESSAGE_FORMAT = plugin.config.getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
+        this.RANGED_MODE = plugin.config.getBoolean("toggles.ranged-mode", this.RANGED_MODE);
+        this.CHAT_RANGE = plugin.config.getDouble("other.chat-range", this.CHAT_RANGE);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -49,7 +46,7 @@ public class bChatListener implements Listener {
         boolean localChat = RANGED_MODE;
         
         if (localChat) {
-            message = LOCAl_MESSAGE_FORMAT;
+            //message = LOCAl_MESSAGE_FORMAT;
             //TODO: reimplement local chat
         }
 

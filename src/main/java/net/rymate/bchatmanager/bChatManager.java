@@ -4,9 +4,12 @@ import net.milkbowl.vault.chat.Chat;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import org.mcstats.Metrics;
 
 import java.io.IOException;
+import java.io.File;
 
 /**
  * Main class
@@ -17,6 +20,7 @@ public class bChatManager extends JavaPlugin {
 
     public static Chat chat = null;
     private bChatListener listener;
+    public YamlConfiguration config;
 
     public void onEnable() {
         //setup the config
@@ -40,7 +44,10 @@ public class bChatManager extends JavaPlugin {
     }
 
     private void setupConfig() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        File configFile = new File(this.getDataFolder() + File.separator + "config.yml");
+        config = new YamlConfiguration();
+        config.loadConfiguration(configFile);
+
     }
 
     /*
