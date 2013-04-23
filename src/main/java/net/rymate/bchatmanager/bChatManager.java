@@ -10,8 +10,11 @@ import net.rymate.bchatmanager.metrics.Metrics;
 
 import java.io.IOException;
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.Location;
 
 /**
  * Main class
@@ -91,5 +94,32 @@ public class bChatManager extends JavaPlugin {
             return "";
         }
         return string.replaceAll("&([a-z0-9])", "\u00A7$1");
+    }
+
+    public List<Player> getLocalRecipients(Player sender, String message, double range) {
+        Location playerLocation = sender.getLocation();
+        List<Player> recipients = new LinkedList<Player>();
+        double squaredDistance = Math.pow(range, 2);
+        for (Player recipient : getServer().getOnlinePlayers()) {
+            // Recipient are not from same world
+            if (!recipient.getWorld().equals(sender.getWorld())) {
+                continue;
+            }
+            if (playerLocation.distanceSquared(recipient.getLocation()) > squaredDistance) {
+                continue;
+            }
+            recipients.add(recipient);
+        }
+        return recipients;
+    }
+
+    public List<Player> getSpies() {
+        List<Player> recipients = new LinkedList<Player>();
+        for (Player recipient : this.getServer().getOnlinePlayers()) {
+            if (recipient.hasPermission("bchatmanager.spy")) {
+                recipients.add(recipient);
+            }
+        }
+        return recipients;
     }
 }
