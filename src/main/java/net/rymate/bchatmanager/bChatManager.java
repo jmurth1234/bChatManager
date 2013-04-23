@@ -36,7 +36,6 @@ public class bChatManager extends JavaPlugin {
         setupChat();
 
         //setup the Metrics
-
         Metrics metrics;
         try {
             metrics = new Metrics(this);
@@ -50,6 +49,13 @@ public class bChatManager extends JavaPlugin {
 
     private void setupConfig() {
         File configFile = new File(this.getDataFolder() + File.separator + "config.yml");
+        try {
+            if (!configFile.exists()) {
+                this.saveDefaultConfig();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(bChatManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
         config = new YamlConfiguration();
         config.loadConfiguration(configFile);
 
@@ -76,7 +82,8 @@ public class bChatManager extends JavaPlugin {
                 .replace("%suffix", chat.getPlayerSuffix(player))
                 .replace("%world", worldName)
                 .replace("%player", player.getName())
-                .replace("%displayname", player.getDisplayName());
+                .replace("%displayname", player.getDisplayName())
+                .replace("%group", chat.getPrimaryGroup(player));
     }
 
     public String colorize(String string) {
