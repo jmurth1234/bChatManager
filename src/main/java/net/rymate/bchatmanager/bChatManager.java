@@ -6,10 +6,12 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import org.mcstats.Metrics;
+import net.rymate.bchatmanager.metrics.Metrics;
 
 import java.io.IOException;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Main class
@@ -34,12 +36,15 @@ public class bChatManager extends JavaPlugin {
         setupChat();
 
         //setup the Metrics
+
+        Metrics metrics;
         try {
-            Metrics metrics = new Metrics(this);
+            metrics = new Metrics(this);
             metrics.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(bChatManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         System.out.println("[bChatManager] Enabled!");
     }
 
@@ -65,7 +70,6 @@ public class bChatManager extends JavaPlugin {
     //
     //  Begin methods from Functions.java
     //
-
     public String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
         return format.replace("%prefix", chat.getPlayerPrefix(player))
@@ -81,6 +85,4 @@ public class bChatManager extends JavaPlugin {
         }
         return string.replaceAll("&([a-z0-9])", "\u00A7$1");
     }
-
-
 }
