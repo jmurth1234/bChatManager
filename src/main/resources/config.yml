@@ -7,5 +7,6 @@ formats:
 toggles:
     control-me: true
     ranged-mode: false
+    special-features: true
 other:
     chat-range: 100.0
