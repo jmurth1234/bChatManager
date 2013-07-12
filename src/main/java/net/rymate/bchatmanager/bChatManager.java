@@ -14,7 +14,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 
 /**
  * Main class
@@ -121,5 +124,71 @@ public class bChatManager extends JavaPlugin {
             }
         }
         return recipients;
+    }
+    
+        @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if ((command.getName().equals("me")) && (config.getBoolean("toggles.control-me", true))) {
+            String meFormat = config.getString("formats.me-format", "* %player %message");
+            Double chatRange = config.getDouble("other.chat-range", 100);
+            boolean rangedMode = config.getBoolean("toggles.ranged-mode", false);
+            if (args.length < 1) {
+                sender.sendMessage(ChatColor.RED + "Ya need to type something after it :P");
+                return false;
+            }
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
+                return true;
+            }
+            Player player = (Player) sender;
+            int i;
+            StringBuilder me = new StringBuilder();
+            for (i = 0; i < args.length; i++) {
+                me.append(args[i]);
+                me.append(" ");
+            }
+            String meMessage = me.toString();
+            String message = meFormat;
+            message = colorize(message);
+
+            if (sender.hasPermission("bchatmanager.chat.color")) {
+                meMessage = f.colorize(meMessage);
+            }
+
+            message = message.replace("%message", meMessage).replace("%displayname", "%1$s");
+            message = replacePlayerPlaceholders(player, message);
+
+            if (rangedMode) {
+                List<Player> pl = getLocalRecipients(player, message, chatRange);
+                for (int j = 0; j < pl.size(); j++) {
+                    pl.get(j).sendMessage(message);
+                }
+                sender.sendMessage(message);
+                System.out.println(message);
+            } else {
+                getServer().broadcastMessage(message);
+            }
+            return true;
+        }
+
+        if ((command.getName().equals("bchatreload"))) {
+            if (!(sender instanceof Player)) {
+                getServer().getPluginManager().disablePlugin(this);
+                getServer().getPluginManager().enablePlugin(this);
+                sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
+                return true;
+            }
+
+            if (sender.hasPermission("bchatmanager.reload")) {
+                sender.sendMessage(ChatColor.AQUA + "[bChatManager] Wtf, you can't do this!");
+                return true;
+            }
+
+            getServer().getPluginManager().disablePlugin(this);
+            getServer().getPluginManager().enablePlugin(this);
+            sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
+            return true;
+        }
+        return true;
     }
 }

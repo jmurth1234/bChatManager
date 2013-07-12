@@ -59,6 +59,7 @@ public class bChatListener implements Listener {
             event.getRecipients().addAll(plugin.getLocalRecipients(player, message, range));
             event.getRecipients().addAll(plugin.getSpies());
         }
+        
         if (SPECIAL_FEATURES) {
             if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.message")) {
                 chatMessage = chatMessage.substring(1);
@@ -96,6 +97,7 @@ public class bChatListener implements Listener {
                 }
             }
         }
+        
         message = plugin.replacePlayerPlaceholders(player, message);
         message = plugin.colorize(message);
 
