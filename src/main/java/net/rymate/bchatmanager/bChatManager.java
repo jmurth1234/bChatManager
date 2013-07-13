@@ -152,7 +152,7 @@ public class bChatManager extends JavaPlugin {
             message = colorize(message);
 
             if (sender.hasPermission("bchatmanager.chat.color")) {
-                meMessage = f.colorize(meMessage);
+                meMessage = colorize(meMessage);
             }
 
             message = message.replace("%message", meMessage).replace("%displayname", "%1$s");
