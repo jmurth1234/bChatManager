@@ -26,7 +26,7 @@ public class bChatListener implements Listener {
     public Boolean SPECIAL_FEATURES = true;
     public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
-    YamlConfiguration config;
+    //YamlConfiguration config;
 
     public bChatListener(bChatManager aThis) {
         this.plugin = aThis;
