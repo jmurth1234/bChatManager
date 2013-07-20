@@ -64,7 +64,6 @@ public class bChatManager extends JavaPlugin {
         }
         config = new YamlConfiguration();
         config.loadConfiguration(configFile);
-
     }
 
     /*

@@ -26,17 +26,16 @@ public class bChatListener implements Listener {
     public Boolean SPECIAL_FEATURES = true;
     public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
-    YamlConfiguration config;
 
     public bChatListener(bChatManager aThis) {
         this.plugin = aThis;
-        this.MESSAGE_FORMAT = plugin.config.getString("formats.message-format", this.MESSAGE_FORMAT);
-        this.LOCAL_MESSAGE_FORMAT = plugin.config.getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
-        this.PERSONAL_MESSAGE_FORMAT = plugin.config.getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
-        this.RANGED_MODE = plugin.config.getBoolean("toggles.ranged-mode", this.RANGED_MODE);
-        this.SPECIAL_FEATURES = plugin.config.getBoolean("toggles.special-features", this.SPECIAL_FEATURES);
+        this.MESSAGE_FORMAT = plugin.getConfig().getString("formats.message-format", this.MESSAGE_FORMAT);
+        this.LOCAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
+        this.PERSONAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
+        this.RANGED_MODE = plugin.getConfig().getBoolean("toggles.ranged-mode", this.RANGED_MODE);
+        this.SPECIAL_FEATURES = plugin.getConfig().getBoolean("toggles.special-features", this.SPECIAL_FEATURES);
 
-        this.CHAT_RANGE = plugin.config.getDouble("other.chat-range", this.CHAT_RANGE);
+        this.CHAT_RANGE = plugin.getConfig().getDouble("other.chat-range", this.CHAT_RANGE);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
