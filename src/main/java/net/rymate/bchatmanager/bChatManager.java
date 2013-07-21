@@ -63,7 +63,7 @@ public class bChatManager extends JavaPlugin {
             Logger.getLogger(bChatManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         config = new YamlConfiguration();
-        config.loadConfiguration(configFile);
+        config = YamlConfiguration.loadConfiguration(configFile);
     }
 
     /*
