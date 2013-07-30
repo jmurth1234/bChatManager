@@ -52,16 +52,14 @@ public class bChatListener implements Listener {
 
         boolean localChat = RANGED_MODE;
 
-        if (localChat) {
-            message = LOCAL_MESSAGE_FORMAT;
-            double range = CHAT_RANGE;
-            event.getRecipients().clear();
-            event.getRecipients().addAll(plugin.getLocalRecipients(player, message, range));
-            event.getRecipients().addAll(plugin.getSpies());
-        }
 
         if (SPECIAL_FEATURES) {
+            if (chatMessage.startsWith("!") && player.hasPermission("bchatmanager.chat.global")) {
+                localChat = false;
+                chatMessage = chatMessage.substring(1);
+            }
             if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.message")) {
+                localChat = false;
                 chatMessage = chatMessage.substring(1);
                 String[] messageSplit = chatMessage.split(" ");
                 Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
@@ -88,7 +86,6 @@ public class bChatListener implements Listener {
                     chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
                     message = PERSONAL_MESSAGE_FORMAT;
                     message = message.replaceAll("%reciever", messageSplit[0]);
-                    localChat = false;
                     event.getRecipients().clear();
                     event.getRecipients().add(player);
                     event.getRecipients().add(reciever);
@@ -97,6 +94,16 @@ public class bChatListener implements Listener {
                 }
             }
         }
+        
+        if (localChat) {
+            message = LOCAL_MESSAGE_FORMAT;
+            double range = CHAT_RANGE;
+            event.getRecipients().clear();
+            event.getRecipients().addAll(plugin.getLocalRecipients(player, message, range));
+            event.getRecipients().addAll(plugin.getSpies());
+        }
+
+
 
         message = plugin.replacePlayerPlaceholders(player, message);
         message = plugin.colorize(message);
