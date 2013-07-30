@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.5.1-R0.2</version>
+            <version>1.6.1-R0.1-SNAPSHOT</version>
         </dependency>
         
         <dependency>
@@ -44,6 +44,14 @@
             <version>2.0.3</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.massivecraft.mcore</groupId>
+            <artifactId>mcore</artifactId>
+            <version>6.5.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/mcore.jar</systemPath>
         </dependency>
     </dependencies>
     

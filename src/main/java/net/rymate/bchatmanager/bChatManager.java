@@ -19,6 +19,11 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+// lel factions
+import com.massivecraft.factions.Factions;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.UPlayer;
+
 /**
  * Main class
  *
@@ -29,6 +34,7 @@ public class bChatManager extends JavaPlugin {
     public static Chat chat = null;
     private bChatListener listener;
     public YamlConfiguration config;
+    boolean factions = false;
 
     public void onEnable() {
         //setup the config
@@ -41,6 +47,7 @@ public class bChatManager extends JavaPlugin {
         //Vault chat hooks
         setupChat();
 
+
         //setup the Metrics
         Metrics metrics;
         try {
@@ -48,6 +55,11 @@ public class bChatManager extends JavaPlugin {
             metrics.start();
         } catch (IOException ex) {
             Logger.getLogger(bChatManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //check if factions is installed
+        if (this.getServer().getPluginManager().isPluginEnabled("Factions")) {
+            factions = true;
         }
 
         System.out.println("[bChatManager] Enabled!");
@@ -83,6 +95,9 @@ public class bChatManager extends JavaPlugin {
     //
     public String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
+        if (factions) {
+            format = format.replace("%faction", this.getFaction(player));
+        }
         return format.replace("%prefix", chat.getPlayerPrefix(player))
                 .replace("%suffix", chat.getPlayerSuffix(player))
                 .replace("%world", worldName)
@@ -115,6 +130,20 @@ public class bChatManager extends JavaPlugin {
         return recipients;
     }
 
+    private String getFaction(Player player) {
+        String factionString = "";
+        try {
+            Player p = this.getServer().getPlayerExact(player.getName());
+            UPlayer uplayer = UPlayer.get(p);
+            Faction faction = uplayer.getFaction();
+
+        } catch (Exception e) {
+            System.out.println("Factions support failed! Disabling factions support.");
+            factions = false;
+        }
+        return factionString;
+    }
+
     public List<Player> getSpies() {
         List<Player> recipients = new LinkedList<Player>();
         for (Player recipient : this.getServer().getOnlinePlayers()) {
@@ -124,8 +153,8 @@ public class bChatManager extends JavaPlugin {
         }
         return recipients;
     }
-    
-        @Override
+
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if ((command.getName().equals("me")) && (config.getBoolean("toggles.control-me", true))) {
             String meFormat = config.getString("formats.me-format", "* %player %message");

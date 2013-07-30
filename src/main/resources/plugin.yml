@@ -1,6 +1,7 @@
 name: bChatManager
 main: net.rymate.bchatmanager.bChatManager
 depend: [ Vault ]
+softdepend: [ Factions ]
 version: 3.0-BETA
 author: rymate1234
 website: www.rymate.co.uk
