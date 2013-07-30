@@ -29,7 +29,7 @@ public class bChatListener implements Listener {
 
     public bChatListener(bChatManager aThis) {
         this.plugin = aThis;
-        
+
         this.MESSAGE_FORMAT = plugin.getConfig().getString("formats.message-format", this.MESSAGE_FORMAT);
         this.LOCAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
         this.PERSONAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
@@ -59,7 +59,7 @@ public class bChatListener implements Listener {
             event.getRecipients().addAll(plugin.getLocalRecipients(player, message, range));
             event.getRecipients().addAll(plugin.getSpies());
         }
-        
+
         if (SPECIAL_FEATURES) {
             if (chatMessage.startsWith("@") && player.hasPermission("bchatmanager.chat.message")) {
                 chatMessage = chatMessage.substring(1);
@@ -97,7 +97,7 @@ public class bChatListener implements Listener {
                 }
             }
         }
-        
+
         message = plugin.replacePlayerPlaceholders(player, message);
         message = plugin.colorize(message);
 

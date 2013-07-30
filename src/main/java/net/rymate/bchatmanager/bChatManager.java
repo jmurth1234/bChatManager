@@ -97,6 +97,8 @@ public class bChatManager extends JavaPlugin {
         String worldName = player.getWorld().getName();
         if (factions) {
             format = format.replace("%faction", this.getFaction(player));
+        } else {
+            format = format.replace("%faction", "");
         }
         return format.replace("%prefix", chat.getPlayerPrefix(player))
                 .replace("%suffix", chat.getPlayerSuffix(player))
@@ -137,11 +139,11 @@ public class bChatManager extends JavaPlugin {
             UPlayer uplayer = UPlayer.get(p);
             Faction faction = uplayer.getFaction();
             factionString = faction.getName();
-
         } catch (Exception e) {
             System.out.println("Factions support failed! Disabling factions support.");
             factions = false;
         }
+
         return factionString;
     }
 
