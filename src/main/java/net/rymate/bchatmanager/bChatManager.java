@@ -136,6 +136,7 @@ public class bChatManager extends JavaPlugin {
             Player p = this.getServer().getPlayerExact(player.getName());
             UPlayer uplayer = UPlayer.get(p);
             Faction faction = uplayer.getFaction();
+            factionString = faction.getName();
 
         } catch (Exception e) {
             System.out.println("Factions support failed! Disabling factions support.");
