@@ -96,16 +96,16 @@ public class bChatManager extends JavaPlugin {
     public String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
         if (factions) {
-            format = format.replace("%faction", this.getFaction(player));
+            format = format.replaceAll("%faction", this.getFaction(player));
         } else {
-            format = format.replace("%faction", "");
+            format = format.replaceAll("%faction", "");
         }
-        return format.replace("%prefix", chat.getPlayerPrefix(player))
-                .replace("%suffix", chat.getPlayerSuffix(player))
-                .replace("%world", worldName)
-                .replace("%player", player.getName())
-                .replace("%displayname", player.getDisplayName())
-                .replace("%group", chat.getPrimaryGroup(player));
+        return format.replaceAll("%prefix", chat.getPlayerPrefix(player))
+                .replaceAll("%suffix", chat.getPlayerSuffix(player))
+                .replaceAll("%world", worldName)
+                .replaceAll("%player", player.getName())
+                .replaceAll("%displayname", player.getDisplayName())
+                .replaceAll("%group", chat.getPrimaryGroup(player));
     }
 
     public String colorize(String string) {
@@ -174,20 +174,24 @@ public class bChatManager extends JavaPlugin {
             Player player = (Player) sender;
             int i;
             StringBuilder me = new StringBuilder();
+            
             for (i = 0; i < args.length; i++) {
                 me.append(args[i]);
                 me.append(" ");
             }
+            
             String meMessage = me.toString();
             String message = meFormat;
-            message = colorize(message);
 
             if (sender.hasPermission("bchatmanager.chat.color")) {
                 meMessage = colorize(meMessage);
             }
 
-            message = message.replace("%message", meMessage).replace("%displayname", "%1$s");
             message = replacePlayerPlaceholders(player, message);
+            message = colorize(message);
+            
+            message = message.replace("%message", meMessage);
+
 
             if (rangedMode) {
                 List<Player> pl = getLocalRecipients(player, message, chatRange);
