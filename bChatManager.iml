@@ -8,11 +8,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.bukkit:bukkit:1.4.5-R0.2" level="project" />
-    <orderEntry type="library" name="Maven: net.milkbowl.vault:Vault:1.2.21-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.mcstats:metrics:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.bukkit:bukkit:1.6.1-R0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: net.milkbowl.vault:Vault:1.2.23-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.massivecraft.factions:Factions:2.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.massivecraft.mcore:mcore:6.5.0" level="project" />
   </component>
 </module>
 

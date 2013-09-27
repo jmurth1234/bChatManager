@@ -85,7 +85,7 @@ public class bChatListener implements Listener {
                 } else {
                     chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
                     message = PERSONAL_MESSAGE_FORMAT;
-                    message = message.replaceAll("%reciever", messageSplit[0]);
+                    message = message.replaceAll("%reciever", reciever.getDisplayName());
                     event.getRecipients().clear();
                     event.getRecipients().add(player);
                     event.getRecipients().add(reciever);
@@ -112,9 +112,10 @@ public class bChatListener implements Listener {
             chatMessage = plugin.colorize(chatMessage);
         }
 
-        message = message.replace("%message", chatMessage);
+        message = message.replace("%message", "%2$s");
 
         event.setFormat(message);
+
         event.setMessage(chatMessage);
 
     }

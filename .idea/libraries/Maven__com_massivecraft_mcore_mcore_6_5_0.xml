@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Maven: com.massivecraft.mcore:mcore:6.5.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/mcore.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
