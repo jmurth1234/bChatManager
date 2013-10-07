@@ -78,10 +78,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="bChatManager.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="bChatManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="55" selection-start="3767" selection-end="3767" vertical-scroll-proportion="0.7750865">
+            <state line="118" column="55" selection-start="3767" selection-end="3767" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -96,10 +96,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="0" selection-start="2416" selection-end="2416" vertical-scroll-proportion="0.0">
+            <state line="6" column="16" selection-start="346" selection-end="346" vertical-scroll-proportion="0.16608997">
               <folding />
             </state>
           </provider>
@@ -144,8 +144,8 @@
         <option value="$PROJECT_DIR$/src/main/resources/config.yml" />
         <option value="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java" />
         <option value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -629,23 +629,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="2416" selection-end="2416" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="80" column="47" selection-start="3434" selection-end="3434" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="35" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -659,7 +645,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="55" selection-start="3767" selection-end="3767" vertical-scroll-proportion="0.7750865">
+        <state line="118" column="55" selection-start="3767" selection-end="3767" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="35" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="16" selection-start="346" selection-end="346" vertical-scroll-proportion="0.16608997">
           <folding />
         </state>
       </provider>
