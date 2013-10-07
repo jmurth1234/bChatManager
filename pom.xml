@@ -18,6 +18,10 @@
             <id>vault-repo</id>
             <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
         </repository>
+        <repository>
+            <id>OnARandomBox</id>
+            <url>http://repo.onarandombox.com/content/groups/public</url>
+        </repository>
    
     </repositories>
     
@@ -53,6 +57,17 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/mcore.jar</systemPath>
         </dependency>
+
+        <!-- Start of Multiverse Core Dependency -->
+        <dependency>
+            <groupId>com.onarandombox.multiversecore</groupId>
+            <artifactId>Multiverse-Core</artifactId>
+            <version>2.5</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <!-- End of Multiverse Core Dependency -->
+
     </dependencies>
     
     <build>

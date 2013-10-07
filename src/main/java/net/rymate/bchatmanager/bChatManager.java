@@ -1,5 +1,7 @@
 package net.rymate.bchatmanager;
 
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -14,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -34,7 +37,9 @@ public class bChatManager extends JavaPlugin {
     public static Chat chat = null;
     private bChatListener listener;
     public YamlConfiguration config;
-    boolean factions = false;
+    private boolean factions = false;
+    private boolean mv;
+    private MultiverseCore core;
 
     public void onEnable() {
         //setup the config
@@ -60,6 +65,12 @@ public class bChatManager extends JavaPlugin {
         //check if factions is installed
         if (this.getServer().getPluginManager().isPluginEnabled("Factions")) {
             factions = true;
+        }
+
+        //check if Multiverse-Core is installed
+        if (this.getServer().getPluginManager().isPluginEnabled("Multiverse-Core")) {
+            mv = true;
+            core = (MultiverseCore) getServer().getPluginManager().getPlugin("Multiverse-Core");
         }
 
         System.out.println("[bChatManager] Enabled!");
@@ -99,6 +110,13 @@ public class bChatManager extends JavaPlugin {
             format = format.replaceAll("%faction", this.getFaction(player));
         } else {
             format = format.replaceAll("%faction", "");
+        }
+
+        if (mv) {
+            MultiverseWorld mvWorld = core.getMVWorldManager().getMVWorld(player.getWorld());
+            format = format.replaceAll("%mvworld", mvWorld.getColoredWorldString());
+        } else {
+            format = format.replaceAll("%mvworld", "");
         }
         return format.replaceAll("%prefix", chat.getPlayerPrefix(player))
                 .replaceAll("%suffix", chat.getPlayerSuffix(player))
@@ -174,12 +192,12 @@ public class bChatManager extends JavaPlugin {
             Player player = (Player) sender;
             int i;
             StringBuilder me = new StringBuilder();
-            
+
             for (i = 0; i < args.length; i++) {
                 me.append(args[i]);
                 me.append(" ");
             }
-            
+
             String meMessage = me.toString();
             String message = meFormat;
 
@@ -189,7 +207,7 @@ public class bChatManager extends JavaPlugin {
 
             message = replacePlayerPlaceholders(player, message);
             message = colorize(message);
-            
+
             message = message.replace("%message", meMessage);
 
 

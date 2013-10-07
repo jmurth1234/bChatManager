@@ -39,7 +39,7 @@ public class bChatListener implements Listener {
         this.CHAT_RANGE = plugin.getConfig().getDouble("other.chat-range", this.CHAT_RANGE);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         if (event.isCancelled()) {
             return;
@@ -78,7 +78,7 @@ public class bChatListener implements Listener {
                     }
 
                     event.getRecipients().addAll(recipients);
-                    message = PERSONAL_MESSAGE_FORMAT;
+                    message = OP_MESSAGE_FORMAT;
                 } else if (reciever == null) {
                     player.sendMessage("This player isn't online or you just typed the @ symbol! Ignoring.");
                     event.setCancelled(true);
