@@ -90,7 +90,6 @@ public class bChatListener implements Listener {
                     event.getRecipients().add(player);
                     event.getRecipients().add(reciever);
                     event.getRecipients().addAll(plugin.getSpies());
-                    message = PERSONAL_MESSAGE_FORMAT;
                 }
             }
         }
@@ -108,7 +107,7 @@ public class bChatListener implements Listener {
         message = plugin.replacePlayerPlaceholders(player, message);
         message = plugin.colorize(message);
 
-        if (player.hasPermission("bchatmanager.color")) {
+        if (player.hasPermission("bchatmanager.chat.color")) {
             chatMessage = plugin.colorize(chatMessage);
         }
 

@@ -8,8 +8,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import net.rymate.bchatmanager.metrics.Metrics;
-
 import java.io.IOException;
 import java.io.File;
 import java.util.LinkedList;
@@ -52,16 +50,6 @@ public class bChatManager extends JavaPlugin {
         //Vault chat hooks
         setupChat();
 
-
-        //setup the Metrics
-        Metrics metrics;
-        try {
-            metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException ex) {
-            Logger.getLogger(bChatManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         //check if factions is installed
         if (this.getServer().getPluginManager().isPluginEnabled("Factions")) {
             factions = true;
@@ -73,7 +61,15 @@ public class bChatManager extends JavaPlugin {
             core = (MultiverseCore) getServer().getPluginManager().getPlugin("Multiverse-Core");
         }
 
-        System.out.println("[bChatManager] Enabled!");
+        System.out.println("[bChatManager] Enabled");
+    }
+
+    @Override
+    public void onDisable() {
+        // make null all the things
+        config = null;
+        listener = null;
+        System.out.println("[bChatManager] Disabled");
     }
 
     private void setupConfig() {
@@ -232,7 +228,7 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-            if (sender.hasPermission("bchatmanager.reload")) {
+            if (!sender.hasPermission("bchatmanager.reload")) {
                 sender.sendMessage(ChatColor.AQUA + "[bChatManager] Wtf, you can't do this!");
                 return true;
             }

@@ -4,10 +4,10 @@
       <root url="jar://$MAVEN_REPOSITORY$/org/mcstats/metrics/1.2-SNAPSHOT/metrics-1.2-20121002.085121-1.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/mcstats/metrics/1.2-SNAPSHOT/metrics-1.2-SNAPSHOT-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/mcstats/metrics/1.2-SNAPSHOT/metrics-1.2-20121002.085121-1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/mcstats/metrics/1.2-SNAPSHOT/metrics-1.2-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/mcstats/metrics/1.2-SNAPSHOT/metrics-1.2-20121002.085121-1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

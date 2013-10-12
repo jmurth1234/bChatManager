@@ -2,20 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97bdc9cb-bca8-407e-95ef-e5c024368d28" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ant.xml" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
+      <change type="DELETED" beforePath="Z:\GitHub\bChatManager\src\main\java\net\rymate\bchatmanager\metrics\Metrics.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mcstats_metrics_1_2_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mcstats_metrics_1_2_SNAPSHOT.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java" afterPath="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bChatManager.iml" afterPath="$PROJECT_DIR$/bChatManager.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java" afterPath="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bChatManager.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="97bdc9cb-bca8-407e-95ef-e5c024368d28" time="1381170453710" ignored="false" />
+    <file path="/Dummy.txt" changelist="97bdc9cb-bca8-407e-95ef-e5c024368d28" time="1381617031339" ignored="false" />
     <file path="/pom.xml" changelist="97bdc9cb-bca8-407e-95ef-e5c024368d28" time="1354833521934" ignored="false" />
-    <file path="/bChatManager.java" changelist="97bdc9cb-bca8-407e-95ef-e5c024368d28" time="1381172652363" ignored="false" />
+    <file path="/bChatManager.java" changelist="97bdc9cb-bca8-407e-95ef-e5c024368d28" time="1381617406048" ignored="false" />
     <file path="/bChatListener.java" changelist="97bdc9cb-bca8-407e-95ef-e5c024368d28" time="1381170561177" ignored="false" />
     <file path="/plugin.yml" changelist="97bdc9cb-bca8-407e-95ef-e5c024368d28" time="1381171323993" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -78,10 +75,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="bChatManager.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="bChatManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="55" selection-start="3767" selection-end="3767" vertical-scroll-proportion="0.0">
+            <state line="9" column="0" selection-start="369" selection-end="369" vertical-scroll-proportion="0.16475973">
               <folding />
             </state>
           </provider>
@@ -90,16 +87,16 @@
       <file leaf-file-name="bChatListener.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="47" selection-start="3434" selection-end="3434" vertical-scroll-proportion="0.0">
+            <state line="64" column="16" selection-start="2626" selection-end="2690" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="16" selection-start="346" selection-end="346" vertical-scroll-proportion="0.16608997">
+            <state line="45" column="53" selection-start="1547" selection-end="1547" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -142,10 +139,10 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/main/resources/config.yml" />
-        <option value="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java" />
         <option value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
-        <option value="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java" />
       </list>
     </option>
   </component>
@@ -193,6 +190,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -266,7 +264,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -282,12 +279,12 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="Maven.Unnamed">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -326,19 +323,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -364,6 +348,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -478,7 +475,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25026682" sideWeight="0.6711111" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -629,23 +626,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="47" selection-start="3434" selection-end="3434" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="24" selection-start="104" selection-end="119" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="55" selection-start="3767" selection-end="3767" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -659,7 +642,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="16" selection-start="346" selection-end="346" vertical-scroll-proportion="0.16608997">
+        <state line="45" column="53" selection-start="1547" selection-end="1547" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="16" selection-start="2626" selection-end="2690" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/rymate/bchatmanager/bChatManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="369" selection-end="369" vertical-scroll-proportion="0.16475973">
           <folding />
         </state>
       </provider>
