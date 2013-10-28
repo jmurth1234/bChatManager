@@ -108,8 +108,11 @@ public class bChatManager extends JavaPlugin {
             format = format.replaceAll("%faction", "");
         }
 
+        MultiverseWorld mvWorld = null;
         if (mv) {
-            MultiverseWorld mvWorld = core.getMVWorldManager().getMVWorld(player.getWorld());
+            mvWorld = core.getMVWorldManager().getMVWorld(player.getWorld());
+        }
+        if (mvWorld != null) {
             format = format.replaceAll("%mvworld", mvWorld.getColoredWorldString());
         } else {
             format = format.replaceAll("%mvworld", "");
