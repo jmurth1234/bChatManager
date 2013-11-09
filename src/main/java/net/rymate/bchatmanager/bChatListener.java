@@ -27,8 +27,8 @@ public class bChatListener implements Listener {
     public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
 
-    public bChatListener(bChatManager aThis) {
-        this.plugin = aThis;
+    public bChatListener(bChatManager instance) {// a This. Omg.
+        this.plugin = instance;
 
         this.MESSAGE_FORMAT = plugin.getConfig().getString("formats.message-format", this.MESSAGE_FORMAT);
         this.LOCAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
@@ -41,9 +41,7 @@ public class bChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
+    //You have already ignoreCancelled in EventHandler annotation
 
         Player player = event.getPlayer();
 
