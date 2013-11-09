@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.ChatColor;
 
 import java.io.IOException;
 import java.io.File;
@@ -61,15 +62,13 @@ public class bChatManager extends JavaPlugin {
             core = (MultiverseCore) getServer().getPluginManager().getPlugin("Multiverse-Core");
         }
 
-        System.out.println("[bChatManager] Enabled");
+        getLogger().info("Enabled");//Bukkit API: Logger.
     }
 
     @Override
     public void onDisable() {
-        // make null all the things
-        config = null;
-        listener = null;
-        System.out.println("[bChatManager] Disabled");
+        //Why do you set vars to null? o_O
+        getLogger().info("Disabled");
     }
 
     private void setupConfig() {
@@ -94,7 +93,7 @@ public class bChatManager extends JavaPlugin {
             chat = chatProvider.getProvider();
         }
 
-        return (chat != null);
+        return chat != null;
     }
 
     //
@@ -129,7 +128,7 @@ public class bChatManager extends JavaPlugin {
         if (string == null) {
             return "";
         }
-        return string.replaceAll("&([a-z0-9])", "\u00A7$1");
+        return ChatColor.translateAlternateColorCodes('&', string);
     }
 
     public List<Player> getLocalRecipients(Player sender, String message, double range) {
