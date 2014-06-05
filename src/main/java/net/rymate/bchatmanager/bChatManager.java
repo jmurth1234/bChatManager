@@ -120,6 +120,7 @@ public class bChatManager extends JavaPlugin {
         return format.replaceAll("%prefix", chat.getPlayerPrefix(player))
                 .replaceAll("%suffix", chat.getPlayerSuffix(player))
                 .replaceAll("%world", worldName)
+                .replaceAll("%uuid", player.getUniqueId().toString()) // for people who really want UUIDs in chat
                 .replaceAll("%player", player.getName())
                 .replaceAll("%displayname", player.getDisplayName())
                 .replaceAll("%group", chat.getPrimaryGroup(player));
@@ -176,7 +177,7 @@ public class bChatManager extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if ((command.getName().equals("me")) && (config.getBoolean("toggles.control-me", true))) {
+        if ((command.getName().equalsIgnoreCase("me")) && (config.getBoolean("toggles.control-me", true))) {
             String meFormat = config.getString("formats.me-format", "* %player %message");
             Double chatRange = config.getDouble("other.chat-range", 100);
             boolean rangedMode = config.getBoolean("toggles.ranged-mode", false);
@@ -209,7 +210,6 @@ public class bChatManager extends JavaPlugin {
 
             message = message.replace("%message", meMessage);
 
-
             if (rangedMode) {
                 List<Player> pl = getLocalRecipients(player, message, chatRange);
                 for (int j = 0; j < pl.size(); j++) {
@@ -241,6 +241,6 @@ public class bChatManager extends JavaPlugin {
             sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
             return true;
         }
-        return true;
+        return false;
     }
 }
