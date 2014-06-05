@@ -2,7 +2,7 @@ name: bChatManager
 main: net.rymate.bchatmanager.bChatManager
 depend: [ Vault ]
 softdepend: [ Factions, Multiverse-Core]
-version: 3.1.1
+version: 3.1.2
 author: rymate1234
 website: www.rymate.co.uk
 description: Chat management plugin for bPermissions based of PEX ChatManager
@@ -10,7 +10,6 @@ commands:
   me:
     description: Sends a message in the third person!
     usage: /me <message>
-    aliases: [m, moi]
   bchatreload:
     description: Reloads bChatManager
     usage: /bchatreload
