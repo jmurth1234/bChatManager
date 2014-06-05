@@ -130,6 +130,7 @@ public class bChatManager extends JavaPlugin {
         if (string == null) {
             return "";
         }
+        
         return string.replaceAll("&([a-z0-9])", "\u00A7$1");
     }
 

@@ -52,7 +52,6 @@ public class bChatListener implements Listener {
 
         boolean localChat = RANGED_MODE;
 
-
         if (SPECIAL_FEATURES) {
             if (chatMessage.startsWith("!") && player.hasPermission("bchatmanager.chat.global")) {
                 localChat = false;
@@ -106,6 +105,10 @@ public class bChatListener implements Listener {
 
         message = plugin.replacePlayerPlaceholders(player, message);
         message = plugin.colorize(message);
+        
+        if(!player.hasPermission("bchatmananager.chat.k")) {
+            message.replaceAll("&k", "");
+        }
 
         if (player.hasPermission("bchatmanager.chat.color")) {
             chatMessage = plugin.colorize(chatMessage);

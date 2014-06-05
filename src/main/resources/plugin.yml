@@ -2,7 +2,7 @@ name: bChatManager
 main: net.rymate.bchatmanager.bChatManager
 depend: [ Vault ]
 softdepend: [ Factions, Multiverse-Core]
-version: 3.2
+version: 3.1.1
 author: rymate1234
 website: www.rymate.co.uk
 description: Chat management plugin for bPermissions based of PEX ChatManager
