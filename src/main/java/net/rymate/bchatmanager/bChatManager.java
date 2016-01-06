@@ -1,5 +1,6 @@
 package net.rymate.bchatmanager;
 
+import com.massivecraft.factions.entity.MPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import net.milkbowl.vault.chat.Chat;
@@ -23,7 +24,6 @@ import org.bukkit.command.CommandSender;
 // lel factions
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.entity.Faction;
-import com.massivecraft.factions.entity.UPlayer;
 
 /**
  * Main class
@@ -154,8 +154,7 @@ public class bChatManager extends JavaPlugin {
     private String getFaction(Player player) {
         String factionString = "";
         try {
-            Player p = this.getServer().getPlayerExact(player.getName());
-            UPlayer uplayer = UPlayer.get(p);
+            MPlayer uplayer = MPlayer.get(player);
             Faction faction = uplayer.getFaction();
             factionString = faction.getName();
         } catch (Exception e) {
@@ -190,7 +189,13 @@ public class bChatManager extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
                 return true;
             }
+            
             Player player = (Player) sender;
+            if (!player.hasPermission("bchatmanager.me")) {
+                sender.sendMessage(ChatColor.RED + "You dont have permissions to do this!");
+                return true;
+            }
+            
             int i;
             StringBuilder me = new StringBuilder();
 
