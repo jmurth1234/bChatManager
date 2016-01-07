@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'net.rymate'
+version = '3.1'
+
+description = """bChatManager"""
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+
+
+repositories {
+    maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
+    maven { url "http://nexus.theyeticave.net/content/repositories/pub_releases" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.bukkit', name: 'bukkit', version: '1.8.7-R0.1-SNAPSHOT'
+    compile group: 'net.milkbowl.vault', name: 'VaultAPI', version:'1.5'
+    compile fileTree(dir: 'lib', include: '*.jar')
+}
