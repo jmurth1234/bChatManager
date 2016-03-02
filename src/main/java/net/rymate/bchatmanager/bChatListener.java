@@ -30,13 +30,7 @@ public class bChatListener implements Listener {
     public bChatListener(bChatManager aThis) {
         this.plugin = aThis;
 
-        this.MESSAGE_FORMAT = plugin.getConfig().getString("formats.message-format", this.MESSAGE_FORMAT);
-        this.LOCAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
-        this.PERSONAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
-        this.RANGED_MODE = plugin.getConfig().getBoolean("toggles.ranged-mode", this.RANGED_MODE);
-        this.SPECIAL_FEATURES = plugin.getConfig().getBoolean("toggles.special-features", this.SPECIAL_FEATURES);
-
-        this.CHAT_RANGE = plugin.getConfig().getDouble("other.chat-range", this.CHAT_RANGE);
+        reloadConfig();
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -62,7 +56,7 @@ public class bChatListener implements Listener {
                 chatMessage = chatMessage.substring(1);
                 String[] messageSplit = chatMessage.split(" ");
                 Player reciever = plugin.getServer().getPlayer(messageSplit[0]);
-                if (messageSplit[0] == "ops") {
+                if (messageSplit[0].equalsIgnoreCase("ops")) {
                     chatMessage = chatMessage.replaceFirst(messageSplit[0], "");
                     chatMessage = chatMessage.replaceAll("%reciever", messageSplit[0]);
 
@@ -120,5 +114,15 @@ public class bChatListener implements Listener {
 
         event.setMessage(chatMessage);
 
+    }
+
+    public void reloadConfig() {
+        this.MESSAGE_FORMAT = plugin.getConfig().getString("formats.message-format", this.MESSAGE_FORMAT);
+        this.LOCAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.local-message-format", this.LOCAL_MESSAGE_FORMAT);
+        this.PERSONAL_MESSAGE_FORMAT = plugin.getConfig().getString("formats.personal-message-format", this.PERSONAL_MESSAGE_FORMAT);
+        this.RANGED_MODE = plugin.getConfig().getBoolean("toggles.ranged-mode", this.RANGED_MODE);
+        this.SPECIAL_FEATURES = plugin.getConfig().getBoolean("toggles.special-features", this.SPECIAL_FEATURES);
+
+        this.CHAT_RANGE = plugin.getConfig().getDouble("other.chat-range", this.CHAT_RANGE);
     }
 }

@@ -1,29 +1,30 @@
 package net.rymate.bchatmanager;
 
+import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.MPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import net.milkbowl.vault.chat.Chat;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.IOException;
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 // lel factions
-import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.entity.Faction;
 
 /**
  * Main class
@@ -34,12 +35,14 @@ public class bChatManager extends JavaPlugin {
 
     public static Chat chat = null;
     private bChatListener listener;
-    public YamlConfiguration config;
+    private YamlConfiguration config;
     private boolean factions = false;
     private boolean mv;
     private MultiverseCore core;
+    private PluginCommand meCmd;
 
     public void onEnable() {
+        meCmd = this.getCommand("me");
         //setup the config
         setupConfig();
 
@@ -75,14 +78,21 @@ public class bChatManager extends JavaPlugin {
     private void setupConfig() {
         File configFile = new File(this.getDataFolder() + File.separator + "config.yml");
         try {
-            if (!configFile.exists()) {
-                this.saveDefaultConfig();
+            if (!configFile.exists()) this.saveDefaultConfig();
+
+            config = new YamlConfiguration();
+            config.load(configFile);
+
+            if (config.getBoolean("toggles.control-me", true)) {
+                registerBukkitCommand(meCmd);
+            } else {
+                unRegisterBukkitCommand(meCmd);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(bChatManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
         }
-        config = new YamlConfiguration();
-        config = YamlConfiguration.loadConfiguration(configFile);
     }
 
     /*
@@ -95,6 +105,14 @@ public class bChatManager extends JavaPlugin {
         }
 
         return (chat != null);
+    }
+
+    @Override
+    public YamlConfiguration getConfig() {
+        if (config == null) {
+            setupConfig();
+        }
+        return config;
     }
 
     //
@@ -130,7 +148,7 @@ public class bChatManager extends JavaPlugin {
         if (string == null) {
             return "";
         }
-        
+
         return string.replaceAll("&([a-z0-9])", "\u00A7$1");
     }
 
@@ -189,13 +207,13 @@ public class bChatManager extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "You are not an in-game player!");
                 return true;
             }
-            
+
             Player player = (Player) sender;
             if (!player.hasPermission("bchatmanager.me")) {
                 sender.sendMessage(ChatColor.RED + "You dont have permissions to do this!");
                 return true;
             }
-            
+
             int i;
             StringBuilder me = new StringBuilder();
 
@@ -231,9 +249,9 @@ public class bChatManager extends JavaPlugin {
 
         if ((command.getName().equals("bchatreload"))) {
             if (!(sender instanceof Player)) {
-                getServer().getPluginManager().disablePlugin(this);
-                getServer().getPluginManager().enablePlugin(this);
-                sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
+                setupConfig();
+                listener.reloadConfig();
+                sender.sendMessage(ChatColor.AQUA + "[bChatManager] Configs reloaded!");
                 return true;
             }
 
@@ -242,11 +260,59 @@ public class bChatManager extends JavaPlugin {
                 return true;
             }
 
-            getServer().getPluginManager().disablePlugin(this);
-            getServer().getPluginManager().enablePlugin(this);
-            sender.sendMessage(ChatColor.AQUA + "[bChatManager] Plugin reloaded!");
+            setupConfig();
+            listener.reloadConfig();
+            sender.sendMessage(ChatColor.AQUA + "[bChatManager] Configs reloaded!");
             return true;
         }
         return false;
+    }
+
+    // reflection hacks
+    // thanks to zeeveener from https://bukkit.org/threads/how-to-unregister-commands-from-your-plugin.131808/
+    private Object getPrivateField(Object object, String field) throws SecurityException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Class<?> clazz = object.getClass();
+        Field objectField = clazz.getDeclaredField(field);
+        objectField.setAccessible(true);
+        Object result = objectField.get(object);
+        objectField.setAccessible(false);
+        return result;
+    }
+
+    public void unRegisterBukkitCommand(PluginCommand cmd) {
+        try {
+            Object result = getPrivateField(getServer().getPluginManager(), "commandMap");
+            SimpleCommandMap commandMap = (SimpleCommandMap) result;
+            Object map = getPrivateField(commandMap, "knownCommands");
+            @SuppressWarnings("unchecked")
+            HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
+            knownCommands.remove(cmd.getName());
+            for (String alias : cmd.getAliases()) {
+                if (knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())) {
+                    knownCommands.remove(alias);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void registerBukkitCommand(PluginCommand cmd) {
+        try {
+            Object result = getPrivateField(getServer().getPluginManager(), "commandMap");
+            SimpleCommandMap commandMap = (SimpleCommandMap) result;
+            Object map = getPrivateField(commandMap, "knownCommands");
+            @SuppressWarnings("unchecked")
+            HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
+            knownCommands.put(cmd.getName(), meCmd);
+            for (String alias : cmd.getAliases()) {
+                if (knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())) {
+                    knownCommands.put(alias, meCmd);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
