@@ -33,10 +33,10 @@ import java.util.List;
  */
 public class bChatManager extends JavaPlugin {
 
-    public static Chat chat = null;
+    public static Chat chat;
     private bChatListener listener;
     private YamlConfiguration config;
-    private boolean factions = false;
+    private boolean factions;
     private boolean mv;
     private MultiverseCore core;
     private PluginCommand meCmd;
@@ -104,7 +104,7 @@ public class bChatManager extends JavaPlugin {
             chat = chatProvider.getProvider();
         }
 
-        return (chat != null);
+        return chat != null;
     }
 
     @Override
@@ -247,7 +247,7 @@ public class bChatManager extends JavaPlugin {
             return true;
         }
 
-        if ((command.getName().equals("bchatreload"))) {
+        if (command.getName().equals("bchatreload")) {
             if (!(sender instanceof Player)) {
                 setupConfig();
                 listener.reloadConfig();
