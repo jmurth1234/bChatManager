@@ -22,7 +22,7 @@ public class bChatListener implements Listener {
     public String LOCAL_MESSAGE_FORMAT = "[LOCAL] %prefix %player: &f%message";
     public String PERSONAL_MESSAGE_FORMAT = "[MSG] [%player -> %reciever] &f%message";
     public String OP_MESSAGE_FORMAT = "&c[OPS ONLY] %player: &f%message";
-    public Boolean RANGED_MODE = false;
+    public Boolean RANGED_MODE;
     public Boolean SPECIAL_FEATURES = true;
     public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
