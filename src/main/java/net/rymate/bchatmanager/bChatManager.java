@@ -23,6 +23,8 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // lel factions
 
@@ -135,6 +137,22 @@ public class bChatManager extends JavaPlugin {
         } else {
             format = format.replaceAll("%mvworld", "");
         }
+
+        String re1="(%)";	// Any Single Character 1
+        String re2="(meta)";	// Word 1
+        String re3="(:)";	// Any Single Character 2
+        String re4="((?:[a-z][a-z]+))";	// Word 2
+
+        Pattern p = Pattern.compile(re1+re2+re3+re4,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Matcher m = p.matcher(format);
+
+        while (m.find()) {
+            String meta = m.group(4);
+            String val = chat.getPlayerInfoString(player, meta, "");
+
+            format = format.replaceAll("%meta:" + meta, val);
+        }
+
         return format.replaceAll("%prefix", chat.getPlayerPrefix(player))
                 .replaceAll("%suffix", chat.getPlayerSuffix(player))
                 .replaceAll("%world", worldName)
