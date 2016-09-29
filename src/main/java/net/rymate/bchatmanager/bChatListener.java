@@ -27,17 +27,15 @@ public class bChatListener implements Listener {
     public double CHAT_RANGE = 100d;
     private final bChatManager plugin;
 
-    public bChatListener(bChatManager aThis) {
-        this.plugin = aThis;
+    public bChatListener(bChatManager instance) {// a This. Omg.
+        this.plugin = instance;
 
         reloadConfig();
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
+    //You have already ignoreCancelled in EventHandler annotation
 
         Player player = event.getPlayer();
 
