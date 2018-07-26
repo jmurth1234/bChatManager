@@ -84,12 +84,6 @@ public class bChatManager extends JavaPlugin {
 
             config = new YamlConfiguration();
             config.load(configFile);
-
-            if (config.getBoolean("toggles.control-me", true)) {
-                registerBukkitCommand(meCmd);
-            } else {
-                unRegisterBukkitCommand(meCmd);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InvalidConfigurationException e) {
@@ -286,51 +280,4 @@ public class bChatManager extends JavaPlugin {
         return false;
     }
 
-    // reflection hacks
-    // thanks to zeeveener from https://bukkit.org/threads/how-to-unregister-commands-from-your-plugin.131808/
-    private Object getPrivateField(Object object, String field) throws SecurityException,
-            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        Class<?> clazz = object.getClass();
-        Field objectField = clazz.getDeclaredField(field);
-        objectField.setAccessible(true);
-        Object result = objectField.get(object);
-        objectField.setAccessible(false);
-        return result;
-    }
-
-    public void unRegisterBukkitCommand(PluginCommand cmd) {
-        try {
-            Object result = getPrivateField(getServer().getPluginManager(), "commandMap");
-            SimpleCommandMap commandMap = (SimpleCommandMap) result;
-            Object map = getPrivateField(commandMap, "knownCommands");
-            @SuppressWarnings("unchecked")
-            HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
-            knownCommands.remove(cmd.getName());
-            for (String alias : cmd.getAliases()) {
-                if (knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())) {
-                    knownCommands.remove(alias);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void registerBukkitCommand(PluginCommand cmd) {
-        try {
-            Object result = getPrivateField(getServer().getPluginManager(), "commandMap");
-            SimpleCommandMap commandMap = (SimpleCommandMap) result;
-            Object map = getPrivateField(commandMap, "knownCommands");
-            @SuppressWarnings("unchecked")
-            HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
-            knownCommands.put(cmd.getName(), meCmd);
-            for (String alias : cmd.getAliases()) {
-                if (knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())) {
-                    knownCommands.put(alias, meCmd);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
